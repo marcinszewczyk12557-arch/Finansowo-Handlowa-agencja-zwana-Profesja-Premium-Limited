@@ -1,119 +1,119 @@
 import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import ProductCard from '../components/ProductCard';
 import InstallmentCalculator from '../components/InstallmentCalculator';
-import MediaShowcase from '../components/MediaShowcase';
-import products from '../data/products';
 
-const featuredIds = [1, 2, 3, 4, 5, 6, 7, 8];
-const featuredProducts = products.filter((product) => featuredIds.includes(product.id));
+const categories = [
+  ['Smartfony i elektronika', 'Nubia REDMAGIC', '/products/1', '01'],
+  ['Laptopy i IT', 'Gaming / AI / Business', '/products/2', '02'],
+  ['Fotowoltaika', 'Magazyny energii', '/products/3', '03'],
+  ['Wentylacja i klimatyzacja', 'HVAC / VRF / rekuperacja', '/products/4', '04'],
+  ['Luksusowe meble', 'Biuro / hotel / premium', '/products/5', '05'],
+  ['Drzwi i bramy premium', 'Garaż / przemysł / smart', '/products/6', '06'],
+  ['Maszyny i sprzęt ciężki', 'Budowa / inżynieria', '/products/7', '07'],
+  ['Elektronarzędzia', 'Wyposażenie stanowisk', '/products/8', '08'],
+];
 
 export default function Home() {
   return (
     <>
       <Header />
-      <main>
-        <section className="hero opening-hero">
-          <div className="opening-badge">DNI OTWARCIA</div>
-          <p className="eyebrow">Finansowo-Handlowa Agencja • działalność online o zasięgu globalnym</p>
-          <img src="/profesja-logo.svg" alt="Logo Profesja Premium Limited" className="opening-logo" />
-          <h2>PROFESJA PREMIUM LIMITED</h2>
-          <p className="hero-lead">
-            Świetnie się składa — trwają Dni Otwarcia zarządczo-wykonawczego projektu prowadzonego pod marką
-            Profesja Premium Limited. Tworzymy profesjonalną przestrzeń zakupową dla przedsiębiorców i klientów B2B,
-            łącząc ofertę produktów premium, sourcing międzynarodowy oraz indywidualne rozwiązania finansowe.
-          </p>
+      <main className="premium-home">
+        <section className="commerce-hero">
+          <div className="commerce-hero__brand">
+            <img src="/profesja-logo.svg" alt="Logo Profesja Premium Limited" className="commerce-logo" />
+            <h1>PROFESJA</h1>
+            <div className="brand-gold">PREMIUM LIMITED</div>
+            <p className="agency-label">FINANSOWO-HANDLOWA AGENCJA</p>
+            <h2>KOMPLEKSOWE ROZWIĄZANIA DLA BIZNESU</h2>
+            <p className="hero-services">FINANSOWANIE • IMPORT • DOSTAWY • WSPARCIE</p>
 
-          <div className="opening-stats" aria-label="Najważniejsze warunki współpracy">
-            <div><strong>95 000 zł</strong><span>minimalna wartość zamówienia B2B</span></div>
-            <div><strong>14 szt.</strong><span>minimum dla wybranych ofert smartfonów</span></div>
-            <div><strong>PL / EN</strong><span>materiały ofertowe na życzenie</span></div>
+            <div className="opening-hours">
+              <div className="opening-icon">DNI</div>
+              <div>
+                <strong>DNI OTWARCIA</strong>
+                <p>Świetnie się składa — uruchamiamy pełną ofertę B2B Profesja Premium Limited.</p>
+                <small>Działalność online • zasięg globalny • obsługa indywidualna</small>
+              </div>
+            </div>
           </div>
 
-          <div className="cta-row">
-            <Link href="/catalog"><button>Przeglądaj katalog</button></Link>
-            <Link href="/offers/new"><button className="cta-secondary">Zamów indywidualną ofertę</button></Link>
-            <Link href="/#raty"><button className="cta-secondary">Oblicz finansowanie</button></Link>
+          <div className="product-stage" aria-label="Wybrane produkty premium">
+            <div className="stage-glow" />
+            <div className="laptop-mock">
+              <div className="laptop-screen"><span>LEGION</span><small>AI / Business / Gaming</small></div>
+              <div className="laptop-base" />
+            </div>
+            <div className="phone-mock phone-dark"><div className="camera-stack"><i/><i/><i/></div><span>REDMAGIC</span></div>
+            <div className="phone-mock phone-display"><div className="cyber-face">R</div><span>GAMING</span></div>
+            <div className="phone-mock phone-silver"><div className="camera-stack"><i/><i/><i/></div><span>PRO</span></div>
+            <div className="stage-plinth" />
           </div>
+
+          <aside className="commerce-hero__offer">
+            <div className="brand-offer-label">SMARTFONY GAMINGOWE PREMIUM</div>
+            <div className="nubia-word">nubia</div>
+            <div className="redmagic-mark">REDMAGIC</div>
+            <div className="feature-row">
+              <span><b>01</b>Wysoka wydajność</span>
+              <span><b>02</b>Chłodzenie</span>
+              <span><b>03</b>Szybkie ładowanie</span>
+              <span><b>04</b>Design premium</span>
+            </div>
+            <div className="trade-box">
+              <h3>WARUNKI HANDLOWE B2B</h3>
+              <div className="trade-grid">
+                <div><small>MINIMALNE ZAMÓWIENIE</small><strong>14 szt.</strong><span>wybrane oferty smartfonów</span></div>
+                <div><small>MINIMALNA WARTOŚĆ</small><strong>95 000 zł</strong><span>zamówienia B2B</span></div>
+              </div>
+            </div>
+          </aside>
         </section>
 
-        <section className="section">
-          <p className="eyebrow">Profesja Premium Limited</p>
-          <h2>Kompleksowa oferta dla przedsiębiorstw</h2>
-          <p>
-            Obsługujemy zakupy i wyposażenie przedsiębiorstw w wielu branżach — od elektroniki premium i wyposażenia
-            stanowisk pracy, przez fotowoltaikę, magazyny energii i HVAC, po luksusowe wyposażenie wnętrz, drzwi, bramy,
-            maszyny oraz ciężki sprzęt inżynierski.
-          </p>
+        <section className="quick-actions">
+          <Link href="/offers/new"><span>01</span><div><strong>ZAMÓW OFERTĘ</strong><small>Szybka wycena B2B</small></div><b>→</b></Link>
+          <Link href="/#raty"><span>02</span><div><strong>FINANSOWANIE</strong><small>Leasing, raty, rozwiązania B2B</small></div><b>→</b></Link>
+          <Link href="/about"><span>03</span><div><strong>IMPORT</strong><small>Kompleksowa organizacja</small></div><b>→</b></Link>
+          <Link href="/contact"><span>04</span><div><strong>KONTAKT Z DORADCĄ</strong><small>Indywidualne wsparcie</small></div><b>→</b></Link>
         </section>
 
-        <section className="grid" aria-label="Główne obszary współpracy">
-          <article className="card"><p className="eyebrow">Zakupy</p><h3>Oferta B2B Premium</h3><p>Indywidualne konfiguracje produktów, dostosowanie zamówienia do branży i skali działalności oraz przygotowanie kompletnej propozycji handlowej.</p></article>
-          <article className="card"><p className="eyebrow">Finansowanie</p><h3>Elastyczne rozwiązania zakupowe</h3><p>Orientacyjne symulacje rat i możliwość przygotowania finansowania dopasowanego do wartości zamówienia i parametrów transakcji.</p></article>
-          <article className="card"><p className="eyebrow">Import</p><h3>Sourcing międzynarodowy</h3><p>Organizacja pozyskiwania produktów z naciskiem na parametry techniczne, dokumentację, gwarancję i zgodność oferty z rynkiem docelowym.</p></article>
-        </section>
-
-        <section className="section flagship-strip">
-          <p className="eyebrow">Elektronika premium</p>
-          <h2>Smartfony gamingowe, laptopy i sprzęt dla wymagających firm</h2>
-          <div className="flagship-links">
-            <Link href="/products/1"><span>Nubia REDMAGIC • 4 250–8 225 zł</span></Link>
-            <Link href="/products/2"><span>Lenovo Legion • 7 140 zł • konfiguracja 4,8/5</span></Link>
-          </div>
-        </section>
-
-        <section className="section featured-intro">
-          <p className="eyebrow">Wybrane oferty</p>
-          <h2>Elektronika, energia, wyposażenie i przemysł</h2>
-          <p>Poniższe pozycje przedstawiają najważniejsze kierunki katalogu. Każda oferta może zostać przygotowana w kilku poziomach technicznych oraz z indywidualnymi warunkami realizacji.</p>
-        </section>
-
-        <section className="grid" aria-label="Wybrane produkty katalogowe">
-          {featuredProducts.map((product) => <ProductCard key={product.id} product={product} />)}
-        </section>
-
-        <section className="section brand-showcase">
-          <p className="eyebrow">Oferta specjalna</p>
-          <h2>Nubia REDMAGIC — smartfony gamingowe premium</h2>
-          <p>Wybrane konfiguracje w cenach od 4 250 zł do 8 225 zł za sztukę. Dla tej kategorii obowiązuje minimalne zamówienie 14 sztuk oraz minimalna łączna wartość zamówienia 95 000 zł. Ostateczna specyfikacja partii jest potwierdzana przed zawarciem transakcji.</p>
-          <div className="cta-row">
-            <Link href="/products/1"><button>Zobacz ofertę REDMAGIC</button></Link>
-            <Link href="/offers/new?product=Nubia%20REDMAGIC"><button className="cta-secondary">Zapytaj o konfigurację</button></Link>
-          </div>
-        </section>
-
-        <section className="section brand-showcase">
-          <p className="eyebrow">Laptopy Premium</p>
-          <h2>Lenovo Legion — konfiguracja 4,8 / 5</h2>
-          <p>Prezentowany wariant katalogowy został wyceniony na 7 140 zł za sztukę. Oferta obejmuje konfiguracje od wysokiej do najwyższej klasy, przeznaczone m.in. do AI, grafiki 3D, CAD/CAM, programowania i zastosowań biznesowych.</p>
-          <div className="cta-row">
-            <Link href="/products/2"><button>Zobacz ofertę laptopa</button></Link>
-            <Link href="/offers/new?product=Lenovo%20Legion"><button className="cta-secondary">Zapytaj o konfigurację</button></Link>
+        <section className="category-section">
+          <div className="section-title-line"><span>NASZE KLUCZOWE KATEGORIE</span></div>
+          <div className="category-ribbon">
+            {categories.map(([name, sub, href, icon]) => (
+              <Link href={href} className="category-tile" key={name}>
+                <div className="category-visual">{icon}</div>
+                <strong>{name}</strong>
+                <span>{sub}</span>
+              </Link>
+            ))}
           </div>
         </section>
 
-        <section className="section">
-          <p className="eyebrow">Multimedia</p>
-          <h2>Prezentacje i wizualizacje ofertowe</h2>
-          <p>Materiały demonstracyjne przygotowujemy w spójnym standardzie marki. Wizualizacje AI są oznaczane jako wizualizacje, jeśli nie przedstawiają rzeczywistego egzemplarza produktu.</p>
+        <section className="trust-strip">
+          <div><b>01</b><strong>BEZPIECZNE TRANSAKCJE</strong><span>Sprawdzane warunki i dokumentacja</span></div>
+          <div><b>02</b><strong>INDYWIDUALNE CENY</strong><span>Oferta dopasowana do zamówienia</span></div>
+          <div><b>03</b><strong>GWARANCJA</strong><span>Warunki potwierdzane przed zakupem</span></div>
+          <div><b>04</b><strong>WSPARCIE B2B</strong><span>Dedykowana obsługa na każdym etapie</span></div>
+          <div><b>05</b><strong>GLOBALNY ZASIĘG</strong><span>Sourcing i import międzynarodowy</span></div>
         </section>
-        <MediaShowcase />
 
-        <section id="raty" className="section">
-          <p className="eyebrow">Finansowanie</p>
-          <h2>Orientacyjna kalkulacja sprzedaży ratalnej</h2>
-          <p>Kalkulator służy do wstępnej symulacji. Ostateczne warunki zależą od konkretnej oferty, oprocentowania, prowizji i decyzji instytucji finansującej.</p>
+        <section id="raty" className="section finance-section">
+          <p className="eyebrow">Finansowanie B2B</p>
+          <h2>Orientacyjna kalkulacja finansowania</h2>
+          <p>Kalkulator umożliwia wstępne oszacowanie rat. Ostateczne warunki zależą od finansującego, oprocentowania, prowizji oraz oceny transakcji.</p>
           <InstallmentCalculator />
         </section>
 
-        <section className="section contact-cta">
-          <p className="eyebrow">Kontakt</p>
-          <h2>Rozpocznij współpracę z Profesja Premium Limited</h2>
-          <p>Działalność prowadzona jest online i ma zasięg globalny. W sprawach handlowych skorzystaj z formularza B2B albo napisz bezpośrednio na profesja.premium@gmail.com.</p>
+        <section className="section premium-contact-block">
+          <div>
+            <p className="eyebrow">Profesja Premium Limited</p>
+            <h2>Wyposażenie przedsiębiorstw w jednym miejscu</h2>
+            <p>Elektronika, energia, HVAC, luksusowe wyposażenie, ciężki sprzęt, maszyny, elektronarzędzia i indywidualnie konfigurowane zamówienia dla firm.</p>
+          </div>
           <div className="cta-row">
-            <Link href="/offers/new"><button>Nowe zapytanie ofertowe</button></Link>
-            <a href="mailto:profesja.premium@gmail.com"><button className="cta-secondary">profesja.premium@gmail.com</button></a>
+            <Link href="/catalog"><button>Przejdź do katalogu</button></Link>
+            <Link href="/offers/new"><button className="cta-secondary">Złóż zapytanie B2B</button></Link>
           </div>
         </section>
       </main>
