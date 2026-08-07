@@ -1,6 +1,6 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import ProductCard from '../../components/ProductCard';
+import CatalogBrowser from '../../components/CatalogBrowser';
 import products from '../../data/products';
 
 export default function CatalogPage() {
@@ -14,8 +14,8 @@ export default function CatalogPage() {
           <p className="eyebrow">Katalog profesja/premium/limited</p>
           <h2>Pełna oferta premium</h2>
           <p>
-            Katalog prezentuje aktualne grupy produktowe i przykładowe warianty ofertowe. Dokumentacja,
-            certyfikaty i warunki gwarancji są potwierdzane dla konkretnego modelu przed przedstawieniem oferty.
+            Przeglądaj aktualne grupy produktowe, wyszukuj po nazwie lub kategorii i składaj indywidualne zapytania ofertowe.
+            Dokumentacja, certyfikaty i warunki gwarancji są potwierdzane dla konkretnego modelu przed przedstawieniem oferty.
           </p>
         </section>
 
@@ -27,16 +27,7 @@ export default function CatalogPage() {
           </div>
         </section>
 
-        {categories.map((category) => (
-          <section key={category} className="section catalog-section">
-            <p className="eyebrow">{category}</p>
-            <div className="grid catalog-grid">
-              {products.filter((product) => product.category === category).map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </section>
-        ))}
+        <CatalogBrowser products={products} />
       </main>
       <Footer />
     </>
