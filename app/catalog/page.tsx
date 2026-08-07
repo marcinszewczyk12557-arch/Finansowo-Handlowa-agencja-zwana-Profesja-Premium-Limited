@@ -11,12 +11,14 @@ export default function CatalogPage() {
       <main>
         <section className="hero compact-hero">
           <p className="eyebrow">Katalog Profesja Premium Limited</p>
-          <h2>Rozbudowany katalog B2B — sourcing, prezentacje i indywidualne wyceny</h2>
+          <h2>Pełny katalog B2B — sourcing oraz globalne marki premium</h2>
           <p>
-            Katalog działa wielopoziomowo: kategoria główna → podkategoria → element szczegółowy → pięć wariantów handlowych.
-            Każda pozycja otrzymuje profesjonalny opis, zastosowanie, zakres prezentacji i dokumentacji oraz benchmark ceny bazowej
-            na podstawie aktualnych ofert Alibaba. Ceny PROFESJA są prezentowane z narzutem od +72% do +84% względem benchmarku.
-            Finalny model, MOQ, kurs walut, transport, podatki, certyfikacja i dostępność są zawsze potwierdzane przed zawarciem transakcji.
+            Katalog działa wielopoziomowo: kategoria główna → podkategoria / marka → rodzina produktów → element szczegółowy → pięć wariantów handlowych.
+            Wszystkie karty otrzymują czytelne prezentacje wysokiej rozdzielczości, profesjonalne opisy, zastosowanie i zakres dokumentacji.
+            Kategorie sourcingowe korzystają z benchmarków Alibaba i narzutu PROFESJA od +72% do +84% względem ceny bazowej.
+            Nowa gałąź „Globalne produkty czołowych producentów” obejmuje m.in. Yamaha, Roland, JBL Professional, Tascam, MSI, Lenovo,
+            Apple, ASUS, Acer, HP, Samsung, LG, Technics, Martin Professional i Pioneer DJ. Dla produktów markowych dokładny model,
+            autentyczność, kanał dystrybucji, gwarancja i cena są potwierdzane indywidualnie przed przedstawieniem finalnej oferty.
           </p>
         </section>
 
