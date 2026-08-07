@@ -4,24 +4,24 @@ import Footer from '../components/Footer';
 import InstallmentCalculator from '../components/InstallmentCalculator';
 
 const categories = [
-  ['Smartfony Premium', '4 produkty', '01'],
-  ['Laptopy Premium', '4 produkty', '02'],
-  ['Energia i Fotowoltaika', '4 produkty', '03'],
-  ['HVAC', '4 produkty', '04'],
-  ['Meble Premium', '4 produkty', '05'],
-  ['Drzwi i Bramy Premium', '4 produkty', '06'],
-  ['Maszyny i Sprzęt Ciężki', '4 produkty', '07'],
-  ['Wyposażenie Przedsiębiorstw', '4 produkty', '08'],
-  ['Wellness Premium', '4 produkty', '09'],
-  ['Smart Home Premium', '4 produkty', '10'],
-  ['Luxury Interior', '4 produkty', '11'],
-  ['Outdoor Luxury', '4 produkty', '12'],
-  ['Premium Lighting', '4 produkty', '13'],
-  ['Executive Office', '4 produkty', '14'],
-  ['Hospitality Premium', '4 produkty', '15'],
-  ['Audio Video Premium', '4 produkty', '16'],
-  ['E-Mobility', '4 produkty', '17'],
-  ['Leisure Premium', '4 produkty', '18'],
+  ['Smartfony Premium', 'kategorie i podkategorie', '01'],
+  ['Laptopy Premium', 'kategorie i podkategorie', '02'],
+  ['Energia i Fotowoltaika', 'kategorie i podkategorie', '03'],
+  ['HVAC', 'kategorie i podkategorie', '04'],
+  ['Meble Premium', 'kategorie i podkategorie', '05'],
+  ['Drzwi i Bramy Premium', 'kategorie i podkategorie', '06'],
+  ['Maszyny i Sprzęt Ciężki', 'kategorie i podkategorie', '07'],
+  ['Wyposażenie Przedsiębiorstw', 'kategorie i podkategorie', '08'],
+  ['Wellness Premium', 'kategorie i podkategorie', '09'],
+  ['Smart Home Premium', 'kategorie i podkategorie', '10'],
+  ['Luxury Interior', 'kategorie i podkategorie', '11'],
+  ['Outdoor Luxury', 'kategorie i podkategorie', '12'],
+  ['Premium Lighting', 'kategorie i podkategorie', '13'],
+  ['Executive Office', 'kategorie i podkategorie', '14'],
+  ['Hospitality Premium', 'kategorie i podkategorie', '15'],
+  ['Audio Video Premium', 'kategorie i podkategorie', '16'],
+  ['E-Mobility', 'kategorie i podkategorie', '17'],
+  ['Leisure Premium', 'kategorie i podkategorie', '18'],
 ];
 
 export default function Home() {
@@ -88,7 +88,7 @@ export default function Home() {
         </section>
 
         <section className="category-section">
-          <div className="section-title-line"><span>PEŁNY KATALOG — 4 PRODUKTY W KAŻDEJ KATEGORII</span></div>
+          <div className="section-title-line"><span>PEŁNY KATALOG — 5 PRODUKTÓW W KAŻDYM ELEMENTCIE HIERARCHII</span></div>
           <div className="category-ribbon">
             {categories.map(([name, sub, icon]) => (
               <Link href="/catalog" className="category-tile" key={name}>
@@ -118,8 +118,8 @@ export default function Home() {
         <section className="section premium-contact-block">
           <div>
             <p className="eyebrow">Profesja Premium Limited</p>
-            <h2>72 produkty w 18 kategoriach B2B</h2>
-            <p>Każda kategoria zawiera po cztery pozycje katalogowe. Katalog obejmuje elektronikę, energię, HVAC, luksusowe wyposażenie, ciężki sprzęt, maszyny, elektronarzędzia i rozwiązania dla przedsiębiorstw.</p>
+            <h2>Pełna wielopoziomowa struktura katalogu B2B</h2>
+            <p>18 kategorii głównych, 288 szczegółowych elementów katalogu i łącznie 1 440 pozycji produktowych — po pięć różnych produktów w każdym najniższym elemencie kategorii.</p>
           </div>
           <div className="cta-row">
             <Link href="/catalog"><button>Przejdź do pełnego katalogu</button></Link>
