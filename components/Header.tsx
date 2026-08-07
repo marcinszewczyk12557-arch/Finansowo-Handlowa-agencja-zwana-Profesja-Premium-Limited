@@ -9,10 +9,13 @@ export default function Header() {
       </div>
 
       <div className="site-header__inner">
-        <div className="brand-block">
-          <p className="eyebrow">Finansowo-Handlowa Agencja</p>
-          <Link href="/" className="brand-name">profesja/premium/limited</Link>
-        </div>
+        <Link href="/" className="brand-block" aria-label="Profesja Premium Limited — strona główna">
+          <img src="/profesja-logo.svg" alt="Logo Profesja Premium Limited" className="brand-logo" />
+          <div>
+            <p className="eyebrow">Finansowo-Handlowa Agencja</p>
+            <span className="brand-name">profesja/premium/limited</span>
+          </div>
+        </Link>
 
         <nav className="site-nav" aria-label="Główna nawigacja">
           <Link href="/">Start</Link>
