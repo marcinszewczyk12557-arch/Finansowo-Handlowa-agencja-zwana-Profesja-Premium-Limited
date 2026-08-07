@@ -21,11 +21,35 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           <h1>{product.name}</h1>
           <p>{product.description}</p>
           <p className="product-price"><strong>{product.priceLabel}</strong></p>
+          {product.minimumOrder ? <p><strong>{product.minimumOrder}</strong></p> : null}
           <div className="cta-row">
             <Link href={`/offers/new?product=${encodeURIComponent(product.name)}`}><button>Zapytaj o ofertę</button></Link>
             <Link href="/#raty"><button className="cta-secondary">Sprawdź raty</button></Link>
           </div>
         </section>
+
+        {product.tiers?.length ? (
+          <section className="section">
+            <p className="eyebrow">Standard ofertowy agencji</p>
+            <h2>Poziomy parametrów technicznych</h2>
+            <div className="grid">
+              {product.tiers.map((tier) => (
+                <article className="card" key={tier.label}>
+                  <h3>Wariant {tier.label}</h3>
+                  <p><strong>RAM:</strong> {tier.ram}</p>
+                  <p><strong>Pamięć:</strong> {tier.storage}</p>
+                  <p><strong>Wyświetlacz:</strong> {tier.display}</p>
+                  <p><strong>Procesor:</strong> {tier.processor}</p>
+                  <p><strong>Bateria:</strong> {tier.battery}</p>
+                  <p><strong>Ładowanie:</strong> {tier.charging}</p>
+                  <p><strong>Aparat:</strong> {tier.camera}</p>
+                  <p><strong>Łączność:</strong> {tier.connectivity}</p>
+                </article>
+              ))}
+            </div>
+            <p className="calculator-note">Parametry stanowią standard ofertowy Profesja Premium Limited. Ostateczna konfiguracja konkretnej partii jest potwierdzana przed zawarciem transakcji.</p>
+          </section>
+        ) : null}
 
         <section className="section product-detail-grid">
           <article className="card">
@@ -44,22 +68,6 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             <p>{product.mediaStatus}</p>
           </article>
         </section>
-
-        {product.id === 1 ? (
-          <section className="section flagship-offer">
-            <p className="eyebrow">Oferta specjalna</p>
-            <h2>Nubia REDMAGIC — seria gaming premium</h2>
-            <p>
-              Oferta obejmuje wybrane warianty smartfonów Nubia REDMAGIC w przedziale cenowym od 4 250 zł do 8 225 zł.
-              Ostateczna cena zależy od modelu, pamięci, koloru, wersji regionalnej i bieżącej dostępności.
-            </p>
-            <div className="grid">
-              <article className="card"><h3>Warianty pamięci</h3><p>Konfiguracje są potwierdzane przed przygotowaniem finalnej oferty.</p></article>
-              <article className="card"><h3>Finansowanie</h3><p>Możliwość przygotowania orientacyjnej symulacji sprzedaży ratalnej dla wybranego wariantu.</p></article>
-              <article className="card"><h3>Materiały produktowe</h3><p>Galeria i prezentacja mogą zostać uzupełnione po zatwierdzeniu materiałów, do których przysługują prawa do publikacji.</p></article>
-            </div>
-          </section>
-        ) : null}
       </main>
       <Footer />
     </>
