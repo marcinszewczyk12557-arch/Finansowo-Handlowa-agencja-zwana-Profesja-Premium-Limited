@@ -12,27 +12,21 @@ export default function Header() {
           </span>
         </Link>
 
-        <div className="partner-label">
-          <span>OFERTA B2B</span>
-          <strong>nubia</strong>
-          <small>SMARTPHONES</small>
-        </div>
-
         <label className="header-search" aria-label="Wyszukaj produkty">
-          <input type="search" placeholder="Szukaj produktów..." />
+          <input type="search" placeholder="Szukaj produktów, kategorii i rozwiązań B2B..." />
           <span>⌕</span>
         </label>
 
         <div className="header-actions">
-          <Link href="/dashboard" className="header-action"><span>◎</span><b>Zaloguj się</b><small>Panel klienta</small></Link>
+          <Link href="/dashboard" className="header-action"><span>◎</span><b>Panel klienta</b><small>Zaloguj się</small></Link>
           <Link href="/offers/new" className="header-action"><span>▧</span><b>Zapytanie ofertowe</b><small>Szybka wycena</small></Link>
-          <Link href="/catalog" className="header-cart">🛒 <b>Koszyk B2B</b></Link>
+          <Link href="/catalog" className="header-cart">🛒 <b>Katalog B2B</b></Link>
         </div>
       </div>
 
       <div className="premium-header__nav">
         <nav className="site-nav premium-nav" aria-label="Główna nawigacja">
-          <Link href="/catalog" className="category-nav">☰ KATEGORIE PRODUKTÓW⌄</Link>
+          <Link href="/catalog" className="category-nav">☰ KATEGORIE PRODUKTÓW</Link>
           <Link href="/" className="active">STRONA GŁÓWNA</Link>
           <Link href="/about">O NAS</Link>
           <Link href="/offers/new">OFERTA B2B</Link>
