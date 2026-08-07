@@ -12,6 +12,12 @@ export default function Header() {
           </span>
         </Link>
 
+        <div className="partner-label" aria-label="Globalna oferta B2B">
+          <span>GLOBALNA</span>
+          <strong>B2B</strong>
+          <small>PREMIUM OFFER</small>
+        </div>
+
         <label className="header-search" aria-label="Wyszukaj produkty">
           <input type="search" placeholder="Szukaj produktów, kategorii i rozwiązań B2B..." />
           <span>⌕</span>
