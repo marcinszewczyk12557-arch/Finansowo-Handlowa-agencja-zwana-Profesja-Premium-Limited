@@ -2,29 +2,30 @@
 
 import { useMemo, useState } from 'react';
 import catalogTaxonomy, { type TaxonomyBranch } from '../data/catalogTaxonomy';
-import { MIN_ORDER_QUANTITY, pricingRange } from '../data/pricing';
+import { CATALOG_MARKUPS, priceWithMarkup } from '../data/pricing';
 
 const productSeries = ['SELECT', 'PRO', 'EXECUTIVE', 'INDUSTRIAL', 'SIGNATURE'];
+const USD_TO_PLN = 4;
 
-const categoryBasePrice: Record<string, number> = {
-  'Smartfony Premium': 4200,
-  'Laptopy Premium': 6900,
-  'Energia i Fotowoltaika': 28000,
-  HVAC: 8200,
-  'Meble Premium': 7200,
-  'Drzwi i Bramy Premium': 6400,
-  'Maszyny i Sprzęt Ciężki': 52000,
-  'Wyposażenie Przedsiębiorstw': 1800,
-  'Wellness Premium': 8500,
-  'Smart Home Premium': 2400,
-  'Luxury Interior': 6200,
-  'Outdoor Luxury': 7800,
-  'Premium Lighting': 1600,
-  'Executive Office': 5400,
-  'Hospitality Premium': 7600,
-  'Audio Video Premium': 4300,
-  'E-Mobility': 5200,
-  'Leisure Premium': 3600,
+const alibabaBenchmarks: Record<string, { low: number; high: number; note: string }> = {
+  'Smartfony Premium': { low: 44, high: 106.4, note: 'smartfony 5G / OEM / private label' },
+  'Laptopy Premium': { low: 180, high: 520, note: 'laptopy biznesowe i OEM' },
+  'Energia i Fotowoltaika': { low: 342, high: 5599, note: 'systemy solarne, baterie i magazyny energii' },
+  HVAC: { low: 100, high: 260, note: 'klimatyzacja split i rozwiązania HVAC' },
+  'Meble Premium': { low: 60, high: 800, note: 'meble biurowe, hotelowe i outdoor' },
+  'Drzwi i Bramy Premium': { low: 120, high: 900, note: 'drzwi, bramy i systemy wejściowe' },
+  'Maszyny i Sprzęt Ciężki': { low: 1500, high: 22000, note: 'minikoparki, ładowarki i sprzęt budowlany' },
+  'Wyposażenie Przedsiębiorstw': { low: 26, high: 500, note: 'stanowiska pracy i wyposażenie komercyjne' },
+  'Wellness Premium': { low: 180, high: 1800, note: 'wyposażenie wellness i spa' },
+  'Smart Home Premium': { low: 18, high: 280, note: 'automatyka, sterowanie i urządzenia smart' },
+  'Luxury Interior': { low: 115, high: 800, note: 'wyposażenie wnętrz i meble premium' },
+  'Outdoor Luxury': { low: 115.88, high: 799, note: 'meble ogrodowe, tarasowe i hotelowe' },
+  'Premium Lighting': { low: 12, high: 220, note: 'oświetlenie dekoracyjne i komercyjne' },
+  'Executive Office': { low: 60, high: 500, note: 'biurka zarządcze, fotele i boksy akustyczne' },
+  'Hospitality Premium': { low: 149, high: 799, note: 'wyposażenie hoteli i resortów' },
+  'Audio Video Premium': { low: 35, high: 650, note: 'audio, video i systemy multimedialne' },
+  'E-Mobility': { low: 59, high: 539, note: 'hulajnogi, e-bike i mobilność elektryczna' },
+  'Leisure Premium': { low: 80, high: 680, note: 'rekreacja, outdoor i mobilność' },
 };
 
 type LeafPath = { category: string; path: string[]; leaf: string };
@@ -45,11 +46,11 @@ function hashText(text: string) {
   return hash;
 }
 
-function basePriceFor(category: string, fullPath: string, index: number) {
-  const base = categoryBasePrice[category] ?? 3000;
-  const variance = 0.82 + ((hashText(fullPath) % 37) / 100);
-  const levelFactor = 1 + index * 0.18;
-  return Math.round((base * variance * levelFactor) / 10) * 10;
+function alibabaBasePricePln(category: string, path: string, index: number) {
+  const b = alibabaBenchmarks[category] ?? { low: 50, high: 500, note: 'benchmark sourcingowy' };
+  const seed = ((hashText(path) % 100) / 100 + index * 0.17) % 1;
+  const usd = b.low + (b.high - b.low) * seed;
+  return { usd, pln: usd * USD_TO_PLN, note: b.note };
 }
 
 function formatPln(value: number) {
@@ -72,14 +73,14 @@ export default function HierarchicalCatalog() {
   return <>
     <section className="section catalog-taxonomy-summary">
       <div className="catalog-meta"><div><strong>{catalogTaxonomy.length}</strong><span>kategorii głównych</span></div><div><strong>{leaves.length}</strong><span>najniższych elementów katalogu</span></div><div><strong>{leaves.length * 5}</strong><span>pozycji produktowych — po 5 na każdy element</span></div></div>
-      <p className="catalog-count">Polityka cenowa wszystkich ofert: 1 szt. próbna = 184% wartości bazowej; od {MIN_ORDER_QUANTITY} szt. = 174% wartości bazowej. Dla 2–9 szt. cena jednostkowa maleje płynnie pomiędzy tymi poziomami.</p>
+      <p className="catalog-count">Każdy element katalogu ma pięć poziomów ofertowych z narzutem PROFESJA: <strong>+72%, +75%, +78%, +81% i +84%</strong> względem benchmarku ceny bazowej Alibaba. Kurs roboczy do prezentacji: 4,00 PLN/USD; finalna oferta potwierdza kurs, MOQ, transport, podatki i zgodność produktu.</p>
     </section>
     <section className="section taxonomy-browser">
       <div className="catalog-toolbar"><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Szukaj kategorii, podkategorii lub produktu..." aria-label="Szukaj w hierarchii katalogu"/><select value={category} onChange={(e) => setCategory(e.target.value)} aria-label="Kategoria główna"><option>Wszystkie</option>{catalogTaxonomy.map((item) => <option key={item.name}>{item.name}</option>)}</select></div>
       <p className="catalog-count">Zakres bieżącego widoku: <strong>{filteredLeaves.length}</strong> elementów / <strong>{filteredLeaves.length * 5}</strong> produktów.</p>
       <div className="taxonomy-layout">
         <aside className="taxonomy-sidebar"><h3>Struktura katalogu</h3><Tree branches={catalogTaxonomy}/></aside>
-        <div className="taxonomy-products">{filteredLeaves.map((item, leafIndex) => { const pathLabel = item.path.join(' / '); return <section className="taxonomy-leaf" key={pathLabel}><div className="taxonomy-leaf-heading"><div><p className="eyebrow">{item.category}</p><h2>{item.leaf}</h2><p>{pathLabel}</p></div><span>5 różnych produktów</span></div><div className="taxonomy-product-grid">{productSeries.map((series, index) => { const basePrice = basePriceFor(item.category, pathLabel, index); const range = pricingRange(basePrice); return <article className="taxonomy-product-card" key={`${pathLabel}-${series}`}><div className="taxonomy-product-number">{String(leafIndex + 1).padStart(3, '0')}.{index + 1}</div><div className="taxonomy-product-visual">{series.slice(0, 2)}</div><p className="eyebrow">{item.leaf}</p><h3>{item.leaf} {series}</h3><p><strong>Opis:</strong> konfiguracja {index + 1}/5 dla segmentu {item.leaf.toLowerCase()}, przygotowana do indywidualnej oferty B2B.</p><p><strong>Zastosowanie:</strong> profesjonalne użycie zgodne z kategorią {item.category.toLowerCase()}.</p><p><strong>Prezentacja:</strong> karta produktu i materiały produktowe dla zatwierdzonego wariantu.</p><p><strong>Instrukcja:</strong> instrukcja obsługi i dokumentacja bezpieczeństwa dla wybranego modelu.</p><div className="taxonomy-price"><small>1 szt. próbna — 184%</small><strong>{formatPln(range.maxUnit)}</strong><small>od {MIN_ORDER_QUANTITY} szt. — 174%</small><strong>{formatPln(range.minUnit)} / szt.</strong><em>{MIN_ORDER_QUANTITY} szt. = {formatPln(range.minOrderTotal)}</em></div><a className="taxonomy-offer-link" href={`/offers/new?product=${encodeURIComponent(`${item.leaf} ${series}`)}&qty=${MIN_ORDER_QUANTITY}`}>Poproś o ofertę →</a></article>; })}</div></section>; })}</div>
+        <div className="taxonomy-products">{filteredLeaves.map((item, leafIndex) => { const pathLabel = item.path.join(' / '); return <section className="taxonomy-leaf" key={pathLabel}><div className="taxonomy-leaf-heading"><div><p className="eyebrow">{item.category}</p><h2>{item.leaf}</h2><p>{pathLabel}</p></div><span>5 profesjonalnych wariantów</span></div><div className="taxonomy-product-grid">{productSeries.map((series, index) => { const base = alibabaBasePricePln(item.category, pathLabel, index); const markup = CATALOG_MARKUPS[index]; const sellPrice = priceWithMarkup(base.pln, markup); return <article className="taxonomy-product-card" key={`${pathLabel}-${series}`}><div className="taxonomy-product-number">{String(leafIndex + 1).padStart(3, '0')}.{index + 1}</div><div className="taxonomy-product-visual taxonomy-product-visual--sharp"><span>{series.slice(0, 2)}</span><small>{item.category}</small></div><p className="eyebrow">{item.leaf}</p><h3>{item.leaf} {series}</h3><p><strong>Opis profesjonalny:</strong> wariant {series.toLowerCase()} przygotowany dla segmentu {item.leaf.toLowerCase()}, z doborem parametrów, producenta, certyfikacji i logistyki pod wymagania klienta B2B.</p><p><strong>Zastosowanie:</strong> zakup firmowy, inwestycyjny, wyposażenie, projekt OEM/ODM lub dalsza odsprzedaż — zależnie od kategorii.</p><p><strong>Prezentacja:</strong> karta handlowa PL/EN, porównanie wariantów, materiał produktowy i zestawienie kosztów dla zatwierdzonego modelu.</p><p><strong>Dokumentacja:</strong> instrukcja, dokumentacja bezpieczeństwa i dokumenty zgodności dostępne dla finalnie wybranego produktu.</p><p><strong>Benchmark Alibaba:</strong> {base.note}; cena bazowa ok. USD {base.usd.toFixed(2)}.</p><div className="taxonomy-price"><small>Cena bazowa Alibaba (kurs roboczy)</small><em>{formatPln(base.pln)}</em><small>Cena PROFESJA — narzut +{Math.round((markup - 1) * 100)}%</small><strong>{formatPln(sellPrice)}</strong></div><a className="taxonomy-offer-link" href={`/offers/new?product=${encodeURIComponent(`${item.leaf} ${series}`)}`}>Poproś o ofertę i prezentację →</a></article>; })}</div></section>; })}</div>
       </div>
     </section>
   </>;
