@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 420" role="img" aria-labelledby="title desc">
+  <title id="title">Profesja Premium Limited</title>
+  <desc id="desc">Turkusowy geometryczny znak agencji Profesja Premium Limited.</desc>
+  <g fill="none" stroke="#22c7b7" stroke-width="30" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M74 336 L210 94 L371 337" />
+    <path d="M150 336 L262 138 L389 332" />
+    <path d="M157 336 H414" />
+    <path d="M247 75 L380 304 H314 L214 132" />
+  </g>
+</svg>
