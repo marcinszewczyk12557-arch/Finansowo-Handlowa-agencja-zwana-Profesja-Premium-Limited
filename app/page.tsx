@@ -2,118 +2,110 @@ import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import InstallmentCalculator from '../components/InstallmentCalculator';
-import './reference-home.css';
-
-const phoneCards = [
-  ['REDMAGIC 9S PRO', 'od 7 863 zł'],
-  ['REDMAGIC 9S PRO+', 'od 10 083 zł'],
-  ['REDMAGIC 9S PRO BUMBLEBEE', 'od 12 303 zł'],
-  ['REDMAGIC PRO+', 'od 13 413 zł'],
-  ['REDMAGIC PRO', 'od 15 216 zł'],
-];
 
 const categories = [
-  ['Smartfony Premium', '4 produkty'], ['Laptopy Premium', '4 produkty'], ['Energia i Fotowoltaika', '4 produkty'],
-  ['HVAC', '4 produkty'], ['Meble Premium', '4 produkty'], ['Drzwi i Bramy Premium', '4 produkty'],
-  ['Maszyny i Sprzęt Ciężki', '4 produkty'], ['Wyposażenie Przedsiębiorstw', '4 produkty'], ['Wellness Premium', '4 produkty'],
-  ['Smart Home Premium', '4 produkty'], ['Luxury Interior', '4 produkty'], ['Outdoor Luxury', '4 produkty'],
-  ['Premium Lighting', '4 produkty'], ['Executive Office', '4 produkty'], ['Hospitality Premium', '4 produkty'],
-  ['Audio Video Premium', '4 produkty'], ['E-Mobility', '4 produkty'], ['Leisure Premium', '4 produkty'],
+  ['Smartfony Premium', '4 produkty', '01'],
+  ['Laptopy Premium', '4 produkty', '02'],
+  ['Energia i Fotowoltaika', '4 produkty', '03'],
+  ['HVAC', '4 produkty', '04'],
+  ['Meble Premium', '4 produkty', '05'],
+  ['Drzwi i Bramy Premium', '4 produkty', '06'],
+  ['Maszyny i Sprzęt Ciężki', '4 produkty', '07'],
+  ['Wyposażenie Przedsiębiorstw', '4 produkty', '08'],
+  ['Wellness Premium', '4 produkty', '09'],
+  ['Smart Home Premium', '4 produkty', '10'],
+  ['Luxury Interior', '4 produkty', '11'],
+  ['Outdoor Luxury', '4 produkty', '12'],
+  ['Premium Lighting', '4 produkty', '13'],
+  ['Executive Office', '4 produkty', '14'],
+  ['Hospitality Premium', '4 produkty', '15'],
+  ['Audio Video Premium', '4 produkty', '16'],
+  ['E-Mobility', '4 produkty', '17'],
+  ['Leisure Premium', '4 produkty', '18'],
 ];
 
 export default function Home() {
   return (
     <>
       <Header />
-      <main className="reference-home">
-        <section className="reference-hero">
-          <div className="reference-left">
-            <p className="reference-kicker">DNI OTWARCIA</p>
-            <h1>ŚWIETNIE SIĘ SKŁADA!</h1>
-            <p className="reference-copy">
-              Ponieważ są to tzw. Dni Otwarcia mojego zarządczo-wykonawczego projektu — indywidualnie prowadzonej
-              agencji finansowo-handlowej działającej pod marką Profesja Premium Limited.
-            </p>
+      <main className="premium-home">
+        <section className="commerce-hero">
+          <div className="commerce-hero__brand">
+            <img src="/profesja-logo.svg" alt="Logo Profesja Premium Limited" className="commerce-logo" />
+            <h1>PROFESJA</h1>
+            <div className="brand-gold">PREMIUM LIMITED</div>
+            <p className="agency-label">FINANSOWO-HANDLOWA AGENCJA</p>
+            <h2>KOMPLEKSOWE ROZWIĄZANIA DLA BIZNESU</h2>
+            <p className="hero-services">FINANSOWANIE • IMPORT • DOSTAWY • WSPARCIE</p>
 
-            <img src="/profesja-logo.svg" alt="Logo Profesja Premium Limited" className="reference-main-logo" />
-            <h2>PROFESJA PREMIUM LIMITED</h2>
-            <p className="reference-agency">FINANSOWO-HANDLOWA AGENCJA</p>
-
-            <div className="reference-benefits">
-              <div><b>01</b><span>Profesjonalna obsługa B2B</span></div>
-              <div><b>02</b><span>Produkty klasy premium</span></div>
-              <div><b>03</b><span>Indywidualne rozwiązania finansowe</span></div>
-              <div><b>04</b><span>Kompleksowa organizacja importu</span></div>
-              <div><b>05</b><span>Gwarancja i wsparcie posprzedażowe</span></div>
-            </div>
-
-            <div className="reference-minimums">
-              <div><small>MINIMALNE ZAMÓWIENIE</small><strong>14 SZTUK</strong><span>dla wybranych ofert smartfonów</span></div>
-              <div><small>MINIMALNA WARTOŚĆ ZAMÓWIENIA</small><strong>95 000 PLN</strong><span>dla zamówień B2B</span></div>
-            </div>
-
-            <Link href="/offers/new" className="reference-main-cta">POPROŚ O INDYWIDUALNĄ OFERTĘ →</Link>
-            <small className="reference-b2b-note">OFERTA DLA PRZEDSIĘBIORSTW B2B</small>
-          </div>
-
-          <div className="reference-center" aria-label="Prezentacja smartfonów premium">
-            <div className="reference-stage-glow" />
-            <div className="reference-device-stage">
-              <div className="device-back device-one"><i/><i/><i/><span>REDMAGIC</span></div>
-              <div className="device-front"><div className="device-face">R</div><span>GAMING</span></div>
-              <div className="device-back device-two"><i/><i/><i/><span>PRO</span></div>
-              <div className="device-plinth" />
+            <div className="opening-hours">
+              <div className="opening-icon">DNI</div>
+              <div>
+                <strong>DNI OTWARCIA</strong>
+                <p>Świetnie się składa — uruchamiamy pełną ofertę B2B Profesja Premium Limited.</p>
+                <small>Działalność online • zasięg globalny • obsługa indywidualna</small>
+              </div>
             </div>
           </div>
 
-          <div className="reference-right">
-            <div className="reference-brand-line"><span>OFERTA SMARTFONÓW PREMIUM</span><b>nubia</b></div>
-            <div className="reference-redmagic"><span>✦</span> REDMAGIC</div>
-            <p className="reference-subline">SMARTFONY DLA GRACZY I PROFESJONALISTÓW</p>
-
-            <div className="reference-features">
-              <span>NAJWYŻSZA WYDAJNOŚĆ</span><span>INNOWACYJNE CHŁODZENIE</span><span>AMOLED 165 HZ</span><span>SZYBKIE ŁADOWANIE</span><span>DESIGN PREMIUM</span>
+          <div className="product-stage" aria-label="Wybrane produkty premium">
+            <div className="stage-glow" />
+            <div className="laptop-mock">
+              <div className="laptop-screen"><span>LEGION</span><small>AI / Business / Gaming</small></div>
+              <div className="laptop-base" />
             </div>
-
-            <div className="reference-phone-grid">
-              {phoneCards.map(([name, price], index) => (
-                <Link href="/products/1" className="reference-phone-card" key={`${name}-${index}`}>
-                  <div className={`mini-phone mini-${index + 1}`}><span>{index + 1}</span></div>
-                  <strong>{name}</strong>
-                  <small>{price}</small>
-                  <b>ZOBACZ OFERTĘ</b>
-                </Link>
-              ))}
-            </div>
+            <div className="phone-mock phone-dark"><div className="camera-stack"><i/><i/><i/></div><span>REDMAGIC</span></div>
+            <div className="phone-mock phone-display"><div className="cyber-face">R</div><span>GAMING</span></div>
+            <div className="phone-mock phone-silver"><div className="camera-stack"><i/><i/><i/></div><span>PRO</span></div>
+            <div className="stage-plinth" />
           </div>
+
+          <aside className="commerce-hero__offer">
+            <div className="brand-offer-label">SMARTFONY GAMINGOWE PREMIUM</div>
+            <div className="nubia-word">nubia</div>
+            <div className="redmagic-mark">REDMAGIC</div>
+            <div className="feature-row">
+              <span><b>01</b>Wysoka wydajność</span>
+              <span><b>02</b>Chłodzenie</span>
+              <span><b>03</b>Szybkie ładowanie</span>
+              <span><b>04</b>Design premium</span>
+            </div>
+            <div className="trade-box">
+              <h3>WARUNKI HANDLOWE B2B</h3>
+              <div className="trade-grid">
+                <div><small>MINIMALNE ZAMÓWIENIE</small><strong>14 szt.</strong><span>wybrane oferty smartfonów</span></div>
+                <div><small>MINIMALNA WARTOŚĆ</small><strong>95 000 zł</strong><span>zamówienia B2B</span></div>
+              </div>
+            </div>
+          </aside>
         </section>
 
-        <section className="reference-service-row">
-          <Link href="/offers/new"><strong>OFERTA DLA FIRM B2B</strong><span>Indywidualne zapytania</span></Link>
-          <Link href="/offers/new"><strong>ZAPYTANIA OFERTOWE</strong><span>Szybka wycena</span></Link>
-          <Link href="/catalog"><strong>ZAMÓWIENIA HURTOWE</strong><span>Pełny katalog</span></Link>
-          <Link href="/contact"><strong>DEDYKOWANE WSPARCIE</strong><span>Opiekun handlowy</span></Link>
+        <section className="quick-actions">
+          <Link href="/offers/new"><span>01</span><div><strong>ZAMÓW OFERTĘ</strong><small>Szybka wycena B2B</small></div><b>→</b></Link>
+          <Link href="/#raty"><span>02</span><div><strong>FINANSOWANIE</strong><small>Leasing, raty, rozwiązania B2B</small></div><b>→</b></Link>
+          <Link href="/about"><span>03</span><div><strong>IMPORT</strong><small>Kompleksowa organizacja</small></div><b>→</b></Link>
+          <Link href="/contact"><span>04</span><div><strong>KONTAKT Z DORADCĄ</strong><small>Indywidualne wsparcie</small></div><b>→</b></Link>
         </section>
 
-        <section className="reference-trust-row">
-          <div><strong>PEWNY PARTNER</strong><span>Indywidualna obsługa B2B</span></div>
-          <div><strong>GLOBALNY ZASIĘG</strong><span>Dostawy i sourcing międzynarodowy</span></div>
-          <div><strong>NAJWYŻSZA JAKOŚĆ</strong><span>Starannie dobierane rozwiązania</span></div>
-          <div><strong>WSPARCIE B2B</strong><span>Obsługa na każdym etapie</span></div>
-        </section>
-
-        <section className="reference-catalog-preview">
-          <div className="section-title-line"><span>PEŁNY KATALOG — 18 KATEGORII / 4 PRODUKTY W KAŻDEJ</span></div>
-          <div className="reference-category-grid">
-            {categories.map(([name, count], index) => (
-              <Link href={`/catalog?category=${encodeURIComponent(name)}`} className="reference-category-card" key={name}>
-                <b>{String(index + 1).padStart(2, '0')}</b>
+        <section className="category-section">
+          <div className="section-title-line"><span>PEŁNY KATALOG — 4 PRODUKTY W KAŻDEJ KATEGORII</span></div>
+          <div className="category-ribbon">
+            {categories.map(([name, sub, icon]) => (
+              <Link href="/catalog" className="category-tile" key={name}>
+                <div className="category-visual">{icon}</div>
                 <strong>{name}</strong>
-                <span>{count}</span>
+                <span>{sub}</span>
               </Link>
             ))}
           </div>
-          <div className="reference-catalog-cta"><Link href="/catalog">PRZEJDŹ DO PEŁNEGO KATALOGU →</Link></div>
+        </section>
+
+        <section className="trust-strip">
+          <div><b>01</b><strong>BEZPIECZNE TRANSAKCJE</strong><span>Sprawdzane warunki i dokumentacja</span></div>
+          <div><b>02</b><strong>CENY KATALOGOWE</strong><span>Gotowe ceny sprzedażowe dla ofert B2B</span></div>
+          <div><b>03</b><strong>GWARANCJA</strong><span>Warunki potwierdzane przed zakupem</span></div>
+          <div><b>04</b><strong>WSPARCIE B2B</strong><span>Dedykowana obsługa na każdym etapie</span></div>
+          <div><b>05</b><strong>GLOBALNY ZASIĘG</strong><span>Sourcing i import międzynarodowy</span></div>
         </section>
 
         <section id="raty" className="section finance-section">
@@ -121,6 +113,18 @@ export default function Home() {
           <h2>Orientacyjna kalkulacja finansowania</h2>
           <p>Kalkulator umożliwia wstępne oszacowanie rat. Ostateczne warunki zależą od finansującego, oprocentowania, prowizji oraz oceny transakcji.</p>
           <InstallmentCalculator />
+        </section>
+
+        <section className="section premium-contact-block">
+          <div>
+            <p className="eyebrow">Profesja Premium Limited</p>
+            <h2>72 produkty w 18 kategoriach B2B</h2>
+            <p>Każda kategoria zawiera po cztery pozycje katalogowe. Katalog obejmuje elektronikę, energię, HVAC, luksusowe wyposażenie, ciężki sprzęt, maszyny, elektronarzędzia i rozwiązania dla przedsiębiorstw.</p>
+          </div>
+          <div className="cta-row">
+            <Link href="/catalog"><button>Przejdź do pełnego katalogu</button></Link>
+            <Link href="/offers/new"><button className="cta-secondary">Złóż zapytanie B2B</button></Link>
+          </div>
         </section>
       </main>
       <Footer />
