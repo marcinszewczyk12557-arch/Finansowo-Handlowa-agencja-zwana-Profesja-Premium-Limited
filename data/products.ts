@@ -1,3 +1,15 @@
+export type ProductTier = {
+  label: string;
+  ram: string;
+  storage: string;
+  display: string;
+  processor: string;
+  battery: string;
+  charging: string;
+  camera: string;
+  connectivity: string;
+};
+
 export type CatalogProduct = {
   id: number;
   name: string;
@@ -7,6 +19,8 @@ export type CatalogProduct = {
   certificates: string[];
   warranty: string;
   mediaStatus: string;
+  minimumOrder?: string;
+  tiers?: ProductTier[];
 };
 
 const commonDocs = ['Dokumentacja, deklaracje zgodności i certyfikaty są potwierdzane dla konkretnego modelu przed przedstawieniem oferty'];
@@ -18,12 +32,48 @@ const products: CatalogProduct[] = [
   {
     id: 1,
     name: 'Nubia REDMAGIC — smartfony gamingowe premium',
-    description: 'Aktualna oferta sprzedażowa smartfonów Nubia REDMAGIC w różnych wariantach stylistycznych i sprzętowych. Dostępność konkretnego modelu, pamięci, koloru i wersji regionalnej jest potwierdzana przed przedstawieniem finalnej oferty.',
+    description: 'Oferta Profesja Premium Limited obejmuje wybrane konfiguracje smartfonów gamingowych klasy premium. Parametry poniżej definiują standardy ofertowe naszej agencji dla wariantów Średni, Wysoki i Najwyższy. Ostateczna specyfikacja konkretnej partii jest potwierdzana przed zawarciem transakcji.',
     category: 'Smartfony Premium',
-    priceLabel: 'Cena sprzedaży: 4 250–8 225 zł, zależnie od wariantu',
+    priceLabel: 'Cena sprzedaży: 4 250–8 225 zł za sztukę, zależnie od wariantu',
     certificates: commonDocs,
     warranty: commonWarranty,
-    mediaStatus: 'Galeria produktowa: materiały Nubia REDMAGIC dostarczone do aktualizacji oferty; prezentacja PL/EN przygotowywana dla wybranego wariantu'
+    mediaStatus: 'Galeria produktowa i prezentacja PL/EN przygotowywane dla wybranego wariantu oferty.',
+    minimumOrder: 'Minimalne zamówienie: 14 sztuk oraz minimalna łączna wartość zamówienia 110 000 zł.',
+    tiers: [
+      {
+        label: 'Średni',
+        ram: '12 GB RAM',
+        storage: '256 GB pamięci',
+        display: 'AMOLED 6,7–6,9 cala, odświeżanie min. 120 Hz',
+        processor: 'Procesor klasy flagowej / gamingowej',
+        battery: 'min. 5 000 mAh',
+        charging: 'szybkie ładowanie min. 65 W',
+        camera: 'aparat główny min. 50 MP',
+        connectivity: '5G, Wi‑Fi 6/6E, Bluetooth, NFC'
+      },
+      {
+        label: 'Wysoki',
+        ram: '16 GB RAM',
+        storage: '512 GB pamięci',
+        display: 'AMOLED 6,7–6,9 cala, odświeżanie 144–165 Hz',
+        processor: 'Procesor klasy top-flagowej z rozbudowanym chłodzeniem',
+        battery: '5 500–6 500 mAh',
+        charging: 'szybkie ładowanie 80–120 W',
+        camera: 'aparat główny min. 50 MP + dodatkowe moduły',
+        connectivity: '5G, Wi‑Fi 7 lub równoważne, Bluetooth, NFC'
+      },
+      {
+        label: 'Najwyższy',
+        ram: '24 GB RAM',
+        storage: '1 TB pamięci',
+        display: 'AMOLED klasy premium, odświeżanie do 165 Hz, wysoka jasność i HDR',
+        processor: 'Najwyższa dostępna konfiguracja układu mobilnego klasy gamingowej',
+        battery: 'do ok. 7 000 mAh, zależnie od wariantu',
+        charging: 'szybkie ładowanie do ok. 120 W, zależnie od wariantu',
+        camera: 'zaawansowany zestaw aparatów z głównym sensorem min. 50 MP',
+        connectivity: '5G, Wi‑Fi 7, Bluetooth nowej generacji, NFC, USB‑C wysokiej przepustowości'
+      }
+    ]
   },
   {
     id: 2,
