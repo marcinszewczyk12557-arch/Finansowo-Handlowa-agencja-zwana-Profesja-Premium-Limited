@@ -13,7 +13,8 @@ type Product = {
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
-    <article className="card">
+    <article className="card product-card">
+      <div className="product-card__badge">Oferta {String(product.id).padStart(2, '0')}</div>
       <p className="eyebrow">{product.category}</p>
       <h3>{product.name}</h3>
       <p>{product.description}</p>
@@ -25,10 +26,11 @@ export default function ProductCard({ product }: { product: Product }) {
       {product.warranty ? <p><strong>Gwarancja:</strong> {product.warranty}</p> : null}
       {product.mediaStatus ? <p><strong>Materiały:</strong> {product.mediaStatus}</p> : null}
 
-      <p><strong>{product.priceLabel}</strong></p>
-      <Link href="/offers/new">
-        <button>Poproś o ofertę</button>
-      </Link>
+      <p className="product-price"><strong>{product.priceLabel}</strong></p>
+      <div className="cta-row">
+        <Link href={`/products/${product.id}`}><button>Zobacz szczegóły</button></Link>
+        <Link href={`/offers/new?product=${encodeURIComponent(product.name)}`}><button className="cta-secondary">Poproś o ofertę</button></Link>
+      </div>
     </article>
   );
 }
