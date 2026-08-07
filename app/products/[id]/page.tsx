@@ -19,6 +19,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         <section className="hero compact-hero">
           <p className="eyebrow">{product.category}</p>
           <h1>{product.name}</h1>
+          {product.rating ? <p><strong>Ocena konfiguracji:</strong> {product.rating}</p> : null}
           <p>{product.description}</p>
           <p className="product-price"><strong>{product.priceLabel}</strong></p>
           {product.minimumOrder ? <p><strong>{product.minimumOrder}</strong></p> : null}
@@ -36,14 +37,22 @@ export default function ProductPage({ params }: { params: { id: string } }) {
               {product.tiers.map((tier) => (
                 <article className="card" key={tier.label}>
                   <h3>Wariant {tier.label}</h3>
-                  <p><strong>RAM:</strong> {tier.ram}</p>
-                  <p><strong>Pamięć:</strong> {tier.storage}</p>
-                  <p><strong>Wyświetlacz:</strong> {tier.display}</p>
-                  <p><strong>Procesor:</strong> {tier.processor}</p>
-                  <p><strong>Bateria:</strong> {tier.battery}</p>
-                  <p><strong>Ładowanie:</strong> {tier.charging}</p>
-                  <p><strong>Aparat:</strong> {tier.camera}</p>
-                  <p><strong>Łączność:</strong> {tier.connectivity}</p>
+                  {tier.specs?.length ? (
+                    <ul>
+                      {tier.specs.map((spec) => <li key={spec}>{spec}</li>)}
+                    </ul>
+                  ) : (
+                    <>
+                      {tier.ram ? <p><strong>RAM:</strong> {tier.ram}</p> : null}
+                      {tier.storage ? <p><strong>Pamięć:</strong> {tier.storage}</p> : null}
+                      {tier.display ? <p><strong>Wyświetlacz:</strong> {tier.display}</p> : null}
+                      {tier.processor ? <p><strong>Procesor:</strong> {tier.processor}</p> : null}
+                      {tier.battery ? <p><strong>Bateria:</strong> {tier.battery}</p> : null}
+                      {tier.charging ? <p><strong>Ładowanie:</strong> {tier.charging}</p> : null}
+                      {tier.camera ? <p><strong>Aparat:</strong> {tier.camera}</p> : null}
+                      {tier.connectivity ? <p><strong>Łączność:</strong> {tier.connectivity}</p> : null}
+                    </>
+                  )}
                 </article>
               ))}
             </div>
@@ -52,21 +61,9 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         ) : null}
 
         <section className="section product-detail-grid">
-          <article className="card">
-            <p className="eyebrow">Dokumentacja</p>
-            <h2>Parametry i zgodność</h2>
-            <p>{product.certificates.join(', ')}</p>
-          </article>
-          <article className="card">
-            <p className="eyebrow">Gwarancja</p>
-            <h2>Warunki ochrony</h2>
-            <p>{product.warranty}</p>
-          </article>
-          <article className="card">
-            <p className="eyebrow">Multimedia</p>
-            <h2>Materiały PL / EN</h2>
-            <p>{product.mediaStatus}</p>
-          </article>
+          <article className="card"><p className="eyebrow">Dokumentacja</p><h2>Parametry i zgodność</h2><p>{product.certificates.join(', ')}</p></article>
+          <article className="card"><p className="eyebrow">Gwarancja</p><h2>Warunki ochrony</h2><p>{product.warranty}</p></article>
+          <article className="card"><p className="eyebrow">Multimedia</p><h2>Materiały PL / EN</h2><p>{product.mediaStatus}</p></article>
         </section>
       </main>
       <Footer />
