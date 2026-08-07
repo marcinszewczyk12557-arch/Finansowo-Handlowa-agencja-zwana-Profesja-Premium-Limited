@@ -31,9 +31,10 @@ export default function Home() {
             <p className="reference-kicker">DNI OTWARCIA</p>
             <h1>ŚWIETNIE SIĘ SKŁADA!</h1>
             <p className="reference-copy">
-              Ponieważ są to tzw. Dni Otwarcia mojego zarządczo-wykonawczego projektu — indywidualnie prowadzonej agencji
-              finansowo-handlowej działającej pod marką Profesja Premium Limited.
+              Ponieważ są to tzw. Dni Otwarcia mojego zarządczo-wykonawczego projektu — indywidualnie prowadzonej
+              agencji finansowo-handlowej działającej pod marką Profesja Premium Limited.
             </p>
+
             <img src="/profesja-logo.svg" alt="Logo Profesja Premium Limited" className="reference-main-logo" />
             <h2>PROFESJA PREMIUM LIMITED</h2>
             <p className="reference-agency">FINANSOWO-HANDLOWA AGENCJA</p>
@@ -41,35 +42,37 @@ export default function Home() {
             <div className="reference-benefits">
               <div><b>01</b><span>Profesjonalna obsługa B2B</span></div>
               <div><b>02</b><span>Produkty klasy premium</span></div>
-              <div><b>03</b><span>Indywidualne finansowanie</span></div>
+              <div><b>03</b><span>Indywidualne rozwiązania finansowe</span></div>
               <div><b>04</b><span>Kompleksowa organizacja importu</span></div>
               <div><b>05</b><span>Gwarancja i wsparcie posprzedażowe</span></div>
             </div>
 
             <div className="reference-minimums">
-              <div><small>MINIMALNE ZAMÓWIENIE</small><strong>14 SZTUK</strong></div>
-              <div><small>MINIMALNA WARTOŚĆ ZAMÓWIENIA</small><strong>95 000 PLN</strong></div>
+              <div><small>MINIMALNE ZAMÓWIENIE</small><strong>14 SZTUK</strong><span>dla wybranych ofert smartfonów</span></div>
+              <div><small>MINIMALNA WARTOŚĆ ZAMÓWIENIA</small><strong>95 000 PLN</strong><span>dla zamówień B2B</span></div>
             </div>
 
             <Link href="/offers/new" className="reference-main-cta">POPROŚ O INDYWIDUALNĄ OFERTĘ →</Link>
             <small className="reference-b2b-note">OFERTA DLA PRZEDSIĘBIORSTW B2B</small>
           </div>
 
+          <div className="reference-center" aria-label="Prezentacja smartfonów premium">
+            <div className="reference-stage-glow" />
+            <div className="reference-device-stage">
+              <div className="device-back device-one"><i/><i/><i/><span>REDMAGIC</span></div>
+              <div className="device-front"><div className="device-face">R</div><span>GAMING</span></div>
+              <div className="device-back device-two"><i/><i/><i/><span>PRO</span></div>
+              <div className="device-plinth" />
+            </div>
+          </div>
+
           <div className="reference-right">
-            <div className="reference-brand-offer">OFERTA SMARTFONÓW PREMIUM</div>
-            <div className="reference-nubia">nubia</div>
+            <div className="reference-brand-line"><span>OFERTA SMARTFONÓW PREMIUM</span><b>nubia</b></div>
             <div className="reference-redmagic"><span>✦</span> REDMAGIC</div>
             <p className="reference-subline">SMARTFONY DLA GRACZY I PROFESJONALISTÓW</p>
 
             <div className="reference-features">
               <span>NAJWYŻSZA WYDAJNOŚĆ</span><span>INNOWACYJNE CHŁODZENIE</span><span>AMOLED 165 HZ</span><span>SZYBKIE ŁADOWANIE</span><span>DESIGN PREMIUM</span>
-            </div>
-
-            <div className="reference-device-stage" aria-label="Prezentacja oferty smartfonów premium">
-              <div className="device-back device-one"><i/><i/><i/></div>
-              <div className="device-front"><div className="device-face">R</div></div>
-              <div className="device-back device-two"><i/><i/><i/></div>
-              <div className="device-plinth" />
             </div>
 
             <div className="reference-phone-grid">
@@ -103,7 +106,7 @@ export default function Home() {
           <div className="section-title-line"><span>PEŁNY KATALOG — 18 KATEGORII / 4 PRODUKTY W KAŻDEJ</span></div>
           <div className="reference-category-grid">
             {categories.map(([name, count], index) => (
-              <Link href="/catalog" className="reference-category-card" key={name}>
+              <Link href={`/catalog?category=${encodeURIComponent(name)}`} className="reference-category-card" key={name}>
                 <b>{String(index + 1).padStart(2, '0')}</b>
                 <strong>{name}</strong>
                 <span>{count}</span>
