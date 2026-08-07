@@ -11,19 +11,20 @@ export default function CatalogPage() {
       <Header />
       <main>
         <section className="hero compact-hero">
-          <p className="eyebrow">Katalog profesja/premium/limited</p>
-          <h2>Pełna oferta premium</h2>
+          <p className="eyebrow">Katalog Profesja Premium Limited</p>
+          <h2>Pełna oferta B2B — 4 produkty w każdej kategorii</h2>
           <p>
-            Przeglądaj aktualne grupy produktowe, wyszukuj po nazwie lub kategorii i składaj indywidualne zapytania ofertowe.
-            Dokumentacja, certyfikaty i warunki gwarancji są potwierdzane dla konkretnego modelu przed przedstawieniem oferty.
+            Katalog obejmuje 18 kategorii i 72 pozycje sprzedażowe. Każda kategoria zawiera cztery produkty lub konfiguracje,
+            a ceny prezentowane na stronie są końcowymi cenami katalogowymi naszej agencji. Dokumentacja, certyfikaty,
+            dostępność i warunki gwarancji są potwierdzane dla konkretnego wariantu przed przedstawieniem wiążącej oferty.
           </p>
         </section>
 
         <section className="section">
           <div className="catalog-meta">
             <div><strong>{products.length}</strong><span>pozycji katalogowych</span></div>
-            <div><strong>{categories.length}</strong><span>kategorii premium</span></div>
-            <div><strong>PL / EN</strong><span>materiały na życzenie</span></div>
+            <div><strong>{categories.length}</strong><span>kategorii B2B</span></div>
+            <div><strong>4</strong><span>produkty w każdej kategorii</span></div>
           </div>
         </section>
 
