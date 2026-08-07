@@ -11,12 +11,12 @@ export default function CatalogPage() {
       <main>
         <section className="hero compact-hero">
           <p className="eyebrow">Katalog Profesja Premium Limited</p>
-          <h2>Pełny katalog B2B — kategorie, podkategorie i kolejne poziomy</h2>
+          <h2>Rozbudowany katalog B2B — sourcing, prezentacje i indywidualne wyceny</h2>
           <p>
-            Katalog został zbudowany wielopoziomowo: kategoria główna → podkategoria → podpodkategoria / element szczegółowy.
-            Każdy najniższy element struktury zawiera dokładnie pięć różnych pozycji sprzedażowych. Wszystkie ceny katalogowe
-            zostały skorygowane o 19% w dół względem poprzedniej wersji. Każda oferta zawiera tytuł, opis, zastosowanie,
-            prezentację, instrukcję obsługi oraz skorygowaną cenę; dokumentacja i parametry są potwierdzane dla finalnego modelu.
+            Katalog działa wielopoziomowo: kategoria główna → podkategoria → element szczegółowy → pięć wariantów handlowych.
+            Każda pozycja otrzymuje profesjonalny opis, zastosowanie, zakres prezentacji i dokumentacji oraz benchmark ceny bazowej
+            na podstawie aktualnych ofert Alibaba. Ceny PROFESJA są prezentowane z narzutem od +72% do +84% względem benchmarku.
+            Finalny model, MOQ, kurs walut, transport, podatki, certyfikacja i dostępność są zawsze potwierdzane przed zawarciem transakcji.
           </p>
         </section>
 
