@@ -4,14 +4,24 @@ import Footer from '../components/Footer';
 import InstallmentCalculator from '../components/InstallmentCalculator';
 
 const categories = [
-  ['Smartfony i elektronika', 'Nubia REDMAGIC', '/products/1', '01'],
-  ['Laptopy i IT', 'Gaming / AI / Business', '/products/2', '02'],
-  ['Fotowoltaika', 'Magazyny energii', '/products/3', '03'],
-  ['Wentylacja i klimatyzacja', 'HVAC / VRF / rekuperacja', '/products/4', '04'],
-  ['Luksusowe meble', 'Biuro / hotel / premium', '/products/5', '05'],
-  ['Drzwi i bramy premium', 'Garaż / przemysł / smart', '/products/6', '06'],
-  ['Maszyny i sprzęt ciężki', 'Budowa / inżynieria', '/products/7', '07'],
-  ['Elektronarzędzia', 'Wyposażenie stanowisk', '/products/8', '08'],
+  ['Smartfony Premium', '4 produkty', '01'],
+  ['Laptopy Premium', '4 produkty', '02'],
+  ['Energia i Fotowoltaika', '4 produkty', '03'],
+  ['HVAC', '4 produkty', '04'],
+  ['Meble Premium', '4 produkty', '05'],
+  ['Drzwi i Bramy Premium', '4 produkty', '06'],
+  ['Maszyny i Sprzęt Ciężki', '4 produkty', '07'],
+  ['Wyposażenie Przedsiębiorstw', '4 produkty', '08'],
+  ['Wellness Premium', '4 produkty', '09'],
+  ['Smart Home Premium', '4 produkty', '10'],
+  ['Luxury Interior', '4 produkty', '11'],
+  ['Outdoor Luxury', '4 produkty', '12'],
+  ['Premium Lighting', '4 produkty', '13'],
+  ['Executive Office', '4 produkty', '14'],
+  ['Hospitality Premium', '4 produkty', '15'],
+  ['Audio Video Premium', '4 produkty', '16'],
+  ['E-Mobility', '4 produkty', '17'],
+  ['Leisure Premium', '4 produkty', '18'],
 ];
 
 export default function Home() {
@@ -78,10 +88,10 @@ export default function Home() {
         </section>
 
         <section className="category-section">
-          <div className="section-title-line"><span>NASZE KLUCZOWE KATEGORIE</span></div>
+          <div className="section-title-line"><span>PEŁNY KATALOG — 4 PRODUKTY W KAŻDEJ KATEGORII</span></div>
           <div className="category-ribbon">
-            {categories.map(([name, sub, href, icon]) => (
-              <Link href={href} className="category-tile" key={name}>
+            {categories.map(([name, sub, icon]) => (
+              <Link href="/catalog" className="category-tile" key={name}>
                 <div className="category-visual">{icon}</div>
                 <strong>{name}</strong>
                 <span>{sub}</span>
@@ -92,7 +102,7 @@ export default function Home() {
 
         <section className="trust-strip">
           <div><b>01</b><strong>BEZPIECZNE TRANSAKCJE</strong><span>Sprawdzane warunki i dokumentacja</span></div>
-          <div><b>02</b><strong>INDYWIDUALNE CENY</strong><span>Oferta dopasowana do zamówienia</span></div>
+          <div><b>02</b><strong>CENY KATALOGOWE</strong><span>Gotowe ceny sprzedażowe dla ofert B2B</span></div>
           <div><b>03</b><strong>GWARANCJA</strong><span>Warunki potwierdzane przed zakupem</span></div>
           <div><b>04</b><strong>WSPARCIE B2B</strong><span>Dedykowana obsługa na każdym etapie</span></div>
           <div><b>05</b><strong>GLOBALNY ZASIĘG</strong><span>Sourcing i import międzynarodowy</span></div>
@@ -108,11 +118,11 @@ export default function Home() {
         <section className="section premium-contact-block">
           <div>
             <p className="eyebrow">Profesja Premium Limited</p>
-            <h2>Wyposażenie przedsiębiorstw w jednym miejscu</h2>
-            <p>Elektronika, energia, HVAC, luksusowe wyposażenie, ciężki sprzęt, maszyny, elektronarzędzia i indywidualnie konfigurowane zamówienia dla firm.</p>
+            <h2>72 produkty w 18 kategoriach B2B</h2>
+            <p>Każda kategoria zawiera po cztery pozycje katalogowe. Katalog obejmuje elektronikę, energię, HVAC, luksusowe wyposażenie, ciężki sprzęt, maszyny, elektronarzędzia i rozwiązania dla przedsiębiorstw.</p>
           </div>
           <div className="cta-row">
-            <Link href="/catalog"><button>Przejdź do katalogu</button></Link>
+            <Link href="/catalog"><button>Przejdź do pełnego katalogu</button></Link>
             <Link href="/offers/new"><button className="cta-secondary">Złóż zapytanie B2B</button></Link>
           </div>
         </section>
