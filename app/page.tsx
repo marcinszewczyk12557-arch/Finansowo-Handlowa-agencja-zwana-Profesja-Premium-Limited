@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import InstallmentCalculator from '../components/InstallmentCalculator';
+import './reference-home.css';
 
 const phoneCards = [
   ['REDMAGIC 9S PRO', 'od 7 863 zł'],
