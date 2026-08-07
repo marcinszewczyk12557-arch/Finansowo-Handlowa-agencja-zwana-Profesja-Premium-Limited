@@ -2,6 +2,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import CatalogBrowser from '../../components/CatalogBrowser';
 import products from '../../data/products';
+import './catalog-enhancements.css';
 
 export default function CatalogPage() {
   const categories = Array.from(new Set(products.map((product) => product.category)));
