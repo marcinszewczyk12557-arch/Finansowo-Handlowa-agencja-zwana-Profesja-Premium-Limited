@@ -27,7 +27,7 @@ export default function Home() {
       <main className="premium-home">
         <section className="commerce-hero">
           <div className="commerce-hero__brand">
-            <img src="/profesja-logo.svg" alt="Logo Profesja Premium Limited" className="commerce-logo" />
+            <img src="/profesja-logo.svg" alt="Logo agencji Profesja Premium Limited" className="commerce-logo" />
             <h1>PROFESJA</h1>
             <div className="brand-gold">PREMIUM LIMITED</div>
             <p className="agency-label">FINANSOWO-HANDLOWA AGENCJA</p>
@@ -36,10 +36,17 @@ export default function Home() {
             <div className="opening-hours"><div className="opening-icon">DNI</div><div><strong>DNI OTWARCIA</strong><p>Świetnie się składa — uruchamiamy pełną ofertę B2B Profesja Premium Limited.</p><small>Działalność online • zasięg globalny • obsługa indywidualna</small></div></div>
           </div>
 
-          <div className="product-stage" aria-label="Wybrane produkty premium"><div className="stage-glow" /><div className="featured-stage-photo"><img src={redmagicFeaturedOffers[1].image} alt="REDMAGIC — wybrana oferta" /></div><div className="stage-plinth" /></div>
+          <div className="product-stage" aria-label="Wybrane smartfony Nubia i REDMAGIC">
+            <div className="stage-glow" />
+            <div className="featured-stage-photo"><img src={redmagicFeaturedOffers[0].image} alt={`${redmagicFeaturedOffers[0].title} — oferta Nubia / REDMAGIC`} /></div>
+            <div className="stage-plinth" />
+          </div>
 
           <aside className="commerce-hero__offer">
-            <div className="brand-offer-label">SMARTFONY GAMINGOWE PREMIUM</div><div className="nubia-word">nubia</div><div className="redmagic-mark">REDMAGIC</div>
+            <div className="brand-offer-label">MARKI I PRODUKTY PREZENTOWANE W OFERCIE</div>
+            <div className="nubia-word">nubia</div>
+            <div className="redmagic-mark">REDMAGIC</div>
+            <div className="brand-offer-label">NO NAME • NO LOGO • ELECTRONIC PRODUCTS</div>
             <div className="feature-row"><span><b>01</b>Wysoka wydajność</span><span><b>02</b>Chłodzenie</span><span><b>03</b>Szybkie ładowanie</span><span><b>04</b>Design premium</span></div>
             <div className="trade-box"><h3>WARUNKI HANDLOWE B2B</h3><div className="trade-grid"><div><small>CENA MINIMALNA</small><strong>174%</strong><span>od {MIN_ORDER_QUANTITY} sztuk tego samego produktu</span></div><div><small>CENA MAKSYMALNA</small><strong>184%</strong><span>1 sztuka próbna</span></div></div></div>
           </aside>
@@ -48,16 +55,16 @@ export default function Home() {
         <section className="quick-actions"><Link href="/offers/new"><span>01</span><div><strong>ZAMÓW OFERTĘ</strong><small>Szybka wycena B2B</small></div><b>→</b></Link><Link href="/#raty"><span>02</span><div><strong>FINANSOWANIE</strong><small>Leasing, raty, rozwiązania B2B</small></div><b>→</b></Link><Link href="/about"><span>03</span><div><strong>IMPORT</strong><small>Kompleksowa organizacja</small></div><b>→</b></Link><Link href="/contact"><span>04</span><div><strong>KONTAKT Z DORADCĄ</strong><small>Indywidualne wsparcie</small></div><b>→</b></Link></section>
 
         <section className="section featured-offers-section">
-          <p className="eyebrow">Oferta specjalna Nubia REDMAGIC</p>
-          <h2>Ceny zależne od ilości: 174%–184% wartości bazowej</h2>
+          <p className="eyebrow">Oferta specjalna Nubia / REDMAGIC</p>
+          <h2>Każda oferta ma przypisane indywidualne zdjęcie produktu</h2>
           <div className="featured-offer-grid">
             {redmagicFeaturedOffers.map((offer, index) => {
               const basePrice = offer.price / PREVIOUS_REDMAGIC_MULTIPLIER;
               const range = pricingRange(basePrice);
               return <article className="featured-offer-card" key={offer.title}>
-                <img src={offer.image} alt={offer.title} />
+                <img src={offer.image} alt={`${offer.title} — zdjęcie przypisane do oferty ${index + 1}`} />
                 <div className="featured-offer-copy">
-                  <span>OFERTA {index + 1}/5</span><h3>{offer.title}</h3>
+                  <span>OFERTA {index + 1}/{redmagicFeaturedOffers.length}</span><h3>{offer.title}</h3>
                   <p><strong>Opis:</strong> smartfon klasy premium dobierany pod wysoką wydajność, ekran o wysokiej częstotliwości odświeżania, szybkie ładowanie i zastosowania profesjonalne.</p>
                   <p><strong>Zastosowanie:</strong> {offer.application}.</p><p><strong>Prezentacja:</strong> materiał produktowy PL/EN z prezentacją funkcji.</p><p><strong>Instrukcja:</strong> instrukcja obsługi i dokumentacja bezpieczeństwa dla zatwierdzonego wariantu.</p>
                   <small>1 szt. próbna — 184%</small><strong className="featured-price">{pln(range.maxUnit)}</strong>
