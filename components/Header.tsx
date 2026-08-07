@@ -1,7 +1,5 @@
 import Link from 'next/link';
 
-const publicUrl = 'https://finansowo-handlowa-agencja-zwana-profesja-premium-limited.vercel.app/';
-
 export default function Header() {
   return (
     <header className="site-header">
@@ -13,10 +11,7 @@ export default function Header() {
       <div className="site-header__inner">
         <div className="brand-block">
           <p className="eyebrow">Finansowo-Handlowa Agencja</p>
-          <h1 className="brand-name">profesja/premium/limited</h1>
-          <a className="public-url" href={publicUrl} target="_blank" rel="noreferrer">
-            {publicUrl}
-          </a>
+          <Link href="/" className="brand-name">profesja/premium/limited</Link>
         </div>
 
         <nav className="site-nav" aria-label="Główna nawigacja">
@@ -25,8 +20,8 @@ export default function Header() {
           <Link href="/catalog">Katalog</Link>
           <Link href="/#raty">Raty</Link>
           <Link href="/offers/new">Zapytanie B2B</Link>
-          <Link href="/register">Rejestracja</Link>
-          <Link href="/login">Logowanie</Link>
+          <Link href="/contact">Kontakt</Link>
+          <Link href="/faq">FAQ</Link>
           <Link href="/dashboard">Panel klienta</Link>
           <Link href="/admin">Panel administratora</Link>
         </nav>
