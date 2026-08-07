@@ -1,9 +1,12 @@
-export const metadata = {
-  title: 'Profesja Premium Limited™',
-  description: 'Finansowo-Handlowa Agencja Profesja Premium Limited™'
+import type { Metadata } from 'next';
+import './globals.css';
+
+export const metadata: Metadata = {
+  title: 'profesja/premium/limited',
+  description: 'Finansowo-Handlowa Agencja — globalna współpraca i oferta B2B',
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pl">
       <body>{children}</body>
