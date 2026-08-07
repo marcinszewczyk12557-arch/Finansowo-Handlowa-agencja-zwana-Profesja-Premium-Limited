@@ -2,6 +2,8 @@ import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ProductCard from '../components/ProductCard';
+import InstallmentCalculator from '../components/InstallmentCalculator';
+import MediaShowcase from '../components/MediaShowcase';
 import products from '../data/products';
 
 export default function Home() {
@@ -18,7 +20,7 @@ export default function Home() {
           </p>
           <div className="cta-row">
             <Link href="/offers/new"><button>Złóż zapytanie B2B</button></Link>
-            <Link href="/register"><button className="cta-secondary">Załóż konto</button></Link>
+            <Link href="/catalog"><button className="cta-secondary">Przejdź do katalogu</button></Link>
           </div>
         </section>
 
@@ -38,14 +40,21 @@ export default function Home() {
           </article>
           <article className="card">
             <h3>Sourcing globalny</h3>
-            <p>Organizacja pozyskiwania produktów od dostawców zagranicznych z naciskiem na dokumentację i weryfikację oferty.</p>
+            <p>Organizacja pozyskiwania produktów z naciskiem na dokumentację, zgodność oferty i jakość obsługi.</p>
           </article>
         </section>
 
         <section className="section">
+          <p className="eyebrow">Multimedia</p>
+          <h2>Profesjonalne prezentacje i wizualizacje AI</h2>
+          <p>Materiały demonstracyjne przygotowane dla marki. Materiały konkretnego produktu będą oznaczane jako wizualizacje AI, jeśli nie przedstawiają rzeczywistego egzemplarza.</p>
+        </section>
+        <MediaShowcase />
+
+        <section className="section">
           <p className="eyebrow">Katalog</p>
-          <h2>Wybrane pozycje</h2>
-          <p>Obecne wpisy są pozycjami demonstracyjnymi i będą sukcesywnie zastępowane zweryfikowanymi produktami katalogowymi.</p>
+          <h2>Wybrane pozycje premium</h2>
+          <p>Każda oferta może zostać uzupełniona o zweryfikowaną dokumentację, warunki gwarancji i dedykowane materiały PL/EN.</p>
         </section>
 
         <section className="grid" aria-label="Produkty katalogowe">
@@ -54,11 +63,15 @@ export default function Home() {
           ))}
         </section>
 
+        <section id="raty" className="section">
+          <InstallmentCalculator />
+        </section>
+
         <section className="section">
           <p className="eyebrow">Kontakt</p>
           <h2>Rozpocznij współpracę</h2>
           <p>
-            Działalność prowadzona jest online i ma zasięg globalny. W sprawach handlowych skorzystaj z formularza B2B lub napisz bezpośrednio na adres kontaktowy podany w stopce.
+            Działalność prowadzona jest online i ma zasięg globalny. W sprawach handlowych skorzystaj z formularza B2B lub napisz bezpośrednio na profesja.premium@gmail.com.
           </p>
           <div className="cta-row">
             <Link href="/offers/new"><button>Nowe zapytanie ofertowe</button></Link>
