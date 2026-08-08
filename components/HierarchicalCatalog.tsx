@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { strictPublicOffers } from '../data/strictQualifiedOffers';
 import { strictPublicOfficeOffers } from '../data/strictQualifiedOffersOffice';
 import { strictPublicOffersExpansion2 } from '../data/strictQualifiedOffersExpansion2';
+import { strictPublicCashHandlingOffers } from '../data/strictQualifiedOffersCashHandling';
 
 function visual(label:string){
   const safe=label.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -13,7 +14,7 @@ function visual(label:string){
 
 export default function HierarchicalCatalog(){
   const offers=useMemo(()=>{
-    const combined=[...strictPublicOffers(),...strictPublicOfficeOffers(),...strictPublicOffersExpansion2()];
+    const combined=[...strictPublicOffers(),...strictPublicOfficeOffers(),...strictPublicOffersExpansion2(),...strictPublicCashHandlingOffers()];
     const ids=new Set<string>();
     const titles=new Set<string>();
     return combined.filter((offer)=>{
