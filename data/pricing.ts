@@ -2,7 +2,15 @@ export const MIN_ORDER_QUANTITY = 10;
 export const MIN_PRICE_MULTIPLIER = 1.72;
 export const MAX_PRICE_MULTIPLIER = 1.84;
 
+// Kept for backwards compatibility with older components.
 export const CATALOG_MARKUPS = [1.72, 1.75, 1.78, 1.81, 1.84] as const;
+
+export function markupForVariant(index: number, totalVariants: number) {
+  const total = Math.max(2, Math.floor(totalVariants || 2));
+  const position = Math.min(Math.max(0, Math.floor(index || 0)), total - 1);
+  const step = (MAX_PRICE_MULTIPLIER - MIN_PRICE_MULTIPLIER) / (total - 1);
+  return MIN_PRICE_MULTIPLIER + step * position;
+}
 
 export function multiplierForQuantity(quantity: number) {
   const qty = Math.max(1, Math.floor(quantity || 1));
