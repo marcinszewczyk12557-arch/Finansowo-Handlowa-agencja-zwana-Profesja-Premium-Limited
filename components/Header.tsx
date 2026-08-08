@@ -6,7 +6,7 @@ export default function Header() {
       <div className="reference-topbar">
         <div className="reference-topbar__inner">
           <div className="reference-topbar__left">
-            <span>FINANSOWANIE B2B</span><i>•</i><span>IMPORT</span><i>•</i><span>OEM / ODM</span><i>•</i><span>PRIVATE LABEL</span>
+            <span>FINANSOWANIE B2B</span><i>•</i><span>IMPORT</span><i>•</i><span>LOGISTYKA DOOR-TO-DOOR</span><i>•</i><span>OEM / ODM</span><i>•</i><span>PRIVATE LABEL</span>
           </div>
           <div className="reference-topbar__right">
             <a href="mailto:profesja.premium@gmail.com">✉ profesja.premium@gmail.com</a>
@@ -28,6 +28,7 @@ export default function Header() {
           <Link href="/" className="active">STRONA GŁÓWNA</Link>
           <Link href="/offers/new">OFERTA</Link>
           <Link href="/catalog">KATALOG PRODUKTÓW</Link>
+          <Link href="/shops">SKLEPY W BUDOWIE</Link>
           <Link href="/#raty">FINANSOWANIE</Link>
           <Link href="/about">IMPORT</Link>
           <Link href="/offers/new?product=OEM%20ODM">OEM / ODM</Link>
