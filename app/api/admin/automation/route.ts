@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { isOwnerSession } from '../../../../lib/ownerAuth';
-import { ensureSalesAutomationCase, setFinancingPartnerDecision } from '../../../../lib/salesAutomation';
+import { ensureSalesAutomationCase, setFinancingPartnerDecision, syncAllSalesAutomationCases } from '../../../../lib/salesAutomation';
 
 export async function POST(request: Request) {
   if (!(await isOwnerSession())) {
@@ -8,7 +8,13 @@ export async function POST(request: Request) {
   }
 
   try {
-    const body = await request.json();
+    const body = await request.json().catch(() => ({}));
+
+    if (body.action === 'RUN_ALL') {
+      const result = await syncAllSalesAutomationCases();
+      return NextResponse.json({ ok: result.failed === 0, result }, { headers: { 'Cache-Control': 'no-store' } });
+    }
+
     const offerId = Number(body.offerId);
     if (!Number.isInteger(offerId) || offerId <= 0) {
       return NextResponse.json({ ok: false, error: 'Nieprawidłowy identyfikator sprawy.' }, { status: 400 });
