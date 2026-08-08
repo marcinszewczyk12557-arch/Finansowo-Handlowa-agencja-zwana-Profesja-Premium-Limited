@@ -1,7 +1,6 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GlobalBrandsShowcase from '../../components/GlobalBrandsShowcase';
-import HierarchicalCatalog from '../../components/HierarchicalCatalog';
 import './catalog-enhancements.css';
 
 export default function CatalogPage() {
@@ -11,17 +10,27 @@ export default function CatalogPage() {
       <main>
         <section className="hero compact-hero">
           <p className="eyebrow">Katalog Profesja Premium Limited</p>
-          <h2>Rozbudowany katalog B2B — sourcing, marki globalne, prezentacje i indywidualne wyceny</h2>
+          <h2>Katalog B2B — oryginalne marki, sourcing i indywidualne wyceny</h2>
           <p>
-            Katalog działa wielopoziomowo: kategoria główna → podkategoria → element szczegółowy → minimum dziesięć wariantów handlowych.
-            Każda pozycja otrzymuje profesjonalny opis, zastosowanie, zakres prezentacji i dokumentacji. Ceny PROFESJA są przygotowywane
-            według wewnętrznej polityki handlowej. Dla światowych marek dokładny model, autentyczność, dostępność, gwarancja i cena są
-            potwierdzane indywidualnie przed ofertą.
+            Oferta obejmuje oryginalne produkty markowe oraz rozwiązania sourcingowe przygotowywane indywidualnie dla klienta.
+            Ceny PROFESJA są przygotowywane według wewnętrznej polityki handlowej. Dokładny model, wariant, autentyczność,
+            dostępność, gwarancja i cena są potwierdzane przed złożeniem wiążącej oferty.
           </p>
         </section>
 
         <GlobalBrandsShowcase />
-        <HierarchicalCatalog />
+
+        <section className="section-shell">
+          <p className="eyebrow">Pełny katalog produktowy</p>
+          <h2>Oferta konfigurowana według zapytania klienta</h2>
+          <p>
+            Rozbudowana prezentacja wariantów jest obecnie optymalizowana do szybkiego ładowania produkcyjnego.
+            Zapytania o konkretną markę, model, ilość i konfigurację można składać bezpośrednio przez formularz ofertowy.
+          </p>
+          <div className="hero-actions">
+            <a className="btn primary" href="/zapytanie">ZAPYTAJ O OFERTĘ B2B</a>
+          </div>
+        </section>
       </main>
       <Footer />
     </>
