@@ -4,6 +4,7 @@ import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import OrderStatusControl from '../../../components/OrderStatusControl';
 import OrderFulfillmentControl from '../../../components/OrderFulfillmentControl';
+import OrderDocumentLinks from '../../../components/OrderDocumentLinks';
 import { isOwnerSession, ownerAuthConfigured } from '../../../lib/ownerAuth';
 import { prisma } from '../../../lib/prisma';
 
@@ -64,6 +65,7 @@ export default async function AdminOrders() {
                   {order.orderConfirmation ? <p><strong>Potwierdzenie zamówienia:</strong> {order.orderConfirmation}</p> : null}
                   {order.commercialOffer ? <p><strong>Oferta / wycena:</strong> {order.commercialOffer}</p> : null}
                   {order.fulfillmentDocument ? <p><strong>Dokument realizacji:</strong> {order.fulfillmentDocument}</p> : null}
+                  <OrderDocumentLinks orderId={order.id} />
                   <OrderStatusControl orderId={order.id} currentStatus={order.status} />
                   <OrderFulfillmentControl order={{
                     id: order.id,
