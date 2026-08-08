@@ -1,9 +1,11 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import FullCatalogTree from '../../components/FullCatalogTree';
 import HierarchicalCatalog from '../../components/HierarchicalCatalog';
 import InstallmentCalculator from '../../components/InstallmentCalculator';
 import LandedCostCalculator from '../../components/LandedCostCalculator';
 import './catalog-enhancements.css';
+import './full-catalog-tree.css';
 
 export default function CatalogPage(){
   return <>
@@ -11,9 +13,10 @@ export default function CatalogPage(){
     <main>
       <section className='hero compact-hero'>
         <p className='eyebrow'>PROFESJA PREMIUM LIMITED™</p>
-        <h2>Wyselekcjonowany katalog produktów PREMIUM</h2>
-        <p>Asortyment agencji jest celowo mniejszy niż oferta globalnych marketplace B2B. Publikujemy tylko unikalne pozycje, dla których wewnętrznie potwierdziliśmy dostawcę spełniającego minimalne kryteria stażu i ochrony transakcji. Każde konkretne zamówienie jest ponownie weryfikowane przed zawarciem transakcji.</p>
+        <h2>Maksymalnie rozbudowany katalog sourcingowy B2B</h2>
+        <p>Pełne drzewo obejmuje szeroki zakres kategorii, grup produktowych i wariantów dostępnych do indywidualnego pozyskania. Osobno publikujemy oferty, dla których zakończono kwalifikację dostawcy i materiału źródłowego. Dzięki temu katalog jest bardzo szeroki, a status „zweryfikowana oferta” pozostaje zarezerwowany wyłącznie dla pozycji faktycznie potwierdzonych.</p>
       </section>
+      <FullCatalogTree/>
       <HierarchicalCatalog/>
       <section className='section catalog-calculators'>
         <div className='taxonomy-leaf-heading'>

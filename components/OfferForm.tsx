@@ -10,8 +10,16 @@ type SubmissionResult = {
   createdAt: string;
 };
 
+type CatalogContext = {
+  category: string;
+  group: string;
+  path: string;
+  source: string;
+};
+
 export default function OfferForm() {
   const [product, setProduct] = useState('');
+  const [catalogContext, setCatalogContext] = useState<CatalogContext>({ category: '', group: '', path: '', source: '' });
   const [financing, setFinancing] = useState(false);
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<SubmissionResult | null>(null);
@@ -20,6 +28,12 @@ export default function OfferForm() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setProduct(params.get('product') || '');
+    setCatalogContext({
+      category: params.get('category') || '',
+      group: params.get('group') || '',
+      path: params.get('path') || '',
+      source: params.get('source') || '',
+    });
   }, []);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -55,11 +69,28 @@ export default function OfferForm() {
     }
   }
 
+  const hasCatalogContext = Boolean(catalogContext.category || catalogContext.group || catalogContext.path);
+
   return (
     <form onSubmit={submit} className="premium-form">
       <p className="eyebrow">Kontakt handlowy</p>
       <h2>Zapytanie ofertowe B2B</h2>
       <p>Przekaż podstawowe parametry. Zapytanie zostanie zapisane w systemie PROFESJA, otrzyma indywidualny numer sprawy i zostanie włączone do Automatyzacji Finansowo‑Sprzedażowej.</p>
+
+      {hasCatalogContext ? (
+        <section className="admin-note" style={{ marginBottom: 18 }}>
+          <h3>Wybrana pozycja katalogowa</h3>
+          {catalogContext.category ? <p><strong>Dział:</strong> {catalogContext.category}</p> : null}
+          {catalogContext.group ? <p><strong>Grupa:</strong> {catalogContext.group}</p> : null}
+          {catalogContext.path ? <p><strong>Ścieżka produktu:</strong> {catalogContext.path}</p> : null}
+          <p><small>Ta ścieżka identyfikuje miejsce produktu w drzewie sourcingowym i zostanie dołączona do sprawy handlowej.</small></p>
+        </section>
+      ) : null}
+
+      <input type="hidden" name="catalogCategory" value={catalogContext.category} />
+      <input type="hidden" name="catalogGroup" value={catalogContext.group} />
+      <input type="hidden" name="catalogPath" value={catalogContext.path} />
+      <input type="hidden" name="catalogSource" value={catalogContext.source} />
 
       <div className="form-grid">
         <label>Nazwa firmy<input name="company" placeholder="Nazwa firmy" /></label>
