@@ -6,6 +6,7 @@ import { strictPublicOfficeOffers } from '../data/strictQualifiedOffersOffice';
 import { strictPublicOffersExpansion2 } from '../data/strictQualifiedOffersExpansion2';
 import { strictPublicCashHandlingOffers } from '../data/strictQualifiedOffersCashHandling';
 import { strictPublicWaterOffers } from '../data/strictQualifiedOffersWater';
+import { hasFullSupplierEvidence } from '../data/supplierEvidenceRegistry';
 
 function visual(label:string){
   const safe=label.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -15,7 +16,8 @@ function visual(label:string){
 
 export default function HierarchicalCatalog(){
   const offers=useMemo(()=>{
-    const combined=[...strictPublicOffers(),...strictPublicOfficeOffers(),...strictPublicOffersExpansion2(),...strictPublicCashHandlingOffers(),...strictPublicWaterOffers()];
+    const candidates=[...strictPublicOffers(),...strictPublicOfficeOffers(),...strictPublicOffersExpansion2(),...strictPublicCashHandlingOffers(),...strictPublicWaterOffers()];
+    const combined=candidates.filter(hasFullSupplierEvidence);
     const ids=new Set<string>();
     const titles=new Set<string>();
     return combined.filter((offer)=>{
@@ -37,11 +39,11 @@ export default function HierarchicalCatalog(){
   return <>
     <section className='section catalog-taxonomy-summary'>
       <div className='catalog-meta'>
-        <div><strong>{categories.length}</strong><span>kwalifikowanych kategorii</span></div>
-        <div><strong>{offers.length}</strong><span>unikalnych ofert po twardej bramce</span></div>
+        <div><strong>{categories.length}</strong><span>kategorii po pełnej kwalifikacji</span></div>
+        <div><strong>{offers.length}</strong><span>unikalnych ofert z pełnym dowodem</span></div>
         <div><strong>3+ lata</strong><span>minimalny staż dostawcy</span></div>
       </div>
-      <p className='catalog-count'>Asortyment PROFESJA jest celowo mniejszy od globalnego marketplace. Publikujemy tylko unikalne pozycje, dla których wewnętrzna dokumentacja wskazuje dostawcę ze statusem Verified Supplier i stażem minimum 3 lata. Każde realne zamówienie musi zostać ponownie zakwalifikowane do Trade Assurance i opłacone przez właściwy kanał platformy, aby ochrona zamówienia mogła obowiązywać.</p>
+      <p className='catalog-count'>Asortyment PROFESJA jest celowo mniejszy od globalnego marketplace. Publicznie pokazujemy tylko unikalne pozycje, dla których centralny rejestr dowodów potwierdza Verified Supplier, staż minimum 3 lata oraz dostawca-/oferta-specyficzne wskazanie Trade Assurance. Ogólny link do programu ochrony nie wystarcza. Każde realne zamówienie jest ponownie kwalifikowane przed płatnością.</p>
     </section>
 
     <section className='section taxonomy-browser'>
@@ -65,21 +67,22 @@ export default function HierarchicalCatalog(){
         <div className='taxonomy-products'>
           <section className='taxonomy-leaf'>
             <div className='taxonomy-leaf-heading'>
-              <div><p className='eyebrow'>ZWERYFIKOWANY ASORTYMENT</p><h2>{selectedCategory}</h2><p>Kliknięcie kategorii po lewej natychmiast zmienia zestaw ofert.</p></div>
+              <div><p className='eyebrow'>ZWERYFIKOWANY ASORTYMENT</p><h2>{selectedCategory || 'Oferty w kwalifikacji'}</h2><p>Kliknięcie kategorii po lewej natychmiast zmienia zestaw ofert.</p></div>
               <span>{visible.length} ofert</span>
             </div>
-            {visible.length===0 ? <div className='catalog-empty'>Brak ofert pasujących do wyszukiwania. Wyczyść pole wyszukiwania lub wybierz inną kategorię.</div> : null}
+            {offers.length===0 ? <div className='catalog-empty'>Brak ofert z kompletnym zestawem dowodów. Kandydaci pozostają w kwalifikacji wewnętrznej i nie są publikowani do czasu potwierdzenia wszystkich warunków.</div> : null}
+            {offers.length>0 && visible.length===0 ? <div className='catalog-empty'>Brak ofert pasujących do wyszukiwania. Wyczyść pole wyszukiwania lub wybierz inną kategorię.</div> : null}
             <div className='taxonomy-product-grid'>
               {visible.map((offer,index)=><article className='taxonomy-product-card' key={offer.id}>
                 <div className='taxonomy-product-number'>{String(index+1).padStart(2,'0')}</div>
                 <img className='taxonomy-product-image' src={visual(offer.title)} alt={`${offer.title} — oferta PROFESJA`} loading='lazy'/>
-                <p className='eyebrow'>VERIFIED SUPPLIER • {offer.supplierYears}+ LAT • TRADE ASSURANCE WYMAGANE</p>
+                <p className='eyebrow'>VERIFIED SUPPLIER • {offer.supplierYears}+ LAT • TRADE ASSURANCE POTWIERDZONE ŹRÓDŁOWO</p>
                 <h3>{offer.title}</h3>
                 <p><strong>Do czego można użyć:</strong> {offer.use}.</p>
                 <p><strong>Przeznaczenie:</strong> {offer.purpose}.</p>
                 <p><strong>Jaką funkcję spełnia:</strong> {offer.function}.</p>
-                <p><strong>Kwalifikacja dostawcy:</strong> źródło wewnętrzne potwierdza status Verified Supplier oraz wymagany staż minimum 3 lata. Dane dostawcy pozostają poufne po stronie PROFESJA.</p>
-                <p><strong>Ochrona każdej transakcji:</strong> zlecenie może przejść do zakupu wyłącznie jako kwalifikowane zamówienie Trade Assurance, po ponownym sprawdzeniu statusu dostawcy i warunków konkretnej transakcji.</p>
+                <p><strong>Kwalifikacja dostawcy:</strong> centralny rejestr dowodów potwierdza wymagany status i staż. Dane operacyjne dostawcy pozostają poufne po stronie PROFESJA.</p>
+                <p><strong>Ochrona każdej transakcji:</strong> zakup może zostać wykonany wyłącznie po ponownym potwierdzeniu Trade Assurance dla konkretnego zamówienia oraz płatności kanałem wymaganym przez platformę.</p>
                 <p><strong>Warunek finalny:</strong> przed zamówieniem ponownie potwierdzamy aktualną dostępność, specyfikację, gwarancję, dokumenty zgodności oraz aktywną ochronę danego zamówienia.</p>
                 <a className='taxonomy-offer-link' href={`/offers/new?product=${encodeURIComponent(offer.title)}&category=${encodeURIComponent(offer.category)}`}>Poproś o ofertę i potwierdzenie warunków →</a>
               </article>)}
