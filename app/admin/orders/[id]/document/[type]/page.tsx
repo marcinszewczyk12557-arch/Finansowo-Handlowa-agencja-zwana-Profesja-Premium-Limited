@@ -7,21 +7,9 @@ import { prisma } from '../../../../../../lib/prisma';
 export const dynamic = 'force-dynamic';
 
 const documentTypes = {
-  confirmation: {
-    title: 'POTWIERDZENIE ZAMÓWIENIA B2B',
-    numberField: 'orderConfirmation' as const,
-    fallbackPrefix: 'PZ',
-  },
-  offer: {
-    title: 'OFERTA HANDLOWA B2B',
-    numberField: 'commercialOffer' as const,
-    fallbackPrefix: 'OF',
-  },
-  fulfillment: {
-    title: 'DOKUMENT REALIZACJI ZAMÓWIENIA',
-    numberField: 'fulfillmentDocument' as const,
-    fallbackPrefix: 'DR',
-  },
+  confirmation: { title: 'POTWIERDZENIE ZAMÓWIENIA B2B', numberField: 'orderConfirmation' as const, fallbackPrefix: 'PZ' },
+  offer: { title: 'OFERTA HANDLOWA B2B', numberField: 'commercialOffer' as const, fallbackPrefix: 'OF' },
+  fulfillment: { title: 'DOKUMENT REALIZACJI ZAMÓWIENIA', numberField: 'fulfillmentDocument' as const, fallbackPrefix: 'DR' },
 };
 
 export default async function OrderDocumentPage({ params }: { params: Promise<{ id: string; type: string }> }) {
@@ -33,10 +21,7 @@ export default async function OrderDocumentPage({ params }: { params: Promise<{ 
   const config = documentTypes[type as keyof typeof documentTypes];
   if (!Number.isInteger(orderId) || orderId <= 0 || !config) notFound();
 
-  const order = await prisma.order.findUnique({
-    where: { id: orderId },
-    include: { offer: true },
-  });
+  const order = await prisma.order.findUnique({ where: { id: orderId }, include: { offer: true } });
   if (!order) notFound();
 
   const documentNumber = order[config.numberField] || `${config.fallbackPrefix}/${order.number}`;
@@ -45,10 +30,7 @@ export default async function OrderDocumentPage({ params }: { params: Promise<{ 
   return (
     <main className="print-document" style={{ maxWidth: 980, margin: '0 auto', padding: '40px 28px', background: '#fff', color: '#111' }}>
       <style>{`@media print { .print-actions { display:none !important; } body { background:#fff !important; } .print-document { max-width:none !important; padding:0 !important; } }`}</style>
-      <div className="print-actions" style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 28 }}>
-        <Link href="/admin/orders">← Wróć do zamówień</Link>
-        <PrintDocumentButton />
-      </div>
+      <div className="print-actions" style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 28 }}><Link href="/admin/orders">← Wróć do zamówień</Link><PrintDocumentButton /></div>
 
       <header style={{ borderBottom: '3px solid #111', paddingBottom: 18, marginBottom: 28 }}>
         <p style={{ margin: 0, fontWeight: 700 }}>PROFESJA PREMIUM LIMITED™</p>
@@ -58,10 +40,11 @@ export default async function OrderDocumentPage({ params }: { params: Promise<{ 
 
       <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28, marginBottom: 28 }}>
         <div>
-          <h2>Sprzedawca / obsługa handlowa</h2>
+          <h2>Podmiot obsługujący transakcję</h2>
           <p><strong>PROFESJA PREMIUM LIMITED™</strong></p>
           <p>Agencja Finansowo-Handlowa B2B</p>
           <p>Kontakt: profesja.premium@gmail.com</p>
+          <p style={{ fontSize: 13 }}>Rola formalna w danej transakcji wynika z zaakceptowanej oferty, umowy i dokumentów handlowych właściwych dla konkretnego zamówienia.</p>
         </div>
         <div>
           <h2>Klient B2B</h2>
@@ -93,7 +76,7 @@ export default async function OrderDocumentPage({ params }: { params: Promise<{ 
       <section style={{ marginBottom: 34 }}>
         <h2>Warunki i uwagi</h2>
         <p>{order.notes || 'Realizacja zgodnie z zaakceptowaną ofertą, ustaleniami handlowymi oraz potwierdzonym zakresem zamówienia.'}</p>
-        <p>Dokładne parametry produktu, gwarancji, transportu i dokumentacji są wiążące zgodnie z zaakceptowaną ofertą i potwierdzeniem zamówienia.</p>
+        <p>Dokładne parametry produktu, gwarancji, transportu, dokumentacji oraz roli stron są wiążące zgodnie z zaakceptowaną ofertą, umową i potwierdzeniem zamówienia.</p>
       </section>
 
       <footer style={{ borderTop: '1px solid #777', paddingTop: 18 }}>
