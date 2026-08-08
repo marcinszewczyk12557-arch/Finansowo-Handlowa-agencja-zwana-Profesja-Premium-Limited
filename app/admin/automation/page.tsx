@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import AutomationRunControl from '../../../components/AutomationRunControl';
+import FormalitiesStatusControl from '../../../components/FormalitiesStatusControl';
 import { isOwnerSession, ownerAuthConfigured } from '../../../lib/ownerAuth';
 import { prisma } from '../../../lib/prisma';
 import { formalitiesReadyForExecution } from '../../../lib/transactionFormalities';
@@ -73,6 +74,7 @@ export default async function AutomationDashboard() {
         <section className="section admin-note">
           <h2>Formalności + poufność STRICT</h2>
           <p>Dane wynikające z negocjacji i transakcji mogą być uzupełniane automatycznie. Zgody oraz podpis końcowy pozostają czynnościami wymagającymi odrębnej akceptacji i nie są ustawiane przez automat.</p>
+          <p>OWNER może jedynie zarejestrować status, który został wcześniej rzeczywiście potwierdzony przez klienta. Każda taka zmiana jest logowana jako ręcznie zweryfikowana czynność wraz z krótkim odniesieniem dowodowym.</p>
           <p>Domyślnie żadna sprawa nie zezwala na zewnętrzne ujawnianie danych. Informacje o konkurencji, kontaktach zawodowych z konkurencją, informacje z pracy, dane osobowe, źródła dostaw, marże i tajemnice handlowe pozostają poza automatycznym eksportem.</p>
           <p>Automatyzacja finansowa przygotowuje proces i rejestruje wynik partnera, ale nie podejmuje decyzji kredytowej ani nie zatwierdza finansowania w imieniu instytucji finansującej.</p>
         </section>
@@ -111,7 +113,8 @@ export default async function AutomationDashboard() {
                         <summary>Status zgód i podpisu</summary>
                         {formalitiesLabels.map(([key, label]) => <p key={key}><small><strong>{label}:</strong> {statusLabel(formalities[key])}</small></p>)}
                       </details>
-                    </> : <p>Pakiet formalności jeszcze nie został utworzony dla tej sprawy.</p>}
+                    </> : <p>Pakiet formalności jeszcze nie został utworzony dla tej sprawy. Pierwsza rejestracja zweryfikowanego statusu utworzy go automatycznie.</p>}
+                    <FormalitiesStatusControl offerId={item.offer.id} />
                   </div>
 
                   {item.events?.length ? (
