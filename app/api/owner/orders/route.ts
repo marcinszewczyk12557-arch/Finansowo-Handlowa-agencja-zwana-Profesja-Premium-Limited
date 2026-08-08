@@ -4,6 +4,17 @@ import { prisma } from '../../../../lib/prisma';
 
 const ORDER_STATUSES = ['CREATED', 'CONFIRMED', 'IN_PROGRESS', 'READY_TO_SHIP', 'SHIPPED', 'DELIVERED', 'COMPLETED', 'CANCELLED'] as const;
 
+function clean(value: unknown, max = 2000) {
+  return typeof value === 'string' ? value.trim().slice(0, max) : '';
+}
+
+function optionalDate(value: unknown) {
+  const text = clean(value, 64);
+  if (!text) return null;
+  const date = new Date(text);
+  return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
 function orderNumber() {
   const now = new Date();
   const date = now.toISOString().slice(0, 10).replace(/-/g, '');
@@ -58,21 +69,45 @@ export async function PATCH(request: Request) {
 
   const body = await request.json().catch(() => ({}));
   const orderId = Number(body.orderId);
-  const status = String(body.status || '').trim().toUpperCase();
+  if (!Number.isInteger(orderId) || orderId <= 0) {
+    return NextResponse.json({ ok: false, error: 'Nieprawidłowy identyfikator zamówienia.' }, { status: 400 });
+  }
 
-  if (!Number.isInteger(orderId) || orderId <= 0 || !ORDER_STATUSES.includes(status as (typeof ORDER_STATUSES)[number])) {
-    return NextResponse.json({ ok: false, error: 'Nieprawidłowy identyfikator lub status zamówienia.' }, { status: 400 });
+  const data: Record<string, unknown> = {};
+  if (body.status !== undefined) {
+    const status = clean(body.status, 40).toUpperCase();
+    if (!ORDER_STATUSES.includes(status as (typeof ORDER_STATUSES)[number])) {
+      return NextResponse.json({ ok: false, error: 'Nieprawidłowy status zamówienia.' }, { status: 400 });
+    }
+    data.status = status;
+    if (status === 'CONFIRMED') data.confirmedAt = new Date();
+    if (status === 'SHIPPED') data.shippedAt = new Date();
+    if (status === 'DELIVERED') data.deliveredAt = new Date();
+  }
+
+  const stringFields = ['shippingMethod', 'shippingAddress', 'carrier', 'trackingNumber', 'trackingUrl', 'orderConfirmation', 'commercialOffer', 'fulfillmentDocument', 'notes'] as const;
+  for (const field of stringFields) {
+    if (body[field] !== undefined) data[field] = clean(body[field], field === 'shippingAddress' || field === 'notes' ? 5000 : 2000) || null;
+  }
+
+  if (body.estimatedDelivery !== undefined) {
+    const parsed = optionalDate(body.estimatedDelivery);
+    if (parsed === undefined) return NextResponse.json({ ok: false, error: 'Nieprawidłowy termin dostawy.' }, { status: 400 });
+    data.estimatedDelivery = parsed;
+  }
+
+  if (!Object.keys(data).length) {
+    return NextResponse.json({ ok: false, error: 'Brak danych do aktualizacji.' }, { status: 400 });
   }
 
   try {
     const order = await prisma.order.update({
       where: { id: orderId },
-      data: { status },
-      select: { id: true, number: true, status: true, updatedAt: true },
+      data,
     });
     return NextResponse.json({ ok: true, order });
   } catch (error) {
-    console.error('OWNER order status update failed', error);
-    return NextResponse.json({ ok: false, error: 'Nie udało się zmienić statusu zamówienia.' }, { status: 500 });
+    console.error('OWNER order update failed', error);
+    return NextResponse.json({ ok: false, error: 'Nie udało się zaktualizować zamówienia.' }, { status: 500 });
   }
 }
