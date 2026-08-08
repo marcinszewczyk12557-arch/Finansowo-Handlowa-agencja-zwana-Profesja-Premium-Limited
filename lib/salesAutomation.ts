@@ -1,5 +1,6 @@
 import { prisma } from './prisma';
 import { classifyRestrictedContent, restrictedCategorySummary } from './confidentiality';
+import { syncTransactionFormalities } from './transactionFormalities';
 
 export type AutomationStage =
   | 'INTAKE'
@@ -30,12 +31,12 @@ function nextActionFor(stage: AutomationStage, financingRequested: boolean, fina
     return 'Oczekiwanie na decyzję uprawnionej instytucji finansującej; system nie podejmuje decyzji kredytowej.';
   }
   switch (stage) {
-    case 'QUALIFIED': return 'Zweryfikuj zakres zapytania i rozpocznij przygotowanie indywidualnej oferty B2B.';
-    case 'QUOTE_PREPARATION': return 'Przygotuj cenę, dostępność, termin, warunki dostawy i warunki handlowe.';
-    case 'CUSTOMER_DECISION': return 'Oczekuj na akceptację lub uwagi klienta do oferty.';
-    case 'FINANCING_PREPARATION': return 'Przygotuj minimalny pakiet danych do finansowania; decyzję podejmuje wyłącznie uprawniony partner.';
-    case 'ORDER_CREATION': return 'Utwórz zamówienie wyłącznie po potwierdzonej akceptacji oferty.';
-    case 'FULFILLMENT': return 'Prowadź realizację, dokumenty, wysyłkę i aktualizacje statusu.';
+    case 'QUALIFIED': return 'Zweryfikuj zakres zapytania i rozpocznij przygotowanie indywidualnej oferty B2B. Pakiet formalności uzupełnia wyłącznie fakty transakcji.';
+    case 'QUOTE_PREPARATION': return 'Przygotuj cenę, dostępność, termin, warunki dostawy i warunki handlowe; zsynchronizuj je z pakietem formalności.';
+    case 'CUSTOMER_DECISION': return 'Oczekuj na akceptację lub uwagi klienta do oferty. Zgody i podpisy wymagają odrębnej, wyraźnej czynności klienta.';
+    case 'FINANCING_PREPARATION': return 'Przygotuj minimalny pakiet danych do finansowania; decyzję podejmuje wyłącznie uprawniony partner, a zgody klienta nie są automatyzowane.';
+    case 'ORDER_CREATION': return 'Przed utworzeniem zamówienia zweryfikuj formalności, akceptację klienta i wymagane podpisy.';
+    case 'FULFILLMENT': return 'Prowadź realizację, dokumenty, wysyłkę i aktualizacje statusu; fakty logistyczne synchronizuj z pakietem formalności.';
     default: return 'Zweryfikuj nowe zgłoszenie.';
   }
 }
@@ -103,6 +104,15 @@ export async function ensureSalesAutomationCase(offerId: number, options?: {
     },
   });
 
+  try {
+    await syncTransactionFormalities(offerId, {
+      financingRequested,
+      financingAmount: options?.financingAmount ?? automation.financingAmount ?? null,
+    });
+  } catch (formalitiesError) {
+    console.error('Transaction formalities synchronization failed', formalitiesError);
+  }
+
   if (eventType) {
     const categorySummary = restrictedCategorySummary(restrictedCategories);
     await prisma.salesAutomationEvent.create({
@@ -111,7 +121,7 @@ export async function ensureSalesAutomationCase(offerId: number, options?: {
         type: eventType,
         message: restricted
           ? `Zastosowano politykę STRICT. Kategorie chronione: ${categorySummary}. Treść źródłowa nie została skopiowana do audytu; eksport zewnętrzny pozostaje zablokowany.`
-          : `Automatyzacja ustawiła etap ${stage}. Eksport zewnętrzny pozostaje domyślnie zablokowany.`,
+          : `Automatyzacja ustawiła etap ${stage}. Fakty transakcyjne zsynchronizowano z pakietem formalności; zgody i podpisy nie są automatyzowane.`,
       },
     });
   }
@@ -151,12 +161,17 @@ export async function setFinancingPartnerDecision(offerId: number, status: 'APPR
       financingStatus: status,
       stage: status === 'APPROVED_BY_PARTNER' ? 'ORDER_CREATION' : 'CUSTOMER_DECISION',
       nextAction: status === 'APPROVED_BY_PARTNER'
-        ? 'Finansowanie zatwierdzone przez partnera. Zweryfikuj akceptację klienta i utwórz zamówienie.'
+        ? 'Finansowanie zatwierdzone przez partnera. Zweryfikuj akceptację klienta, formalności i wymagane podpisy przed utworzeniem zamówienia.'
         : 'Partner odmówił finansowania. Przedstaw klientowi alternatywne, zgodne z prawem warunki płatności.',
       lastRunAt: new Date(),
       externalDisclosureAllowed: false,
       confidentialityLevel: 'STRICT',
     },
+  });
+
+  await syncTransactionFormalities(offerId, {
+    financingRequested: true,
+    financingAmount: updated.financingAmount,
   });
 
   await prisma.salesAutomationEvent.create({
