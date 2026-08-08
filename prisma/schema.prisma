@@ -60,12 +60,15 @@ model Order {
   quantity             String?
   amount               String?
   status               String   @default("CREATED")
+  dispatcherStatus     String   @default("RECEIVED")
   notes                String?
   shippingMethod       String?
+  pickupAddress        String?
   shippingAddress      String?
   carrier              String?
   trackingNumber       String?
   trackingUrl          String?
+  pickupAt             DateTime?
   estimatedDelivery    DateTime?
   confirmedAt          DateTime?
   shippedAt            DateTime?
@@ -73,11 +76,13 @@ model Order {
   orderConfirmation    String?
   commercialOffer      String?
   fulfillmentDocument String?
+  transportDocument    String?
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
   offer                Offer    @relation(fields: [offerId], references: [id], onDelete: Restrict)
 
   @@index([status])
+  @@index([dispatcherStatus])
   @@index([email])
   @@index([createdAt])
   @@index([trackingNumber])
