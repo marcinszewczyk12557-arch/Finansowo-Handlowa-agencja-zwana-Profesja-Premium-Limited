@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { publicQualifiedOffers, qualifiedCategories } from '../data/qualifiedMarketplaceOffers';
+import { strictPublicOffers } from '../data/strictQualifiedOffers';
 
 function visual(label:string){
   const safe=label.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -10,8 +10,9 @@ function visual(label:string){
 }
 
 export default function HierarchicalCatalog(){
-  const offers=useMemo(()=>publicQualifiedOffers(),[]);
-  const [selectedCategory,setSelectedCategory]=useState(qualifiedCategories[0] ?? '');
+  const offers=useMemo(()=>strictPublicOffers(),[]);
+  const categories=useMemo(()=>Array.from(new Set(offers.map((offer)=>offer.category))),[offers]);
+  const [selectedCategory,setSelectedCategory]=useState(categories[0] ?? '');
   const [query,setQuery]=useState('');
 
   const visible=useMemo(()=>{
@@ -22,11 +23,11 @@ export default function HierarchicalCatalog(){
   return <>
     <section className='section catalog-taxonomy-summary'>
       <div className='catalog-meta'>
-        <div><strong>{qualifiedCategories.length}</strong><span>starannie wybranych kategorii</span></div>
-        <div><strong>{offers.length}</strong><span>unikalnych ofert po bramce dostawcy</span></div>
+        <div><strong>{categories.length}</strong><span>kwalifikowanych kategorii</span></div>
+        <div><strong>{offers.length}</strong><span>unikalnych ofert po twardej bramce</span></div>
         <div><strong>3+ lata</strong><span>minimalny staż dostawcy</span></div>
       </div>
-      <p className='catalog-count'>Asortyment PROFESJA jest celowo mniejszy od globalnego marketplace. Nie publikujemy sztucznych wariantów ani duplikatów. Każda widoczna pozycja ma przypisane źródłowe potwierdzenie dostawcy z co najmniej 3-letnim stażem oraz ochroną transakcji. Ochrona transakcji działa wyłącznie wtedy, gdy konkretne zamówienie zostanie zawarte zgodnie z warunkami programu ochrony kupującego.</p>
+      <p className='catalog-count'>Asortyment PROFESJA jest celowo mniejszy od globalnego marketplace. Publikujemy tylko unikalne pozycje, dla których wewnętrzna dokumentacja wskazuje dostawcę ze statusem Verified Supplier i stażem minimum 3 lata. Każde realne zamówienie musi zostać ponownie zakwalifikowane do Trade Assurance i opłacone przez właściwy kanał platformy, aby ochrona zamówienia mogła obowiązywać.</p>
     </section>
 
     <section className='section taxonomy-browser'>
@@ -37,7 +38,7 @@ export default function HierarchicalCatalog(){
         <aside className='taxonomy-sidebar'>
           <h3>Kategorie asortymentu</h3>
           <nav className='qualified-category-list' aria-label='Kategorie katalogu'>
-            {qualifiedCategories.map((category)=>{
+            {categories.map((category)=>{
               const count=offers.filter((offer)=>offer.category===category).length;
               const active=category===selectedCategory;
               return <button type='button' key={category} className={active?'qualified-category active':'qualified-category'} onClick={()=>setSelectedCategory(category)} aria-pressed={active}>
@@ -58,13 +59,14 @@ export default function HierarchicalCatalog(){
               {visible.map((offer,index)=><article className='taxonomy-product-card' key={offer.id}>
                 <div className='taxonomy-product-number'>{String(index+1).padStart(2,'0')}</div>
                 <img className='taxonomy-product-image' src={visual(offer.title)} alt={`${offer.title} — oferta PROFESJA`} loading='lazy'/>
-                <p className='eyebrow'>ZWERYFIKOWANY DOSTAWCA • {offer.supplierYears}+ LAT • OCHRONA TRANSAKCJI</p>
+                <p className='eyebrow'>VERIFIED SUPPLIER • {offer.supplierYears}+ LAT • TRADE ASSURANCE WYMAGANE</p>
                 <h3>{offer.title}</h3>
                 <p><strong>Do czego można użyć:</strong> {offer.use}.</p>
                 <p><strong>Przeznaczenie:</strong> {offer.purpose}.</p>
                 <p><strong>Jaką funkcję spełnia:</strong> {offer.function}.</p>
-                <p><strong>Kwalifikacja dostawcy:</strong> wewnętrzny rejestr PROFESJA zawiera źródło potwierdzające wymagany staż i program ochrony transakcji. Dane dostawcy nie są ujawniane publicznie w katalogu.</p>
-                <p><strong>Warunek finalny:</strong> przed złożeniem wiążącego zamówienia ponownie potwierdzamy aktualny status dostawcy, dostępność, specyfikację, gwarancję, dokumenty zgodności oraz objęcie konkretnego zamówienia ochroną transakcji.</p>
+                <p><strong>Kwalifikacja dostawcy:</strong> źródło wewnętrzne potwierdza status Verified Supplier oraz wymagany staż minimum 3 lata. Dane dostawcy pozostają poufne po stronie PROFESJA.</p>
+                <p><strong>Ochrona każdej transakcji:</strong> zlecenie może przejść do zakupu wyłącznie jako kwalifikowane zamówienie Trade Assurance, po ponownym sprawdzeniu statusu dostawcy i warunków konkretnej transakcji.</p>
+                <p><strong>Warunek finalny:</strong> przed zamówieniem ponownie potwierdzamy aktualną dostępność, specyfikację, gwarancję, dokumenty zgodności oraz aktywną ochronę danego zamówienia.</p>
                 <a className='taxonomy-offer-link' href={`/offers/new?product=${encodeURIComponent(offer.title)}&category=${encodeURIComponent(offer.category)}`}>Poproś o ofertę i potwierdzenie warunków →</a>
               </article>)}
             </div>
