@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import OrderLookup from '../../components/OrderLookup';
 
 type LastOffer = {
   number: string;
@@ -31,12 +32,12 @@ export default function Dashboard() {
       <main className="section">
         <p className="eyebrow">Strefa klienta</p>
         <h1>Panel Klienta B2B</h1>
-        <p>Jedno miejsce do obsługi zapytań, ofert i dokumentacji związanej ze współpracą z PROFESJA PREMIUM LIMITED™.</p>
+        <p>Jedno miejsce do obsługi zapytań, ofert, zamówień i dokumentacji związanej ze współpracą z PROFESJA PREMIUM LIMITED™.</p>
 
         <section className="admin-stats" aria-label="Podsumowanie konta">
           <article className="card"><strong>{lastOffer ? 1 : 0}</strong><span>ostatnich zapytań na tym urządzeniu</span></article>
           <article className="card"><strong>{lastOffer?.status === 'NEW' ? 1 : 0}</strong><span>zapytanie oczekujące</span></article>
-          <article className="card"><strong>0</strong><span>zamówień w realizacji</span></article>
+          <article className="card"><strong>↗</strong><span>status zamówienia sprawdzisz poniżej</span></article>
         </section>
 
         {lastOffer ? (
@@ -44,11 +45,13 @@ export default function Dashboard() {
             <p className="eyebrow">Ostatnie zapytanie</p>
             <h2>{lastOffer.number}</h2>
             <p><strong>Produkt / usługa:</strong> {lastOffer.product}</p>
-            <p><strong>Status:</strong> {lastOffer.status}</p>
+            <p><strong>Status zapisany przy wysłaniu:</strong> {lastOffer.status}</p>
             <p><strong>Data zgłoszenia:</strong> {new Date(lastOffer.createdAt).toLocaleString('pl-PL')}</p>
-            <p>Numer sprawy zachowaj do dalszego kontaktu z obsługą handlową.</p>
+            <p>Numer sprawy zachowaj do dalszego kontaktu oraz sprawdzania zamówienia po jego utworzeniu.</p>
           </section>
         ) : null}
+
+        <OrderLookup />
 
         <section className="grid">
           <article className="card">
@@ -72,7 +75,7 @@ export default function Dashboard() {
 
         <section className="section admin-note">
           <h2>Historia współpracy</h2>
-          <p>Zapytania są teraz zapisywane w systemie. Pełna historia przypisana do konta klienta zostanie udostępniona po podłączeniu uwierzytelniania klientów; do tego czasu panel pokazuje ostatni numer sprawy zapisany na bieżącym urządzeniu.</p>
+          <p>Zapytania i zamówienia są zapisywane w systemie. Do czasu uruchomienia pełnego logowania klientów ostatnie zapytanie jest zapamiętywane lokalnie, a aktualny status zamówienia można bezpiecznie odczytać po numerze sprawy lub zamówienia oraz adresie e-mail.</p>
         </section>
       </main>
       <Footer />
