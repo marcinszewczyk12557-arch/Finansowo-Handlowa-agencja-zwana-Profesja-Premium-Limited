@@ -14,7 +14,7 @@ export default async function AdminPanel() {
     <main className="section">
       <p className="eyebrow">Panel OWNER</p>
       <h1>PROFESJA PREMIUM LIMITED™</h1>
-      <p>Centrum zarządzania katalogiem, zapytaniami B2B, automatyzacją finansowo‑sprzedażową, zamówieniami, materiałami i publikacją treści.</p>
+      <p>Centrum zarządzania katalogiem, zapytaniami B2B, automatyzacją finansowo‑sprzedażową, dyspozytornią VELOX, zamówieniami, materiałami i publikacją treści.</p>
 
       <section className="admin-stats" aria-label="Statystyki panelu">
         <article className="card"><strong>{products.length}</strong><span>produktów</span></article>
@@ -27,6 +27,12 @@ export default async function AdminPanel() {
           <h2>Automatyzacja Finansowo‑Sprzedażowa</h2>
           <p>Obsługuj pełną ścieżkę zapytanie → oferta → opcjonalne finansowanie → zamówienie → realizacja, z domyślną blokadą zewnętrznego ujawniania danych.</p>
           <Link href="/admin/automation"><button>Otwórz automatyzację</button></Link>
+        </article>
+
+        <article className="card">
+          <h2>VELOX • Dyspozytornia</h2>
+          <p>Obsługuj transport door-to-door: wybór przewoźnika, odbiór, tracking, status w trasie, doręczenie i dokument transportowy.</p>
+          <Link href="/admin/dispatch"><button>Otwórz dyspozytornię</button></Link>
         </article>
 
         <article className="card">
