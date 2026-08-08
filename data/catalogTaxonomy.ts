@@ -1,119 +1,54 @@
-export type TaxonomyBranch = {
-  name: string;
-  children?: TaxonomyBranch[];
-};
-
+export type TaxonomyBranch = { name: string; children?: TaxonomyBranch[] };
 const leaf = (...names: string[]): TaxonomyBranch[] => names.map((name) => ({ name }));
+const branch = (name: string, ...children: string[]): TaxonomyBranch => ({ name, children: leaf(...children) });
 
+// Pełna nawigacja głównych działów globalnego marketplace B2B. Nazewnictwo jest
+// prezentowane po polsku i bez zewnętrznego brandingu. Każdy najniższy element
+// otrzymuje w interfejsie dokładnie 10 kwalifikowanych wariantów ofertowych.
 const catalogTaxonomy: TaxonomyBranch[] = [
-  { name: 'Smartfony Premium', children: [
-    { name: 'Gamingowe', children: leaf('Flagowe', 'Aktywne chłodzenie', 'AMOLED 144–165 Hz', 'Wysoka pamięć RAM') },
-    { name: 'Biznesowe', children: leaf('Dual SIM / eSIM', 'Bezpieczne profile', 'Długi czas pracy', 'Łączność 5G') },
-    { name: 'Fotograficzne', children: leaf('Aparaty premium', 'Stabilizacja optyczna', 'Zoom optyczny', 'Wideo 4K / 8K') },
-    { name: 'Akcesoria', children: leaf('Ładowarki', 'Etui', 'Stacje dokujące', 'Słuchawki') },
-  ]},
-  { name: 'Laptopy Premium', children: [
-    { name: 'Gaming', children: leaf('RTX klasy premium', 'Ekrany 165–240 Hz', '32–96 GB RAM', 'Chłodzenie wydajnościowe') },
-    { name: 'AI / Workstation', children: leaf('GPU do AI', 'CAD / CAM', 'Render 3D', 'Obróbka wideo') },
-    { name: 'Business', children: leaf('Ultrabooki', 'Mobilne stacje robocze', 'Bezpieczeństwo TPM', 'Windows Pro') },
-    { name: 'Akcesoria IT', children: leaf('Monitory', 'Stacje dokujące', 'UPS', 'Peryferia') },
-  ]},
-  { name: 'Energia i Fotowoltaika', children: [
-    { name: 'Fotowoltaika', children: leaf('Instalacje dachowe', 'Instalacje gruntowe', 'Instalacje przemysłowe', 'Carport PV') },
-    { name: 'Magazyny energii', children: leaf('Domowe', 'Komercyjne', 'Przemysłowe', 'Kontenerowe BESS') },
-    { name: 'Falowniki i EMS', children: leaf('Falowniki hybrydowe', 'Falowniki stringowe', 'Systemy EMS', 'Monitoring energii') },
-    { name: 'E-Mobility energia', children: leaf('Wallbox AC', 'Ładowarki DC', 'Integracja PV+EV', 'Zarządzanie mocą') },
-  ]},
-  { name: 'HVAC', children: [
-    { name: 'Klimatyzacja', children: leaf('Split', 'Multisplit', 'Kasetonowa', 'Kanałowa') },
-    { name: 'Wentylacja', children: leaf('Centrale wentylacyjne', 'Rekuperatory', 'Wentylatory przemysłowe', 'Kurtyny powietrzne') },
-    { name: 'Systemy VRF / VRV', children: leaf('Jednostki zewnętrzne', 'Jednostki wewnętrzne', 'Sterowanie strefowe', 'Integracja BMS') },
-    { name: 'Pompy ciepła i chłodnictwo', children: leaf('Powietrze-woda', 'Powietrze-powietrze', 'Chillery', 'Rooftopy') },
-  ]},
-  { name: 'Meble Premium', children: [
-    { name: 'Biuro i zarząd', children: leaf('Biurka executive', 'Fotele gabinetowe', 'Stoły konferencyjne', 'Recepcje') },
-    { name: 'Hotel i restauracja', children: leaf('Meble hotelowe', 'Meble restauracyjne', 'Lobby', 'Bary i lady') },
-    { name: 'Meble na wymiar', children: leaf('Zabudowy', 'Garderoby', 'Biblioteki', 'Systemy modułowe') },
-    { name: 'Materiały premium', children: leaf('Drewno naturalne', 'Kamień', 'Metal', 'Skóra i tkaniny premium') },
-  ]},
-  { name: 'Drzwi i Bramy Premium', children: [
-    { name: 'Drzwi', children: leaf('Zewnętrzne', 'Wewnętrzne', 'Antywłamaniowe', 'Przeciwpożarowe') },
-    { name: 'Bramy garażowe', children: leaf('Segmentowe', 'Rolowane', 'Uchylne', 'Automatyczne') },
-    { name: 'Bramy przemysłowe', children: leaf('Szybkobieżne', 'Przesuwne', 'Harmonijkowe', 'Dokowe') },
-    { name: 'Kontrola dostępu', children: leaf('Automatyka', 'Czytniki', 'Wideodomofony', 'Smart building') },
-  ]},
-  { name: 'Maszyny i Sprzęt Ciężki', children: [
-    { name: 'Maszyny budowlane', children: leaf('Koparki', 'Minikoparki', 'Ładowarki', 'Spycharki') },
-    { name: 'Transport bliski', children: leaf('Wózki widłowe', 'Podnośniki', 'Żurawie', 'Wciągniki') },
-    { name: 'Maszyny drogowe', children: leaf('Walce', 'Rozściełacze', 'Frezarki drogowe', 'Zagęszczarki') },
-    { name: 'Zasilanie i sprężone powietrze', children: leaf('Agregaty', 'Sprężarki', 'Osuszacze', 'Zbiorniki') },
-  ]},
-  { name: 'Wyposażenie Przedsiębiorstw', children: [
-    { name: 'Elektronarzędzia', children: leaf('Wiertarko-wkrętarki', 'Młoty', 'Szlifierki', 'Piły') },
-    { name: 'Warsztat', children: leaf('Stoły warsztatowe', 'Wózki narzędziowe', 'Spawarki', 'Urządzenia pomiarowe') },
-    { name: 'Magazyn', children: leaf('Regały', 'Wózki', 'Pakowanie', 'Etykietowanie') },
-    { name: 'BHP i stanowisko pracy', children: leaf('Odzież ochronna', 'Ochrona głowy', 'Ochrona wzroku', 'Ergonomia') },
-  ]},
-  { name: 'Wellness Premium', children: [
-    { name: 'Fotele masażujące', children: leaf('3D', '4D', 'Zero Gravity', 'Grzanie i kompresja') },
-    { name: 'SPA', children: leaf('Jacuzzi', 'Sauny', 'Kabiny infrared', 'Strefy relaksu') },
-    { name: 'Fitness', children: leaf('Bieżnie', 'Rowery', 'Orbitreki', 'Trening funkcjonalny') },
-    { name: 'Regeneracja', children: leaf('Masażery', 'Kompresja', 'Krioterapia lokalna', 'Fotele relaksacyjne') },
-  ]},
-  { name: 'Smart Home Premium', children: [
-    { name: 'Sterowanie', children: leaf('Panele centralne', 'Aplikacje', 'Sceny automatyczne', 'Asystenci głosowi') },
-    { name: 'Bezpieczeństwo', children: leaf('Monitoring', 'Alarmy', 'Czujniki', 'Kontrola dostępu') },
-    { name: 'Komfort', children: leaf('Rolety', 'Termostaty', 'Sterowanie HVAC', 'Inteligentne lustra') },
-    { name: 'Energia', children: leaf('Pomiar zużycia', 'Smart gniazda', 'Sterowanie PV', 'Zarządzanie ładowaniem EV') },
-  ]},
-  { name: 'Luxury Interior', children: [
-    { name: 'Kominki', children: leaf('Elektryczne 3D', 'Parowe', 'Gazowe', 'Zabudowy premium') },
-    { name: 'Dekoracje', children: leaf('Panele ścienne', 'Kamień dekoracyjny', 'Metal dekoracyjny', 'Sztuka użytkowa') },
-    { name: 'Łazienki premium', children: leaf('Wanny wolnostojące', 'Kabiny', 'Armatura', 'Ceramika') },
-    { name: 'Kuchnie premium', children: leaf('Zabudowy', 'Wyspy', 'Blaty', 'AGD do zabudowy') },
-  ]},
-  { name: 'Outdoor Luxury', children: [
-    { name: 'Meble ogrodowe', children: leaf('Sofy modułowe', 'Stoły', 'Leżaki', 'Daybed') },
-    { name: 'Tarasy', children: leaf('Pergole', 'Markizy', 'Zadaszenia', 'Systemy przesuwne') },
-    { name: 'Ogród', children: leaf('Kuchnie outdoor', 'Grille premium', 'Donice', 'Oświetlenie ogrodowe') },
-    { name: 'Baseny i SPA outdoor', children: leaf('Baseny', 'Jacuzzi', 'Zadaszenia basenowe', 'Technika basenowa') },
-  ]},
-  { name: 'Premium Lighting', children: [
-    { name: 'Wnętrza', children: leaf('Żyrandole', 'Lampy wiszące', 'Kinkiety', 'Lampy podłogowe') },
-    { name: 'Architektoniczne', children: leaf('Szynoprzewody', 'Downlight', 'Profile LED', 'Oświetlenie liniowe') },
-    { name: 'Przemysłowe', children: leaf('High-bay', 'Hale', 'Magazyny', 'Oświetlenie awaryjne') },
-    { name: 'Sterowanie światłem', children: leaf('DALI', 'KNX', '0–10V', 'Smart lighting') },
-  ]},
-  { name: 'Executive Office', children: [
-    { name: 'Gabinet zarządu', children: leaf('Biurka', 'Fotele', 'Biblioteki', 'Stoły spotkań') },
-    { name: 'Sala konferencyjna', children: leaf('Stoły', 'Krzesła', 'Ekrany', 'Wideokonferencje') },
-    { name: 'Recepcja', children: leaf('Lady recepcyjne', 'Siedziska', 'System kolejkowy', 'Digital signage') },
-    { name: 'Akustyka', children: leaf('Panele', 'Budki telefoniczne', 'Ścianki', 'Kabiny spotkań') },
-  ]},
-  { name: 'Hospitality Premium', children: [
-    { name: 'Hotel', children: leaf('Pokoje', 'Lobby', 'Recepcja', 'Housekeeping') },
-    { name: 'Restauracja', children: leaf('Sala', 'Kuchnia', 'Bar', 'Catering') },
-    { name: 'SPA hotelowe', children: leaf('Sauny', 'Masaż', 'Basen', 'Strefa wellness') },
-    { name: 'Systemy hotelowe', children: leaf('Zamki', 'PMS', 'Minibary', 'Digital signage') },
-  ]},
-  { name: 'Audio Video Premium', children: [
-    { name: 'Kino domowe', children: leaf('Projektory', 'Ekrany', 'Audio wielokanałowe', 'Fotele kinowe') },
-    { name: 'Sale konferencyjne', children: leaf('Wideokonferencje', 'Mikrofony', 'Monitory', 'Sterowanie AV') },
-    { name: 'Digital signage', children: leaf('Videowall', 'LED wall', 'Kioski', 'Monitory reklamowe') },
-    { name: 'Audio profesjonalne', children: leaf('Nagłośnienie', 'Miksery', 'Kolumny', 'Systemy bezprzewodowe') },
-  ]},
-  { name: 'E-Mobility', children: [
-    { name: 'Ładowanie AC', children: leaf('Wallbox 11 kW', 'Wallbox 22 kW', 'Słupki', 'Load balancing') },
-    { name: 'Ładowanie DC', children: leaf('30–60 kW', '120–180 kW', '240–360 kW', 'HPC') },
-    { name: 'Floty', children: leaf('Zarządzanie flotą', 'Rozliczanie energii', 'RFID', 'Backend OCPP') },
-    { name: 'Infrastruktura', children: leaf('Rozdzielnie', 'Transformatory', 'Magazyny energii', 'PV carport') },
-  ]},
-  { name: 'Leisure Premium', children: [
-    { name: 'Rekreacja', children: leaf('Stoły bilardowe', 'Piłkarzyki', 'Dart', 'Symulatory') },
-    { name: 'Gaming room', children: leaf('Fotele gamingowe', 'Biurka', 'Monitory', 'Akcesoria') },
-    { name: 'Strefa klubowa', children: leaf('Bary', 'Siedziska', 'Audio', 'Oświetlenie') },
-    { name: 'Rozrywka komercyjna', children: leaf('Arcade', 'VR', 'Symulatory wyścigowe', 'Strefy interaktywne') },
-  ]},
+  branch('Odzież i akcesoria','Odzież damska','Odzież męska','Bielizna i odzież domowa','Akcesoria odzieżowe','Odzież dziecięca','Odzież robocza i mundury'),
+  branch('Elektronika użytkowa','Telefony i akcesoria','Komputery i laptopy','Tablety','Audio i słuchawki','Kamery i fotografia','Smart wearables','Gaming','Akcesoria elektroniczne'),
+  branch('Sport i rozrywka','Fitness i kulturystyka','Sporty outdoor','Sporty zespołowe','Sporty wodne','Golf','Rekreacja i gry','Sprzęt sportowy'),
+  branch('Biżuteria, okulary i zegarki','Biżuteria','Zegarki','Okulary','Akcesoria jubilerskie','Opakowania jubilerskie'),
+  branch('Rodzice, dzieci i zabawki','Zabawki','Artykuły dla niemowląt','Wózki i foteliki','Meble dziecięce','Artykuły edukacyjne','Opieka nad dzieckiem'),
+  branch('Dom i ogród','Wyposażenie domu','Kuchnia i jadalnia','Dekoracje','Ogród i patio','Przechowywanie i organizacja','Tekstylia domowe','Łazienka'),
+  branch('Odzież sportowa i outdoorowa','Odzież fitness','Odzież outdoor','Odzież rowerowa','Odzież do sportów wodnych','Odzież drużynowa'),
+  branch('Uroda','Makijaż','Pielęgnacja skóry','Pielęgnacja włosów','Paznokcie','Perfumy i zapachy','Sprzęt kosmetyczny'),
+  branch('Obuwie i akcesoria','Obuwie damskie','Obuwie męskie','Obuwie sportowe','Obuwie dziecięce','Materiały i akcesoria obuwnicze'),
+  branch('Bagaż, torby i walizki','Walizki','Plecaki','Torby biznesowe','Torby podróżne','Torebki','Akcesoria bagażowe'),
+  branch('Opakowania i druk','Opakowania papierowe','Opakowania plastikowe','Butelki i pojemniki','Etykiety','Materiały drukarskie','Maszyny pakujące'),
+  branch('Higiena osobista i domowa','Pielęgnacja osobista','Higiena jamy ustnej','Artykuły higieniczne','Środki czystości','Pranie','Narzędzia do sprzątania'),
+  branch('Zdrowie i medycyna','Urządzenia medyczne','Materiały medyczne','Sprzęt rehabilitacyjny','Diagnostyka i monitoring','Wyposażenie placówek','Ochrona medyczna'),
+  branch('Prezenty i rękodzieło','Prezenty biznesowe','Rękodzieło','Dekoracje sezonowe','Pamiątki','Świece i zapachy','Artykuły artystyczne'),
+  branch('Artykuły dla zwierząt','Dla psów','Dla kotów','Akwaryści','Ptaki','Małe zwierzęta','Pielęgnacja zwierząt'),
+  branch('Szkoła i biuro','Materiały biurowe','Papier i zeszyty','Przybory do pisania','Organizacja biura','Sprzęt prezentacyjny','Materiały szkolne'),
+  branch('Maszyny przemysłowe','Maszyny produkcyjne','Maszyny do obróbki metalu','Maszyny do tworzyw','Maszyny tekstylne','Maszyny spożywcze','Maszyny do drewna','Automatyka przemysłowa'),
+  branch('Urządzenia i maszyny komercyjne','Wyposażenie gastronomii','Automaty vendingowe','Wyposażenie sklepów','Sprzęt pralniczy','Wyposażenie hotelowe','Sprzęt reklamowy'),
+  branch('Maszyny budowlane','Koparki','Ładowarki','Dźwigi','Maszyny drogowe','Maszyny betonowe','Maszyny wiertnicze'),
+  branch('Budownictwo i nieruchomości','Materiały budowlane','Drzwi i okna','Podłogi','Łazienki','Kuchnie','Domy prefabrykowane','Systemy budowlane'),
+  branch('Meble','Meble domowe','Meble biurowe','Meble hotelowe','Meble restauracyjne','Meble ogrodowe','Meble dziecięce','Meble na wymiar'),
+  branch('Oświetlenie','Oświetlenie wnętrz','Oświetlenie zewnętrzne','Oświetlenie komercyjne','Oświetlenie przemysłowe','LED','Sterowanie oświetleniem'),
+  branch('AGD','Urządzenia kuchenne','Pranie i suszenie','Chłodnictwo','Klimatyzacja domowa','Małe AGD','Uzdatnianie wody'),
+  branch('Akcesoria i narzędzia motoryzacyjne','Elektronika samochodowa','Narzędzia serwisowe','Pielęgnacja auta','Wyposażenie wnętrza','Wyposażenie zewnętrzne'),
+  branch('Części i akcesoria pojazdów','Części silnika','Układ hamulcowy','Zawieszenie','Układ kierowniczy','Nadwozie','Oświetlenie pojazdu','Części EV'),
+  branch('Narzędzia i hardware','Elektronarzędzia','Narzędzia ręczne','Elementy złączne','Zamki','Materiały ścierne','Narzędzia pomiarowe'),
+  branch('Energia odnawialna','Panele fotowoltaiczne','Falowniki','Magazyny energii','Energia wiatrowa','Ładowanie EV','Systemy hybrydowe'),
+  branch('Sprzęt i materiały elektryczne','Kable i przewody','Rozdzielnice','Transformatory','Wyłączniki','Zasilacze','Silniki elektryczne'),
+  branch('Bezpieczeństwo i ochrona','Monitoring CCTV','Kontrola dostępu','Alarmy','Ochrona przeciwpożarowa','Środki ochrony indywidualnej','Bezpieczeństwo przemysłowe'),
+  branch('Transport wewnętrzny','Wózki widłowe','Wózki paletowe','Podnośniki','Przenośniki','Wciągniki','Systemy magazynowe'),
+  branch('Aparatura badawcza i pomiarowa','Przyrządy elektryczne','Przyrządy optyczne','Aparatura laboratoryjna','Pomiary środowiskowe','Kontrola jakości','Wagi i mierniki'),
+  branch('Przeniesienie napędu','Łożyska','Przekładnie','Pasy i koła pasowe','Łańcuchy','Sprzęgła','Hydraulika i pneumatyka'),
+  branch('Komponenty elektroniczne i telekomunikacja','Półprzewodniki','PCB','Czujniki','Złącza','Moduły komunikacyjne','Zasilanie','Komponenty pasywne'),
+  branch('Pojazdy i transport','Samochody','Pojazdy elektryczne','Motocykle','Skutery','Rowery elektryczne','Pojazdy użytkowe','Przyczepy'),
+  branch('Rolnictwo','Maszyny rolnicze','Nawadnianie','Szklarnie','Narzędzia rolnicze','Hodowla','Leśnictwo'),
+  branch('Żywność i napoje','Napoje','Kawa i herbata','Przekąski','Produkty zbożowe','Owoce i warzywa','Produkty spożywcze premium'),
+  branch('Surowce tekstylne','Tkaniny','Dzianiny','Włókna','Przędza','Skóra i materiały skóropodobne','Dodatki tekstylne'),
+  branch('Metale i stopy','Stal','Aluminium','Miedź','Metale nieżelazne','Profile i blachy','Odlewy'),
+  branch('Guma i tworzywa sztuczne','Tworzywa surowe','Wyroby plastikowe','Wyroby gumowe','Folie','Profile i rury','Kompozyty'),
+  branch('Chemia','Chemia przemysłowa','Kleje i uszczelniacze','Farby i powłoki','Chemia budowlana','Dodatki i pigmenty','Chemia laboratoryjna'),
+  branch('Środowisko','Uzdatnianie wody','Oczyszczanie powietrza','Gospodarka odpadami','Recykling','Monitoring środowiskowy'),
+  branch('Usługi produkcyjne','CNC','Odlewanie','Formowanie wtryskowe','Obróbka blach','Druk 3D','Montaż kontraktowy'),
+  branch('Usługi biznesowe','Projektowanie','Programowanie i technologia','Logistyka','Kontrola, testy i certyfikacja','Agent zakupowy','Pozostałe usługi B2B'),
 ];
 
 export default catalogTaxonomy;
