@@ -1,22 +1,25 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { Prisma } from '@prisma/client';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import OfferStatusControl from '../../../components/OfferStatusControl';
+import CreateOrderControl from '../../../components/CreateOrderControl';
 import { isOwnerSession, ownerAuthConfigured } from '../../../lib/ownerAuth';
 import { prisma } from '../../../lib/prisma';
 
 export const dynamic = 'force-dynamic';
+type OfferWithOrder = Prisma.OfferGetPayload<{ include: { order: true } }>;
 
 export default async function AdminOffers() {
   if (!ownerAuthConfigured()) redirect('/owner/login?error=config');
   if (!(await isOwnerSession())) redirect('/owner/login');
 
-  let offers: Awaited<ReturnType<typeof prisma.offer.findMany>> = [];
+  let offers: OfferWithOrder[] = [];
   let databaseError = false;
 
   try {
-    offers = await prisma.offer.findMany({ orderBy: { createdAt: 'desc' }, take: 50 });
+    offers = await prisma.offer.findMany({ include: { order: true }, orderBy: { createdAt: 'desc' }, take: 50 });
   } catch (error) {
     console.error('OWNER offers inbox failed', error);
     databaseError = true;
@@ -27,20 +30,22 @@ export default async function AdminOffers() {
   const acceptedCount = offers.filter((offer) => offer.status === 'ACCEPTED').length;
   const inProgressCount = offers.filter((offer) => offer.status === 'IN_PROGRESS').length;
   const completedCount = offers.filter((offer) => offer.status === 'COMPLETED').length;
+  const orderCount = offers.filter((offer) => offer.order).length;
 
   return (
     <>
       <Header />
       <main className="section">
         <p className="eyebrow">OWNER • Panel administratora</p>
-        <h1>Zapytania i oferty B2B</h1>
-        <p>Chroniona skrzynka operacyjna do obsługi zapytań klientów, przygotowania wycen i kontroli kolejnych etapów współpracy.</p>
+        <h1>Zapytania, oferty i zamówienia B2B</h1>
+        <p>Chroniona skrzynka operacyjna do obsługi zapytań klientów, przygotowania wycen, akceptacji i uruchamiania realizacji.</p>
 
         <section className="admin-stats">
           <article className="card"><strong>{newCount}</strong><span>nowych zapytań</span></article>
           <article className="card"><strong>{preparingCount}</strong><span>ofert w przygotowaniu</span></article>
           <article className="card"><strong>{acceptedCount}</strong><span>ofert zaakceptowanych</span></article>
           <article className="card"><strong>{inProgressCount}</strong><span>w realizacji</span></article>
+          <article className="card"><strong>{orderCount}</strong><span>utworzonych zamówień</span></article>
           <article className="card"><strong>{completedCount}</strong><span>zakończonych</span></article>
         </section>
 
@@ -69,6 +74,7 @@ export default async function AdminOffers() {
                   <p><strong>Budżet:</strong> {offer.budget || '—'}</p>
                   {offer.details ? <p><strong>Wymagania:</strong> {offer.details}</p> : null}
                   <OfferStatusControl offerId={offer.id} currentStatus={offer.status} />
+                  <CreateOrderControl offerId={offer.id} offerStatus={offer.status} orderNumber={offer.order?.number} />
                   <p><small>{offer.createdAt.toLocaleString('pl-PL')}</small></p>
                 </article>
               ))}
@@ -102,8 +108,8 @@ export default async function AdminOffers() {
         </section>
 
         <section className="section admin-note">
-          <h2>Proces ofertowy</h2>
-          <p>NEW → PREPARING → OFFER_SENT → ACCEPTED → IN_PROGRESS → COMPLETED. Status CANCELLED pozostaje dostępny dla spraw anulowanych.</p>
+          <h2>Proces handlowy</h2>
+          <p>NEW → PREPARING → OFFER_SENT → ACCEPTED → utworzenie zamówienia → IN_PROGRESS → COMPLETED. Status CANCELLED pozostaje dostępny dla spraw anulowanych.</p>
         </section>
       </main>
       <Footer />
