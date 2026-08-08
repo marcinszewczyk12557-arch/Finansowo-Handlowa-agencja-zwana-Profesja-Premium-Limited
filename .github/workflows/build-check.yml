@@ -8,6 +8,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://user:password@localhost:5432/profesja
+      OWNER_EMAIL: owner@example.com
+      OWNER_PASSWORD_SALT: test-salt
+      OWNER_PASSWORD_HASH: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      OWNER_SESSION_SECRET: test-session-secret
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,5 +23,7 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm install
+      - name: Prisma generate
+        run: npx prisma generate
       - name: Build
         run: npm run build
