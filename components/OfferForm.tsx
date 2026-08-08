@@ -79,10 +79,27 @@ export default function OfferForm() {
       {financing ? (
         <label>Orientacyjna kwota finansowania<input name="financingAmount" placeholder="np. 50 000 PLN" /></label>
       ) : null}
-      <p><small>Finansowanie jest organizowane indywidualnie. Decyzję podejmuje uprawniona instytucja finansująca; serwis nie gwarantuje przyznania finansowania.</small></p>
+      <p><small>Finansowanie jest organizowane indywidualnie. Decyzję podejmuje uprawniona instytucja finansująca; serwis nie gwarantuje przyznania finansowania ani finansowania bez wkładu własnego.</small></p>
 
       <label>Dodatkowe wymagania<textarea name="details" placeholder="Specyfikacja, termin, wariant, wymagane dokumenty, sposób dostawy..." /></label>
       <p><small>Nie wpisuj w polu opisowym danych o konkurencji, poufnych informacji z miejsca pracy, tajemnic handlowych ani danych osobowych, które nie są niezbędne do obsługi zapytania.</small></p>
+
+      <section className="admin-note" style={{ marginTop: 20 }}>
+        <h3>Przed wysłaniem i dalszą finalizacją</h3>
+        <p>Obsługa jest prowadzona online przez Metropolis Corp. Marcin Szewczyk w ramach projektu PROFESJA PREMIUM LIMITED™. Korespondencja i dokumenty elektroniczne tworzą historię ustaleń sprawy, jednak wiążące warunki transakcji wynikają z zaakceptowanej oferty, potwierdzenia zamówienia lub umowy.</p>
+        <p>Sposób i koszt dostawy, w tym ewentualna usługa door-to-door, są ustalane dla konkretnej transakcji. Jeżeli oferta przewiduje pokrycie kosztu transportu przez klienta, warunek ten zostanie wskazany przed zawarciem transakcji.</p>
+        <p>Zapoznaj się z <Link href="/company">danymi przedsiębiorcy i zasadami procesu</Link>, <Link href="/terms">Regulaminem</Link> oraz <Link href="/privacy">Polityką prywatności</Link>.</p>
+      </section>
+
+      <label style={{ display: 'block', marginTop: 14 }}>
+        <input name="transactionInformationAcknowledged" type="checkbox" required />{' '}
+        Potwierdzam, że zapoznałem(-am) się z informacjami o przedsiębiorcy, modelu obsługi online, zasadach dokumentowania ustaleń oraz sposobie ustalania dostawy i jej kosztów.
+      </label>
+      <label style={{ display: 'block', marginTop: 10 }}>
+        <input name="privacyAcknowledged" type="checkbox" required />{' '}
+        Potwierdzam zapoznanie się z Regulaminem i Polityką prywatności oraz rozumiem, że wysłanie zapytania nie jest jeszcze zawarciem umowy ani gwarancją finansowania.
+      </label>
+
       <button type="submit" disabled={sending}>{sending ? 'ZAPISYWANIE ZAPYTANIA...' : 'WYŚLIJ ZAPYTANIE B2B'}</button>
 
       {result ? (
