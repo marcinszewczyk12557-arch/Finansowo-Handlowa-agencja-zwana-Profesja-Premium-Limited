@@ -7,7 +7,7 @@ export type SupplierEvidenceRecord = {
 };
 
 // Ten rejestr jest bramką publikacji publicznej. Wpis trafia tutaj dopiero,
-// gdy istnieją niezależne, aktualne dowody Alibaba.com potwierdzające łącznie:
+// gdy istnieją aktualne dowody Alibaba.com potwierdzające łącznie:
 // Verified Supplier, staż >= 3 lata oraz dostawca-/oferta-specyficzne wskazanie
 // Trade Assurance. Ogólna strona programu Trade Assurance nie wystarcza.
 export const supplierEvidenceRegistry: SupplierEvidenceRecord[] = [
@@ -23,6 +23,13 @@ export const supplierEvidenceRegistry: SupplierEvidenceRecord[] = [
     supplierYears: 11,
     verifiedSupplierEvidenceUrl: 'https://www.alibaba.com/supplier/vendor-risk-rating.html',
     tradeAssuranceEvidenceUrl: 'https://www.alibaba.com/supplier/alibaba-com-trade-assurance.html',
+    verifiedOn: '2026-08-08'
+  },
+  {
+    supplier: 'Henan Shangfeng Hvac Engineering Co., Ltd.',
+    supplierYears: 4,
+    verifiedSupplierEvidenceUrl: 'https://hnshangfeng.en.alibaba.com/index.html?from=detail&productId=1601724422013',
+    tradeAssuranceEvidenceUrl: 'https://www.alibaba.com/search/page?SearchScene=imageTextSearch&productId=1600828473192',
     verifiedOn: '2026-08-08'
   }
 ];
