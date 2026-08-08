@@ -11,7 +11,7 @@ export default async function AutomationDashboard() {
   if (!ownerAuthConfigured()) redirect('/owner/login?error=config');
   if (!(await isOwnerSession())) redirect('/owner/login');
 
-  let cases: Awaited<ReturnType<typeof prisma.salesAutomationCase.findMany>> = [];
+  let cases: any[] = [];
   let databaseError = false;
 
   try {
@@ -22,15 +22,15 @@ export default async function AutomationDashboard() {
         offer: { include: { order: true } },
         events: { orderBy: { createdAt: 'desc' }, take: 5 },
       },
-    }) as typeof cases;
+    });
   } catch (error) {
     console.error('Automation dashboard failed', error);
     databaseError = true;
   }
 
-  const financing = cases.filter((item: any) => item.financingRequested).length;
-  const blocked = cases.filter((item: any) => !item.externalDisclosureAllowed).length;
-  const completed = cases.filter((item: any) => item.stage === 'COMPLETED').length;
+  const financing = cases.filter((item) => item.financingRequested).length;
+  const blocked = cases.filter((item) => !item.externalDisclosureAllowed).length;
+  const completed = cases.filter((item) => item.stage === 'COMPLETED').length;
 
   return (
     <>
@@ -56,7 +56,7 @@ export default async function AutomationDashboard() {
 
         {!databaseError && cases.length ? (
           <section className="grid">
-            {cases.map((item: any) => (
+            {cases.map((item) => (
               <article className="card" key={item.id}>
                 <p className="eyebrow">{item.stage}</p>
                 <h2>{item.offer.number}</h2>
