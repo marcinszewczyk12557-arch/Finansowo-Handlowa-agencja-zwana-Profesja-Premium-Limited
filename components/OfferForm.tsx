@@ -12,6 +12,7 @@ type SubmissionResult = {
 
 export default function OfferForm() {
   const [product, setProduct] = useState('');
+  const [financing, setFinancing] = useState(false);
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<SubmissionResult | null>(null);
   const [error, setError] = useState('');
@@ -28,7 +29,10 @@ export default function OfferForm() {
     setResult(null);
 
     const form = new FormData(event.currentTarget);
-    const payload = Object.fromEntries(form.entries());
+    const payload = {
+      ...Object.fromEntries(form.entries()),
+      financingRequested: form.get('financingRequested') === 'on',
+    };
 
     try {
       const response = await fetch('/api/offers', {
@@ -43,6 +47,7 @@ export default function OfferForm() {
       window.localStorage.setItem('profesja_last_offer', JSON.stringify(data.offer));
       event.currentTarget.reset();
       setProduct('');
+      setFinancing(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Nie udało się wysłać zapytania.');
     } finally {
@@ -54,7 +59,7 @@ export default function OfferForm() {
     <form onSubmit={submit} className="premium-form">
       <p className="eyebrow">Kontakt handlowy</p>
       <h2>Zapytanie ofertowe B2B</h2>
-      <p>Przekaż podstawowe parametry. Zapytanie zostanie zapisane w systemie PROFESJA i otrzyma indywidualny numer sprawy.</p>
+      <p>Przekaż podstawowe parametry. Zapytanie zostanie zapisane w systemie PROFESJA, otrzyma indywidualny numer sprawy i zostanie włączone do Automatyzacji Finansowo‑Sprzedażowej.</p>
 
       <div className="form-grid">
         <label>Nazwa firmy<input name="company" placeholder="Nazwa firmy" /></label>
@@ -67,7 +72,17 @@ export default function OfferForm() {
         <label>Budżet orientacyjny<input name="budget" placeholder="np. 50 000 PLN" /></label>
       </div>
 
+      <label style={{ display: 'block', marginTop: 12 }}>
+        <input name="financingRequested" type="checkbox" checked={financing} onChange={(event) => setFinancing(event.target.checked)} />{' '}
+        Chcę, aby zapytanie obejmowało również organizację finansowania B2B
+      </label>
+      {financing ? (
+        <label>Orientacyjna kwota finansowania<input name="financingAmount" placeholder="np. 50 000 PLN" /></label>
+      ) : null}
+      <p><small>Finansowanie jest organizowane indywidualnie. Decyzję podejmuje uprawniona instytucja finansująca; serwis nie gwarantuje przyznania finansowania.</small></p>
+
       <label>Dodatkowe wymagania<textarea name="details" placeholder="Specyfikacja, termin, wariant, wymagane dokumenty, sposób dostawy..." /></label>
+      <p><small>Nie wpisuj w polu opisowym danych o konkurencji, poufnych informacji z miejsca pracy, tajemnic handlowych ani danych osobowych, które nie są niezbędne do obsługi zapytania.</small></p>
       <button type="submit" disabled={sending}>{sending ? 'ZAPISYWANIE ZAPYTANIA...' : 'WYŚLIJ ZAPYTANIE B2B'}</button>
 
       {result ? (
