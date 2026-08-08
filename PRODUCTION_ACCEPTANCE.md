@@ -35,26 +35,45 @@
 - [x] Logowanie OWNER.
 - [x] Podpisana sesja i bezpieczne cookie.
 - [x] Rate limit logowania.
-- [x] Ochrona `/admin`, `/admin/products`, `/admin/offers`, `/admin/orders`.
+- [x] Ochrona `/admin`, `/admin/automation`, `/admin/products`, `/admin/offers`, `/admin/orders`.
 - [x] Workflow statusów ofert.
 - [x] Tworzenie zamówienia po akceptacji oferty.
 - [x] Workflow realizacji zamówienia.
 - [x] Edycja danych logistycznych i dokumentowych.
 - [x] Dokumenty do druku/PDF.
+- [x] Ręczna pełna synchronizacja Automatyzacji Finansowo‑Sprzedażowej.
 
-## E. Dane i bezpieczeństwo
+## E. Automatyzacja Finansowo‑Sprzedażowa i poufność
+
+- [x] Automatyczne utworzenie sprawy po zapytaniu B2B.
+- [x] Synchronizacja etapu po zmianie statusu oferty.
+- [x] Synchronizacja etapu po utworzeniu/zmianie zamówienia.
+- [x] Wyznaczanie następnej czynności operacyjnej.
+- [x] Obsługa ścieżki finansowania bez autonomicznej decyzji kredytowej.
+- [x] Rejestracja decyzji przekazanej przez uprawnionego partnera finansującego.
+- [x] Domyślne `confidentialityLevel = STRICT`.
+- [x] Domyślne `externalDisclosureAllowed = false`.
+- [x] Klasyfikacja treści dotyczących konkurencji, miejsca pracy, danych osobowych, tajemnicy handlowej i wewnętrznych danych handlowych.
+- [x] Audyt bez kopiowania chronionej treści.
+- [x] Zminimalizowany payload przyszłych integracji zewnętrznych.
+- [x] Zabezpieczony endpoint `/api/cron/sales-automation`.
+- [x] Dzienny reconciliation cron w `vercel.json`.
+- [x] `SALES_AUTOMATION_POLICY.md`.
+
+## F. Dane i bezpieczeństwo
 
 - [x] Prisma + PostgreSQL.
 - [x] Migracje dla ofert.
 - [x] Migracje dla zamówień.
 - [x] Migracje dla logistyki/dokumentów.
 - [x] Migracja rate-limit OWNER.
+- [x] Migracja Automatyzacji Finansowo‑Sprzedażowej.
 - [x] Fresh PostgreSQL migration check.
 - [x] Walidacja publicznego endpointu ofert.
 - [x] Kryptograficzne numery referencyjne.
 - [x] `/api/health`.
 
-## F. SEO i publikacja
+## G. SEO i publikacja
 
 - [x] Global metadata.
 - [x] Canonical URL.
@@ -63,22 +82,23 @@
 - [x] `robots.txt` z blokadą admin/API.
 - [x] `NEXT_PUBLIC_SITE_URL` w `.env.example`.
 
-## G. Dokumentacja
+## H. Dokumentacja
 
 - [x] README.
 - [x] DEPLOYMENT.md.
 - [x] BRAND_GUIDELINES.md.
 - [x] B2B_AGREEMENT_TEMPLATE.md.
+- [x] SALES_AUTOMATION_POLICY.md.
 - [x] Regulamin serwisu.
 - [x] Polityka prywatności opisująca faktyczne przepływy danych.
 
-## H. Automatyczne testy
+## I. Automatyczne testy
 
 - [x] Build Check — Node 24.
 - [x] Migration Check — świeży PostgreSQL 16.
 - [x] Production Smoke Test przygotowany.
 
-## I. Elementy wymagające środowiska produkcyjnego / danych właściciela
+## J. Elementy wymagające środowiska produkcyjnego / danych właściciela
 
 Poniższe elementy nie mogą być zakończone samym kodem repozytorium:
 
@@ -87,12 +107,14 @@ Poniższe elementy nie mogą być zakończone samym kodem repozytorium:
 - [ ] projekt Vercel używa Node 24,
 - [ ] ustawiony produkcyjny `DATABASE_URL`,
 - [ ] ustawione rzeczywiste sekrety OWNER,
+- [ ] ustawiony osobny `CRON_SECRET`,
 - [ ] wykonane `prisma migrate deploy` na produkcyjnej bazie,
 - [ ] `/api/health` zwraca gotowość aplikacji i bazy,
+- [ ] `/api/cron/sales-automation` działa wyłącznie z prawidłowym `CRON_SECRET`,
 - [ ] Production Smoke Test przechodzi na finalnym URL,
 - [ ] wzór umowy B2B uzupełniony o prawdziwe dane rejestrowe i zatwierdzony prawnie,
 - [ ] regulamin i polityka prywatności uzupełnione o prawdziwe dane administratora/podmiotu i zatwierdzone przed uruchomieniem sprzedaży.
 
 ## Warunek końcowego odbioru LIVE
 
-Projekt otrzymuje status **LIVE / PRODUCTION ACCEPTED** po zaznaczeniu wszystkich pozycji w sekcji I.
+Projekt otrzymuje status **LIVE / PRODUCTION ACCEPTED** po zaznaczeniu wszystkich pozycji w sekcji J.
