@@ -1,0 +1,34 @@
+name: Production Smoke Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Production base URL, e.g. https://example.vercel.app
+        required: true
+        type: string
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check home page
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 20 "${{ inputs.base_url }}/" >/dev/null
+      - name: Check catalog
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 20 "${{ inputs.base_url }}/catalog" >/dev/null
+      - name: Check offer form
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 20 "${{ inputs.base_url }}/offers/new" >/dev/null
+      - name: Check client dashboard
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 20 "${{ inputs.base_url }}/dashboard" >/dev/null
+      - name: Check application and database readiness
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --location --max-time 20 "${{ inputs.base_url }}/api/health"
