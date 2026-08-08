@@ -48,22 +48,35 @@ model Offer {
 }
 
 model Order {
-  id        Int      @id @default(autoincrement())
-  number    String   @unique
-  offerId   Int      @unique
-  company   String?
-  contact   String
-  email     String
-  product   String
-  quantity  String?
-  amount    String?
-  status    String   @default("CREATED")
-  notes     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  offer     Offer    @relation(fields: [offerId], references: [id], onDelete: Restrict)
+  id                 Int      @id @default(autoincrement())
+  number             String   @unique
+  offerId            Int      @unique
+  company            String?
+  contact            String
+  email              String
+  product            String
+  quantity           String?
+  amount             String?
+  status             String   @default("CREATED")
+  notes              String?
+  shippingMethod     String?
+  shippingAddress    String?
+  carrier            String?
+  trackingNumber     String?
+  trackingUrl        String?
+  estimatedDelivery  DateTime?
+  confirmedAt        DateTime?
+  shippedAt          DateTime?
+  deliveredAt        DateTime?
+  orderConfirmation  String?
+  commercialOffer    String?
+  fulfillmentDocument String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  offer              Offer    @relation(fields: [offerId], references: [id], onDelete: Restrict)
 
   @@index([status])
   @@index([email])
   @@index([createdAt])
+  @@index([trackingNumber])
 }
