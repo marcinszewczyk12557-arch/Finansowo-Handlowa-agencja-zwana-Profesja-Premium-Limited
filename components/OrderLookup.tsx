@@ -34,11 +34,14 @@ type OrderResult = {
   quantity: string | null;
   amount: string | null;
   status: string;
+  dispatcherStatus: string;
   shippingMethod: string | null;
   carrier: string | null;
   trackingNumber: string | null;
   trackingUrl: string | null;
+  pickupAt: string | null;
   estimatedDelivery: string | null;
+  transportDocument: string | null;
   confirmedAt: string | null;
   shippedAt: string | null;
   deliveredAt: string | null;
@@ -75,6 +78,19 @@ function statusLabel(status: unknown) {
   if (status === 'NOT_APPLICABLE') return 'nie dotyczy';
   if (status === 'REJECTED') return 'odrzucono';
   return 'oczekuje';
+}
+
+function dispatcherLabel(status: string) {
+  const labels: Record<string, string> = {
+    RECEIVED: 'Przyjęte',
+    CARRIER_SELECTED: 'Przewoźnik wybrany',
+    PICKUP_SCHEDULED: 'Odbiór zaplanowany',
+    PICKED_UP: 'Odebrano',
+    IN_TRANSIT: 'W transporcie',
+    DELIVERED: 'Doręczono',
+    CANCELLED: 'Anulowano',
+  };
+  return labels[status] || status;
 }
 
 function FormalitiesPanel({ formalities }: { formalities: FormalitiesResult | null }) {
@@ -177,16 +193,19 @@ export default function OrderLookup() {
           <p><strong>Produkt / usługa:</strong> {order.product}</p>
           <p><strong>Ilość:</strong> {order.quantity || '—'}</p>
           <p><strong>Wartość:</strong> {order.amount || 'Wycena / kwota potwierdzana indywidualnie'}</p>
+          {order.product.toUpperCase().includes('VELOX') ? <p><strong>Status VELOX:</strong> {dispatcherLabel(order.dispatcherStatus)}</p> : null}
           {order.shippingMethod ? <p><strong>Sposób dostawy:</strong> {order.shippingMethod}</p> : null}
           {order.carrier ? <p><strong>Przewoźnik:</strong> {order.carrier}</p> : null}
+          {order.pickupAt ? <p><strong>Planowany odbiór:</strong> {new Date(order.pickupAt).toLocaleString('pl-PL')}</p> : null}
           {order.trackingNumber ? <p><strong>Numer przesyłki:</strong> {order.trackingNumber}</p> : null}
           {order.trackingUrl ? <p><a href={order.trackingUrl} target="_blank" rel="noreferrer">Śledź przesyłkę ↗</a></p> : null}
           {order.estimatedDelivery ? <p><strong>Planowany termin dostawy:</strong> {new Date(order.estimatedDelivery).toLocaleString('pl-PL')}</p> : null}
+          {order.transportDocument ? <p><strong>Dokument transportowy:</strong> {order.transportDocument}</p> : null}
           {order.orderConfirmation ? <p><strong>Potwierdzenie zamówienia:</strong> {order.orderConfirmation}</p> : null}
           {order.commercialOffer ? <p><strong>Oferta / wycena:</strong> {order.commercialOffer}</p> : null}
           {order.fulfillmentDocument ? <p><strong>Dokument realizacji:</strong> {order.fulfillmentDocument}</p> : null}
           {order.confirmedAt ? <p><strong>Potwierdzono:</strong> {new Date(order.confirmedAt).toLocaleString('pl-PL')}</p> : null}
-          {order.shippedAt ? <p><strong>Wysłano:</strong> {new Date(order.shippedAt).toLocaleString('pl-PL')}</p> : null}
+          {order.shippedAt ? <p><strong>Wysłano / odebrano do transportu:</strong> {new Date(order.shippedAt).toLocaleString('pl-PL')}</p> : null}
           {order.deliveredAt ? <p><strong>Dostarczono:</strong> {new Date(order.deliveredAt).toLocaleString('pl-PL')}</p> : null}
           <p><strong>Utworzono:</strong> {new Date(order.createdAt).toLocaleString('pl-PL')}</p>
           <p><strong>Ostatnia aktualizacja:</strong> {new Date(order.updatedAt).toLocaleString('pl-PL')}</p>
