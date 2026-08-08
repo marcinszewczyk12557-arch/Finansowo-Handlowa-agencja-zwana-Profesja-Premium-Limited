@@ -19,6 +19,20 @@ function referenceNumber() {
   return `PPL-${date}-${random}`;
 }
 
+function catalogContext(body: Record<string, unknown>) {
+  const category = text(body.catalogCategory, 200);
+  const group = text(body.catalogGroup, 200);
+  const path = text(body.catalogPath, 1200);
+  const source = text(body.catalogSource, 120);
+  const lines = [
+    category ? `Dział katalogu: ${category}` : '',
+    group ? `Grupa katalogu: ${group}` : '',
+    path ? `Ścieżka katalogowa: ${path}` : '',
+    source ? `Źródło zapytania: ${source}` : '',
+  ].filter(Boolean);
+  return lines.length ? lines.join('\n') : '';
+}
+
 export async function POST(request: Request) {
   try {
     const contentType = request.headers.get('content-type') || '';
@@ -38,6 +52,10 @@ export async function POST(request: Request) {
       );
     }
 
+    const userDetails = text(body.details, 5000);
+    const context = catalogContext(body as Record<string, unknown>);
+    const combinedDetails = [context, userDetails].filter(Boolean).join('\n\n').slice(0, 5000) || null;
+
     const offer = await prisma.offer.create({
       data: {
         number: referenceNumber(),
@@ -49,7 +67,7 @@ export async function POST(request: Request) {
         quantity: text(body.quantity, 120) || null,
         market: text(body.market, 120) || null,
         budget: text(body.budget, 120) || null,
-        details: text(body.details, 5000) || null,
+        details: combinedDetails,
       },
       select: {
         id: true,
