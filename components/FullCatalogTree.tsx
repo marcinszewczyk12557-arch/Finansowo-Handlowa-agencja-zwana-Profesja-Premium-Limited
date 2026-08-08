@@ -5,6 +5,7 @@ import catalogTaxonomy, { TaxonomyBranch } from '../data/catalogTaxonomy';
 import catalogTaxonomyExpansion from '../data/catalogTaxonomyExpansion';
 import catalogTaxonomyExpansion2 from '../data/catalogTaxonomyExpansion2';
 import catalogTaxonomyExpansion3 from '../data/catalogTaxonomyExpansion3';
+import catalogTaxonomyExpansion4 from '../data/catalogTaxonomyExpansion4';
 
 const VARIANTS_PER_LEAF = 12;
 const variantLabels = ['PREMIUM','PRO','INDUSTRIAL','BUSINESS','HEAVY DUTY','COMPACT','ENERGY EFFICIENT','SMART / CONNECTED','OEM','PRIVATE LABEL','CUSTOM CONFIGURATION','BULK / CONTRACT'];
@@ -22,6 +23,10 @@ function mergeNodes(base:TaxonomyBranch[],extra:TaxonomyBranch[]):TaxonomyBranch
   return Array.from(map.values());
 }
 
+function mergeAll(parts:TaxonomyBranch[][]):TaxonomyBranch[]{
+  return parts.reduce((current,part)=>mergeNodes(current,part),[] as TaxonomyBranch[]);
+}
+
 function leafEntries(node:TaxonomyBranch,path:string[]=[]):LeafEntry[]{
   const next=[...path,node.name];
   if(!node.children?.length) return [{leaf:node,path:next}];
@@ -32,7 +37,7 @@ function leavesOf(node:TaxonomyBranch):TaxonomyBranch[]{return leafEntries(node)
 function normalize(value:string){return value.toLocaleLowerCase('pl-PL').normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 
 export default function FullCatalogTree(){
-  const taxonomy=useMemo(()=>mergeNodes(mergeNodes(mergeNodes(catalogTaxonomy,catalogTaxonomyExpansion),catalogTaxonomyExpansion2),catalogTaxonomyExpansion3),[]);
+  const taxonomy=useMemo(()=>mergeAll([catalogTaxonomy,catalogTaxonomyExpansion,catalogTaxonomyExpansion2,catalogTaxonomyExpansion3,catalogTaxonomyExpansion4]),[]);
   const [query,setQuery]=useState('');
   const [selectedRootName,setSelectedRootName]=useState(taxonomy[0]?.name??'');
   const [selectedGroupName,setSelectedGroupName]=useState(taxonomy[0]?.children?.[0]?.name??'');
