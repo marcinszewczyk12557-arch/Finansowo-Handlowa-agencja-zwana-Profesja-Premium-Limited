@@ -90,26 +90,14 @@ export default async function AdminOffers() {
         ) : null}
 
         <section className="grid">
-          <article className="card">
-            <h2>Nowe zapytanie testowe</h2>
-            <p>Otwórz publiczny formularz i sprawdź pełną ścieżkę zapisu.</p>
-            <Link href="/offers/new"><button>Otwórz formularz</button></Link>
-          </article>
-          <article className="card">
-            <h2>Katalog</h2>
-            <p>Zweryfikuj opis, dokumentację, gwarancję i materiały dla pozycji będącej podstawą oferty.</p>
-            <Link href="/admin/products"><button>Zarządzaj katalogiem</button></Link>
-          </article>
-          <article className="card">
-            <h2>Panel OWNER</h2>
-            <p>Wróć do głównego chronionego obszaru zarządzania projektem.</p>
-            <Link href="/owner"><button>Panel OWNER</button></Link>
-          </article>
+          <article className="card"><h2>Zamówienia</h2><p>Przejdź do osobnego centrum realizacji i wysyłki.</p><Link href="/admin/orders"><button>Otwórz zamówienia</button></Link></article>
+          <article className="card"><h2>Katalog</h2><p>Zweryfikuj opis, dokumentację, gwarancję i materiały dla pozycji będącej podstawą oferty.</p><Link href="/admin/products"><button>Zarządzaj katalogiem</button></Link></article>
+          <article className="card"><h2>Panel OWNER</h2><p>Wróć do głównego chronionego obszaru zarządzania projektem.</p><Link href="/owner"><button>Panel OWNER</button></Link></article>
         </section>
 
         <section className="section admin-note">
           <h2>Proces handlowy</h2>
-          <p>NEW → PREPARING → OFFER_SENT → ACCEPTED → utworzenie zamówienia → IN_PROGRESS → COMPLETED. Status CANCELLED pozostaje dostępny dla spraw anulowanych.</p>
+          <p>NEW → PREPARING → OFFER_SENT → ACCEPTED → utworzenie zamówienia → IN_PROGRESS → COMPLETED. Realizacja zamówienia ma własny status od CREATED do COMPLETED.</p>
         </section>
       </main>
       <Footer />
