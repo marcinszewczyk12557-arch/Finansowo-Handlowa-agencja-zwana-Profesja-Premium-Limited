@@ -46,13 +46,30 @@ export async function GET(request: Request) {
       },
     });
 
-    if (!order) {
-      return NextResponse.json({ ok: false, error: 'Nie znaleziono zamówienia dla podanych danych.' }, { status: 404 });
+    if (order) {
+      return NextResponse.json({ ok: true, kind: 'order', order }, { headers: { 'Cache-Control': 'no-store' } });
     }
 
-    return NextResponse.json({ ok: true, order });
+    const offer = await prisma.offer.findFirst({
+      where: { number: reference, email },
+      select: { number: true, product: true, status: true, createdAt: true },
+    });
+
+    if (offer) {
+      return NextResponse.json(
+        {
+          ok: true,
+          kind: 'offer',
+          offer,
+          message: 'Zapytanie istnieje w systemie, ale zamówienie nie zostało jeszcze utworzone. Aktualny etap sprawy jest widoczny poniżej.',
+        },
+        { headers: { 'Cache-Control': 'no-store' } },
+      );
+    }
+
+    return NextResponse.json({ ok: false, error: 'Nie znaleziono sprawy ani zamówienia dla podanych danych.' }, { status: 404 });
   } catch (error) {
     console.error('Client order lookup failed', error);
-    return NextResponse.json({ ok: false, error: 'Nie udało się sprawdzić zamówienia.' }, { status: 500 });
+    return NextResponse.json({ ok: false, error: 'Nie udało się sprawdzić sprawy lub zamówienia.' }, { status: 500 });
   }
 }
