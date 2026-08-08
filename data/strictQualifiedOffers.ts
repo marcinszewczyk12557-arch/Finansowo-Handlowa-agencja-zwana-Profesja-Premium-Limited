@@ -62,6 +62,20 @@ export const strictQualifiedOffers: StrictQualifiedOffer[] = [
     tradeAssuranceEvidenceUrl: 'https://tradeassurance.alibaba.com/'
   },
   {
+    id: 'pineng-impact-wrench',
+    category: 'Narzędzia profesjonalne',
+    title: 'Bezszczotkowy akumulatorowy klucz udarowy wysokiego momentu',
+    use: 'warsztaty, serwis pojazdów, montaż konstrukcji i utrzymanie ruchu',
+    purpose: 'szybkie dokręcanie i odkręcanie połączeń gwintowanych',
+    function: 'generuje wysoki moment obrotowy z mechanizmem udarowym',
+    supplier: 'Jiangsu Pineng Electric Tools Co., Ltd.',
+    supplierYears: 3,
+    verifiedSupplier: true,
+    tradeAssuranceRequired: true,
+    supplierEvidenceUrl: 'https://www.alibaba.com/supplier/cordless-impact-wrench.html',
+    tradeAssuranceEvidenceUrl: 'https://tradeassurance.alibaba.com/'
+  },
+  {
     id: 'hengshuntai-stainless-pipe-316',
     category: 'Stal i instalacje przemysłowe',
     title: 'Rura ze stali nierdzewnej 316 do zastosowań przemysłowych',
@@ -101,6 +115,62 @@ export const strictQualifiedOffers: StrictQualifiedOffer[] = [
     verifiedSupplier: true,
     tradeAssuranceRequired: true,
     supplierEvidenceUrl: 'https://www.alibaba.com/supplier/1045-cd-steel-bar-supplier.html',
+    tradeAssuranceEvidenceUrl: 'https://tradeassurance.alibaba.com/'
+  },
+  {
+    id: 'labtex-autoclave-24l',
+    category: 'Sprzęt laboratoryjny',
+    title: 'Autoklaw laboratoryjny 24 l do sterylizacji wsadowej',
+    use: 'laboratoria, pracownie badawcze i zaplecza techniczne',
+    purpose: 'sterylizacja wyposażenia i materiałów zgodnie z instrukcją konkretnego modelu',
+    function: 'prowadzi kontrolowany cykl sterylizacji termicznej pod ciśnieniem',
+    supplier: 'Labtex Biotech China Co., Ltd.',
+    supplierYears: 3,
+    verifiedSupplier: true,
+    tradeAssuranceRequired: true,
+    supplierEvidenceUrl: 'https://www.alibaba.com/supplier/autoclave-24l.html',
+    tradeAssuranceEvidenceUrl: 'https://tradeassurance.alibaba.com/'
+  },
+  {
+    id: 'labtex-conductivity-meter',
+    category: 'Sprzęt laboratoryjny',
+    title: 'Stołowy miernik przewodności do kontroli parametrów roztworów',
+    use: 'laboratoria kontroli jakości, edukacja, badania i procesy technologiczne',
+    purpose: 'pomiar przewodności elektrycznej próbek ciekłych',
+    function: 'mierzy i prezentuje parametr przewodności zgodnie z zakresem urządzenia',
+    supplier: 'Labtex Biotech China Co., Ltd.',
+    supplierYears: 3,
+    verifiedSupplier: true,
+    tradeAssuranceRequired: true,
+    supplierEvidenceUrl: 'https://www.alibaba.com/supplier/benchtop-conductivity-meter.html',
+    tradeAssuranceEvidenceUrl: 'https://tradeassurance.alibaba.com/'
+  },
+  {
+    id: 'labtex-roller-mixer',
+    category: 'Sprzęt laboratoryjny',
+    title: 'Laboratoryjny mieszalnik rolkowy do probówek z regulacją pracy',
+    use: 'laboratoria diagnostyczne, badawcze i przygotowanie próbek',
+    purpose: 'łagodne i powtarzalne mieszanie próbek w probówkach',
+    function: 'obraca probówki w kontrolowany sposób w celu homogenizacji zawartości',
+    supplier: 'Labtex Biotech China Co., Ltd.',
+    supplierYears: 3,
+    verifiedSupplier: true,
+    tradeAssuranceRequired: true,
+    supplierEvidenceUrl: 'https://www.alibaba.com/supplier/roller-mixer-for-laboratory.html',
+    tradeAssuranceEvidenceUrl: 'https://tradeassurance.alibaba.com/'
+  },
+  {
+    id: 'labtex-medical-refrigeration',
+    category: 'Sprzęt laboratoryjny',
+    title: 'Chłodziarka laboratoryjna do kontrolowanego przechowywania próbek',
+    use: 'laboratoria, zaplecza badawcze i magazynowanie materiałów wymagających kontroli temperatury',
+    purpose: 'utrzymanie stabilnych warunków chłodniczych w granicach specyfikacji modelu',
+    function: 'chłodzi i monitoruje przestrzeń roboczą urządzenia',
+    supplier: 'Labtex Biotech China Co., Ltd.',
+    supplierYears: 3,
+    verifiedSupplier: true,
+    tradeAssuranceRequired: true,
+    supplierEvidenceUrl: 'https://www.alibaba.com/supplier/medical-refrigeration-equipment-factories.html',
     tradeAssuranceEvidenceUrl: 'https://tradeassurance.alibaba.com/'
   }
 ];
