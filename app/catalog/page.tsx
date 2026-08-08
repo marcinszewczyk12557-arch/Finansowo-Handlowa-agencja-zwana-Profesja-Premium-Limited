@@ -5,6 +5,7 @@ import HierarchicalCatalog from '../../components/HierarchicalCatalog';
 import InstallmentCalculator from '../../components/InstallmentCalculator';
 import LandedCostCalculator from '../../components/LandedCostCalculator';
 import './catalog-enhancements.css';
+import './full-catalog-tree.css';
 
 export default function CatalogPage(){
   return <>
