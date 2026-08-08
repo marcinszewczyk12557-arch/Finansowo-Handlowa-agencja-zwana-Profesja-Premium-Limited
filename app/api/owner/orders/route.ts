@@ -5,6 +5,7 @@ import { prisma } from '../../../../lib/prisma';
 import { ensureSalesAutomationCase } from '../../../../lib/salesAutomation';
 
 const ORDER_STATUSES = ['CREATED', 'CONFIRMED', 'IN_PROGRESS', 'READY_TO_SHIP', 'SHIPPED', 'DELIVERED', 'COMPLETED', 'CANCELLED'] as const;
+const DISPATCHER_STATUSES = ['RECEIVED', 'CARRIER_SELECTED', 'PICKUP_SCHEDULED', 'PICKED_UP', 'IN_TRANSIT', 'DELIVERED', 'CANCELLED'] as const;
 
 function clean(value: unknown, max = 2000) {
   return typeof value === 'string' ? value.trim().slice(0, max) : '';
@@ -43,6 +44,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: false, error: 'Zamówienie można utworzyć dopiero po akceptacji oferty.' }, { status: 409 });
     }
 
+    const isVelox = offer.product.toUpperCase().includes('VELOX');
     const order = await prisma.order.create({
       data: {
         number: orderNumber(),
@@ -54,6 +56,7 @@ export async function POST(request: Request) {
         quantity: offer.quantity,
         amount: offer.budget,
         notes: offer.details,
+        dispatcherStatus: isVelox ? 'RECEIVED' : 'RECEIVED',
       },
     });
 
@@ -93,15 +96,27 @@ export async function PATCH(request: Request) {
     if (status === 'DELIVERED') data.deliveredAt = new Date();
   }
 
-  const stringFields = ['shippingMethod', 'shippingAddress', 'carrier', 'trackingNumber', 'trackingUrl', 'orderConfirmation', 'commercialOffer', 'fulfillmentDocument', 'notes'] as const;
-  for (const field of stringFields) {
-    if (body[field] !== undefined) data[field] = clean(body[field], field === 'shippingAddress' || field === 'notes' ? 5000 : 2000) || null;
+  if (body.dispatcherStatus !== undefined) {
+    const dispatcherStatus = clean(body.dispatcherStatus, 40).toUpperCase();
+    if (!DISPATCHER_STATUSES.includes(dispatcherStatus as (typeof DISPATCHER_STATUSES)[number])) {
+      return NextResponse.json({ ok: false, error: 'Nieprawidłowy status dyspozytorski.' }, { status: 400 });
+    }
+    data.dispatcherStatus = dispatcherStatus;
+    if (dispatcherStatus === 'PICKED_UP' || dispatcherStatus === 'IN_TRANSIT') data.shippedAt = new Date();
+    if (dispatcherStatus === 'DELIVERED') data.deliveredAt = new Date();
   }
 
-  if (body.estimatedDelivery !== undefined) {
-    const parsed = optionalDate(body.estimatedDelivery);
-    if (parsed === undefined) return NextResponse.json({ ok: false, error: 'Nieprawidłowy termin dostawy.' }, { status: 400 });
-    data.estimatedDelivery = parsed;
+  const stringFields = ['shippingMethod', 'pickupAddress', 'shippingAddress', 'carrier', 'trackingNumber', 'trackingUrl', 'orderConfirmation', 'commercialOffer', 'fulfillmentDocument', 'transportDocument', 'notes'] as const;
+  for (const field of stringFields) {
+    if (body[field] !== undefined) data[field] = clean(body[field], ['pickupAddress', 'shippingAddress', 'notes'].includes(field) ? 5000 : 2000) || null;
+  }
+
+  for (const field of ['pickupAt', 'estimatedDelivery'] as const) {
+    if (body[field] !== undefined) {
+      const parsed = optionalDate(body[field]);
+      if (parsed === undefined) return NextResponse.json({ ok: false, error: field === 'pickupAt' ? 'Nieprawidłowy termin odbioru.' : 'Nieprawidłowy termin dostawy.' }, { status: 400 });
+      data[field] = parsed;
+    }
   }
 
   if (!Object.keys(data).length) {
@@ -112,7 +127,7 @@ export async function PATCH(request: Request) {
     const order = await prisma.order.update({
       where: { id: orderId },
       data,
-      select: { id: true, offerId: true, number: true, status: true },
+      select: { id: true, offerId: true, number: true, status: true, dispatcherStatus: true },
     });
 
     try {
