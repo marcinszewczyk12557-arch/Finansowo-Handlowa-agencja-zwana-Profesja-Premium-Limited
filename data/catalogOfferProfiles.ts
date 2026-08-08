@@ -1,93 +1,22 @@
 export type OfferProfile = {
-  brand: string;
-  model: string;
-  series: string;
-  functions: string;
-  intendedUse: string;
-  safeUse: string;
-  warrantyMonths: number;
-  manualUrl: string;
-  videoUrl: string;
+  brand: string; model: string; series: string; functions: string; intendedUse: string;
+  safeUse: string; warrantyMonths: number; manualUrl: string; videoUrl: string;
 };
 
 export const smartphoneProfiles: OfferProfile[] = [
-  {
-    brand: 'nubia', model: 'Z80 Ultra', series: 'Flagship / foto / gaming',
-    functions: '6,85\" OLED 144 Hz, Snapdragon 8 Elite Gen 5, aparat główny 35 mm, bateria 7200 mAh, 80 W, 5G, NFC, IP68/IP69.',
-    intendedUse: 'fotografia mobilna, multimedia, praca mobilna, komunikacja 5G i wymagające aplikacje.',
-    safeUse: 'używać zgodnie z instrukcją producenta; stosować zgodne ładowarki i przewody; nie ingerować w obudowę; chronić urządzenie przed temperaturami i warunkami przekraczającymi deklarowaną klasę ochrony.',
-    warrantyMonths: 24, manualUrl: 'https://eu.nubia.com/pages/nubia-z80-ultra', videoUrl: 'https://www.nubia.com/en/products/smartphones/nubia/nubia-z80-ultra.html',
-  },
-  {
-    brand: 'nubia', model: 'Z70 Ultra', series: 'Flagship / foto',
-    functions: '6,85\" AMOLED 144 Hz, Snapdragon 8 Elite, 5G, NFC, aparat główny 50 MP z OIS i regulowaną przysłoną, bateria 6150 mAh, 80 W, IP68/IP69.',
-    intendedUse: 'fotografia, praca mobilna, multimedia i komunikacja biznesowa.',
-    safeUse: 'przestrzegać instrukcji producenta, używać kompatybilnego zasilania USB-C, nie narażać urządzenia na uszkodzenia mechaniczne i przekroczenie parametrów środowiskowych.',
-    warrantyMonths: 24, manualUrl: 'https://eu.nubia.com/en-de/pages/nubia-z70-ultra', videoUrl: 'https://eu.nubia.com/en-de/pages/nubia-z70-ultra',
-  },
-  {
-    brand: 'REDMAGIC', model: '11 Pro', series: 'Gaming',
-    functions: 'Snapdragon 8 Elite Gen 5, chłodzenie AquaCore, AMOLED 2688×1216, 7500 mAh, 80 W, triggery 520 Hz, 5G, NFC.',
-    intendedUse: 'gry mobilne, streaming, multimedia i zastosowania wymagające długotrwałej wysokiej wydajności.',
-    safeUse: 'nie zasłaniać kanałów chłodzenia, stosować zgodne akcesoria i ładowarki, aktualizować oprogramowanie, unikać zawilgocenia poza deklarowaną odpornością.',
-    warrantyMonths: 24, manualUrl: 'https://eu.redmagic.gg/products/redmagic-11-pro/', videoUrl: 'https://eu.redmagic.gg/products/redmagic-11-pro/',
-  },
-  {
-    brand: 'REDMAGIC', model: '10 Pro', series: 'Gaming',
-    functions: 'Snapdragon 8 Elite, ekran 1.5K, aktywne chłodzenie z ciekłym metalem, bateria 7050 mAh, 5G, Dual SIM, Google Pay.',
-    intendedUse: 'gaming, streaming, multimedia, testy aplikacji i mobilna praca wymagająca wysokiej wydajności.',
-    safeUse: 'zapewnić drożność układu chłodzenia, używać zgodnego zasilania, nie wykonywać nieautoryzowanych modyfikacji sprzętowych i przestrzegać instrukcji producenta.',
-    warrantyMonths: 24, manualUrl: 'https://eu.redmagic.gg/products/redmagic-10-pro', videoUrl: 'https://eu.redmagic.gg/products/redmagic-10-pro',
-  },
-  {
-    brand: 'REDMAGIC', model: '10 Air', series: 'Gaming / mobilny',
-    functions: '6,8\" 120 Hz, ICE-X z ciekłym metalem, bateria 6000 mAh, 80 W, triggery 520 Hz, Dual SIM, 5G.',
-    intendedUse: 'gaming mobilny, multimedia i codzienna komunikacja 5G.',
-    safeUse: 'używać zgodnie z instrukcją, nie zasłaniać elementów chłodzenia, stosować akcesoria zgodne ze specyfikacją i regularnie instalować aktualizacje bezpieczeństwa.',
-    warrantyMonths: 24, manualUrl: 'https://eu.redmagic.gg/products/redmagic-10-air', videoUrl: 'https://eu.redmagic.gg/products/redmagic-10-air',
-  },
-  {
-    brand: 'Apple', model: 'iPhone 17 Pro', series: 'Pro',
-    functions: 'smartfon klasy premium z iOS, ekosystemem Apple, funkcjami foto/wideo, łącznością mobilną i funkcjami bezpieczeństwa systemu.',
-    intendedUse: 'komunikacja biznesowa, fotografia i wideo, aplikacje firmowe, praca mobilna i integracja z ekosystemem Apple.',
-    safeUse: 'użytkować zgodnie z podręcznikiem iPhone, stosować certyfikowane akcesoria i aktualizować iOS; serwis wykonywać w uprawnionych punktach.',
-    warrantyMonths: 12, manualUrl: 'https://support.apple.com/pl-pl/docs/iphone', videoUrl: 'https://www.apple.com/pl/iphone/',
-  },
-  {
-    brand: 'Apple', model: 'iPhone 17', series: 'Standard',
-    functions: 'iOS, łączność mobilna, aparat foto/wideo, funkcje prywatności i integracja z usługami Apple.',
-    intendedUse: 'komunikacja, praca mobilna, multimedia i zastosowania biznesowe.',
-    safeUse: 'korzystać zgodnie z instrukcją Apple, używać zgodnego zasilania, chronić przed uszkodzeniem i utrzymywać aktualne oprogramowanie.',
-    warrantyMonths: 12, manualUrl: 'https://support.apple.com/pl-pl/docs/iphone', videoUrl: 'https://www.apple.com/pl/iphone/',
-  },
-  {
-    brand: 'Samsung', model: 'Galaxy S26 Ultra', series: 'Galaxy S / Ultra',
-    functions: 'flagowy smartfon Galaxy z funkcjami foto/wideo, ekranem klasy premium, 5G i rozbudowanymi funkcjami mobilnymi.',
-    intendedUse: 'praca mobilna, fotografia, multimedia, komunikacja 5G i zastosowania profesjonalne.',
-    safeUse: 'stosować się do instrukcji Samsung, używać kompatybilnych ładowarek i akcesoriów, instalować aktualizacje oraz chronić urządzenie przed uszkodzeniami mechanicznymi.',
-    warrantyMonths: 12, manualUrl: 'https://www.samsung.com/pl/support/', videoUrl: 'https://www.samsung.com/pl/smartphones/',
-  },
-  {
-    brand: 'Samsung', model: 'Galaxy Z Fold8', series: 'Galaxy Z / Fold',
-    functions: 'składany smartfon premium z dużym ekranem roboczym, 5G, wielozadaniowością oraz funkcjami foto i produktywności.',
-    intendedUse: 'mobilna praca wielozadaniowa, prezentacje, komunikacja i multimedia.',
-    safeUse: 'nie stosować nadmiernego nacisku na ekran składany, używać zgodnych akcesoriów, utrzymywać urządzenie w czystości i przestrzegać instrukcji producenta.',
-    warrantyMonths: 12, manualUrl: 'https://www.samsung.com/pl/support/', videoUrl: 'https://www.samsung.com/pl/smartphones/',
-  },
-  {
-    brand: 'Samsung', model: 'Galaxy A57 5G', series: 'Galaxy A',
-    functions: 'smartfon 5G klasy biznesowo-użytkowej z funkcjami komunikacyjnymi, aparatem i ekosystemem Samsung.',
-    intendedUse: 'floty firmowe, komunikacja, aplikacje biznesowe i codzienna praca mobilna.',
-    safeUse: 'stosować zgodne zasilanie i akcesoria, aktualizować oprogramowanie, chronić urządzenie i korzystać zgodnie z instrukcją Samsung.',
-    warrantyMonths: 12, manualUrl: 'https://www.samsung.com/pl/support/', videoUrl: 'https://www.samsung.com/pl/smartphones/',
-  },
+  { brand:'nubia',model:'Z80 Ultra',series:'Flagship / foto / gaming',functions:'Ekran OLED klasy premium, wydajna platforma mobilna, zaawansowane foto/wideo, 5G i NFC.',intendedUse:'fotografia mobilna, multimedia, praca mobilna, komunikacja 5G i wymagające aplikacje.',safeUse:'Używać zgodnie z instrukcją producenta i wyłącznie z kompatybilnym zasilaniem.',warrantyMonths:24,manualUrl:'https://eu.nubia.com/pages/nubia-z80-ultra',videoUrl:'https://www.nubia.com/en/products/smartphones/nubia/nubia-z80-ultra.html' },
+  { brand:'nubia',model:'Z70 Ultra',series:'Flagship / foto',functions:'AMOLED klasy premium, 5G, NFC, zaawansowany aparat i szybkie ładowanie.',intendedUse:'fotografia, praca mobilna, multimedia i komunikacja biznesowa.',safeUse:'Przestrzegać instrukcji producenta i parametrów środowiskowych urządzenia.',warrantyMonths:24,manualUrl:'https://eu.nubia.com/en-de/pages/nubia-z70-ultra',videoUrl:'https://eu.nubia.com/en-de/pages/nubia-z70-ultra' },
+  { brand:'REDMAGIC',model:'11 Pro',series:'Gaming',functions:'Flagowa platforma mobilna, aktywne chłodzenie, ekran wysokiej częstotliwości i rozbudowane funkcje gamingowe.',intendedUse:'gry mobilne, streaming, multimedia i długotrwałe zadania wysokiej wydajności.',safeUse:'Nie zasłaniać kanałów chłodzenia; stosować zgodne akcesoria i ładowarki.',warrantyMonths:24,manualUrl:'https://eu.redmagic.gg/products/redmagic-11-pro/',videoUrl:'https://eu.redmagic.gg/products/redmagic-11-pro/' },
+  { brand:'REDMAGIC',model:'10 Pro',series:'Gaming',functions:'Wydajny smartfon gamingowy z aktywnym chłodzeniem, 5G i funkcjami multimedialnymi.',intendedUse:'gaming, streaming, multimedia i mobilna praca wymagająca wysokiej wydajności.',safeUse:'Zapewnić drożność chłodzenia i używać zgodnego zasilania.',warrantyMonths:24,manualUrl:'https://eu.redmagic.gg/products/redmagic-10-pro',videoUrl:'https://eu.redmagic.gg/products/redmagic-10-pro' },
+  { brand:'REDMAGIC',model:'10 Air',series:'Gaming / mobilny',functions:'Smukły smartfon gamingowy z szybkim ekranem, chłodzeniem i 5G.',intendedUse:'gaming mobilny, multimedia i codzienna komunikacja 5G.',safeUse:'Używać zgodnie z instrukcją i nie zasłaniać elementów chłodzenia.',warrantyMonths:24,manualUrl:'https://eu.redmagic.gg/products/redmagic-10-air',videoUrl:'https://eu.redmagic.gg/products/redmagic-10-air' },
+  { brand:'Apple',model:'iPhone Pro',series:'Pro',functions:'Smartfon klasy premium z funkcjami foto/wideo, komunikacji i bezpieczeństwa systemowego.',intendedUse:'komunikacja biznesowa, foto/wideo, aplikacje firmowe i praca mobilna.',safeUse:'Użytkować zgodnie z dokumentacją producenta i stosować certyfikowane akcesoria.',warrantyMonths:12,manualUrl:'https://support.apple.com/pl-pl/docs/iphone',videoUrl:'https://www.apple.com/pl/iphone/' },
+  { brand:'Samsung',model:'Galaxy S Ultra',series:'Galaxy S / Ultra',functions:'Flagowy smartfon z funkcjami foto/wideo, 5G i rozbudowanymi funkcjami mobilnymi.',intendedUse:'praca mobilna, fotografia, multimedia i zastosowania profesjonalne.',safeUse:'Stosować kompatybilne ładowarki i akcesoria oraz instrukcję producenta.',warrantyMonths:12,manualUrl:'https://www.samsung.com/pl/support/',videoUrl:'https://www.samsung.com/pl/smartphones/' },
+  { brand:'Samsung',model:'Galaxy Z Fold',series:'Galaxy Z / Fold',functions:'Składany smartfon premium z dużym ekranem roboczym i wielozadaniowością.',intendedUse:'mobilna praca wielozadaniowa, prezentacje, komunikacja i multimedia.',safeUse:'Chronić ekran składany przed nadmiernym naciskiem i przestrzegać instrukcji producenta.',warrantyMonths:12,manualUrl:'https://www.samsung.com/pl/support/',videoUrl:'https://www.samsung.com/pl/smartphones/' },
+  { brand:'Google',model:'Pixel Pro',series:'Pixel / Pro',functions:'Smartfon premium z rozbudowanymi funkcjami foto, AI i bezpieczeństwa Android.',intendedUse:'praca mobilna, fotografia, komunikacja i produktywność.',safeUse:'Używać zgodnie z instrukcją producenta i zgodnym zasilaniem.',warrantyMonths:12,manualUrl:'https://support.google.com/pixelphone/',videoUrl:'https://store.google.com/category/phones' },
+  { brand:'OnePlus',model:'Flagship',series:'Flagship',functions:'Smartfon premium o wysokiej wydajności, szybkim ekranie i łączności 5G.',intendedUse:'praca, multimedia, komunikacja i wymagające aplikacje.',safeUse:'Używać zgodnie z dokumentacją producenta i kompatybilnymi akcesoriami.',warrantyMonths:12,manualUrl:'https://www.oneplus.com/support',videoUrl:'https://www.oneplus.com/' },
 ];
 
-export const defaultSafetyNotice = 'Produkt należy użytkować wyłącznie zgodnie z instrukcją producenta, przeznaczeniem, parametrami znamionowymi i wymaganiami bezpieczeństwa. Przed zakupem B2B potwierdzane są dokumentacja, zgodność, warunki transportu, zasilania, montażu i eksploatacji.';
-
-export function variantsForCategory(category: string, path: string) {
-  const text = `${category} ${path}`.toLowerCase();
-  if (category === 'Globalne produkty czołowych producentów') return 12;
-  if (/smartfon|audio|video|lighting|maszyn|energia|hospitality|meble/.test(text)) return 12;
-  return 10;
-}
+export const defaultSafetyNotice = 'Produkt należy użytkować wyłącznie zgodnie z instrukcją producenta, przeznaczeniem, parametrami znamionowymi i wymaganiami bezpieczeństwa.';
+export const premiumQualificationNotice = 'Oferta PREMIUM: do publikacji handlowej kwalifikowany jest wyłącznie wariant o podwyższonej jakości wykonania i trwałości, z udokumentowaną specyfikacją producenta oraz dokumentami zgodności/certyfikacji wymaganymi dla danego rodzaju produktu i rynku docelowego. Status dokumentów jest weryfikowany przed zawarciem transakcji; brak potwierdzenia wyklucza produkt z finalnej oferty.';
+export const durabilityNotice = 'Trwałość: wymagane są materiały i wykonanie klasy premium oraz parametry eksploatacyjne odpowiednie do deklarowanego zastosowania. Gwarancja minimum 12 miesięcy; dla produktów wymagających innych norm lub okresów stosuje się wymagania właściwe dla danej kategorii i rynku.';
+export function variantsForCategory(_category: string, _path: string) { return 10; }
