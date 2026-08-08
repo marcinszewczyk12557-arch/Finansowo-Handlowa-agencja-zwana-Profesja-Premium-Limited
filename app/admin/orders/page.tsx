@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import OrderStatusControl from '../../../components/OrderStatusControl';
+import OrderFulfillmentControl from '../../../components/OrderFulfillmentControl';
 import { isOwnerSession, ownerAuthConfigured } from '../../../lib/ownerAuth';
 import { prisma } from '../../../lib/prisma';
 
@@ -32,7 +33,7 @@ export default async function AdminOrders() {
       <main className="section">
         <p className="eyebrow">OWNER • Zamówienia B2B</p>
         <h1>Centrum realizacji zamówień</h1>
-        <p>Osobny widok dla zamówień utworzonych z zaakceptowanych ofert. Status zmieniony tutaj jest od razu widoczny klientowi po bezpiecznym sprawdzeniu numeru sprawy lub zamówienia.</p>
+        <p>Obsługa zaakceptowanych zamówień, dokumentów handlowych, danych wysyłki i statusów realizacji.</p>
 
         <section className="admin-stats">
           <article className="card"><strong>{orders.length}</strong><span>wszystkich zamówień</span></article>
@@ -58,8 +59,25 @@ export default async function AdminOrders() {
                   <p><strong>Produkt / usługa:</strong> {order.product}</p>
                   <p><strong>Ilość:</strong> {order.quantity || '—'}</p>
                   <p><strong>Wartość / budżet:</strong> {order.amount || '—'}</p>
-                  {order.notes ? <p><strong>Uwagi:</strong> {order.notes}</p> : null}
+                  {order.carrier || order.trackingNumber ? <p><strong>Dostawa:</strong> {order.carrier || '—'} {order.trackingNumber ? `• ${order.trackingNumber}` : ''}</p> : null}
+                  {order.estimatedDelivery ? <p><strong>Planowana dostawa:</strong> {order.estimatedDelivery.toLocaleString('pl-PL')}</p> : null}
+                  {order.orderConfirmation ? <p><strong>Potwierdzenie zamówienia:</strong> {order.orderConfirmation}</p> : null}
+                  {order.commercialOffer ? <p><strong>Oferta / wycena:</strong> {order.commercialOffer}</p> : null}
+                  {order.fulfillmentDocument ? <p><strong>Dokument realizacji:</strong> {order.fulfillmentDocument}</p> : null}
                   <OrderStatusControl orderId={order.id} currentStatus={order.status} />
+                  <OrderFulfillmentControl order={{
+                    id: order.id,
+                    shippingMethod: order.shippingMethod,
+                    shippingAddress: order.shippingAddress,
+                    carrier: order.carrier,
+                    trackingNumber: order.trackingNumber,
+                    trackingUrl: order.trackingUrl,
+                    estimatedDelivery: order.estimatedDelivery?.toISOString() || null,
+                    orderConfirmation: order.orderConfirmation,
+                    commercialOffer: order.commercialOffer,
+                    fulfillmentDocument: order.fulfillmentDocument,
+                    notes: order.notes,
+                  }} />
                   <p><small>Utworzono: {order.createdAt.toLocaleString('pl-PL')}</small></p>
                   <p><small>Aktualizacja: {order.updatedAt.toLocaleString('pl-PL')}</small></p>
                 </article>
