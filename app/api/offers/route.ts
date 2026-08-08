@@ -2,6 +2,7 @@ import { randomBytes } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../lib/prisma';
 import { ensureSalesAutomationCase } from '../../../lib/salesAutomation';
+import { syncTransactionFormalities } from '../../../lib/transactionFormalities';
 
 function text(value: unknown, max = 500) {
   return typeof value === 'string' ? value.trim().replace(/\u0000/g, '').slice(0, max) : '';
@@ -59,13 +60,19 @@ export async function POST(request: Request) {
       },
     });
 
+    const financingRequested = body.financingRequested === true;
+    const financingAmount = text(body.financingAmount, 120) || null;
+
     try {
-      await ensureSalesAutomationCase(offer.id, {
-        financingRequested: body.financingRequested === true,
-        financingAmount: text(body.financingAmount, 120) || null,
-      });
+      await ensureSalesAutomationCase(offer.id, { financingRequested, financingAmount });
     } catch (automationError) {
       console.error('Sales automation initialization failed', automationError);
+    }
+
+    try {
+      await syncTransactionFormalities(offer.id, { financingRequested, financingAmount });
+    } catch (formalitiesError) {
+      console.error('Transaction formalities initialization failed', formalitiesError);
     }
 
     const { id: _id, ...publicOffer } = offer;
