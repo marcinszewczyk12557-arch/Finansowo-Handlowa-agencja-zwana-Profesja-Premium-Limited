@@ -63,8 +63,34 @@ export default function Home() {
     <>
       <Header />
       <main className="premium-home">
+        <section
+          aria-label="Dni otwarcia i obsługa B2B"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 20,
+            padding: '14px 24px',
+            borderBottom: '1px solid #2f373b',
+            background: 'linear-gradient(90deg, rgba(192,155,70,.14), rgba(8,15,19,.96))',
+          }}
+        >
+          <div>
+            <strong style={{ color: '#f0d778', letterSpacing: '.16em' }}>DNI OTWARCIA</strong>
+            <span style={{ marginLeft: 14, color: '#d8d8d8' }}>Obsługa zapytań B2B i wycen indywidualnych online</span>
+          </div>
+          <Link href="/contact" style={{ color: '#f0d778', fontWeight: 700, textDecoration: 'none' }}>
+            KONTAKT →
+          </Link>
+        </section>
+
         <section className="commerce-hero">
           <div className="commerce-hero__brand">
+            <img
+              src="/profesja-logo.svg"
+              alt="Logo PROFESJA PREMIUM LIMITED"
+              style={{ width: 112, height: 112, objectFit: 'contain', marginBottom: 12 }}
+            />
             <p className="eyebrow">Agencja Finansowo-Handlowa B2B</p>
             <h1>PROFESJA</h1>
             <div className="brand-gold">PREMIUM LIMITED™</div>
