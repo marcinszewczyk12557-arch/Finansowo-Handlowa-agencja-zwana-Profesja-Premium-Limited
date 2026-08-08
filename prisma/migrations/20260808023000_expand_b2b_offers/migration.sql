@@ -1,4 +1,31 @@
--- Expand the existing Offer model for real B2B inquiry intake.
+-- Initial/upgrade-safe schema for PROFESJA B2B data.
+CREATE TABLE IF NOT EXISTS "User" (
+  "id" SERIAL PRIMARY KEY,
+  "companyName" TEXT NOT NULL,
+  "name" TEXT NOT NULL,
+  "email" TEXT NOT NULL,
+  "password" TEXT NOT NULL,
+  "role" TEXT NOT NULL DEFAULT 'CLIENT',
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS "Product" (
+  "id" SERIAL PRIMARY KEY,
+  "name" TEXT NOT NULL,
+  "description" TEXT NOT NULL,
+  "category" TEXT NOT NULL,
+  "price" TEXT NOT NULL,
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS "Offer" (
+  "id" SERIAL PRIMARY KEY,
+  "number" TEXT NOT NULL,
+  "product" TEXT NOT NULL,
+  "status" TEXT NOT NULL DEFAULT 'NEW',
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 ALTER TABLE "Offer"
   ADD COLUMN IF NOT EXISTS "company" TEXT,
   ADD COLUMN IF NOT EXISTS "contact" TEXT NOT NULL DEFAULT '',
@@ -9,6 +36,7 @@ ALTER TABLE "Offer"
   ADD COLUMN IF NOT EXISTS "budget" TEXT,
   ADD COLUMN IF NOT EXISTS "details" TEXT;
 
+CREATE UNIQUE INDEX IF NOT EXISTS "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX IF NOT EXISTS "Offer_number_key" ON "Offer"("number");
 CREATE INDEX IF NOT EXISTS "Offer_email_idx" ON "Offer"("email");
 CREATE INDEX IF NOT EXISTS "Offer_status_idx" ON "Offer"("status");
