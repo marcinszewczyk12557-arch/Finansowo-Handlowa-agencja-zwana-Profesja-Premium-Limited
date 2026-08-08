@@ -11,13 +11,22 @@
 - [x] © Wszelkie prawa zastrzeżone.
 - [x] Brak agresywnych animacji / 3D.
 
-## B. Katalog
+## B. Katalog — aktualny model
 
-- [x] 18 kategorii.
-- [x] 72 karty produktowe.
+- [x] Usunięto historyczne założenie stałej liczby „18 kategorii / 72 karty”.
+- [x] Kategorie są tworzone dynamicznie z aktualnie zakwalifikowanych, unikalnych ofert.
+- [x] Kliknięcie kategorii pokazuje wyłącznie oferty należące do wybranej kategorii.
+- [x] Globalna deduplikacja po identyfikatorze i tytule oferty.
 - [x] Karty produktu prowadzą do zapytania B2B.
-- [x] Produkt jest przekazywany automatycznie do formularza.
-- [x] Dokumentacja, gwarancja i materiały są oznaczane jako wymagające potwierdzenia dla konkretnego wariantu.
+- [x] Produkt i kategoria są przekazywane automatycznie do formularza.
+- [x] Każda karta zawiera: „Do czego można użyć”, „Przeznaczenie” i „Jaką funkcję spełnia”.
+- [x] Publiczna oferta wymaga przejścia centralnej bramki dowodowej dostawcy.
+- [x] Publiczna oferta wymaga statusu Verified Supplier.
+- [x] Publiczna oferta wymaga minimum 3 lat stażu dostawcy na Alibaba.com.
+- [x] Ogólny link do Trade Assurance nie jest uznawany za wystarczający dowód.
+- [x] Wymagane jest dostawca-/oferta-specyficzne potwierdzenie Trade Assurance.
+- [x] Każda realna transakcja wymaga ponownej kwalifikacji Trade Assurance przed płatnością.
+- [x] Kandydaci bez pełnego zestawu dowodów pozostają poza katalogiem publicznym.
 
 ## C. Proces klienta
 
@@ -72,6 +81,8 @@
 - [x] Walidacja publicznego endpointu ofert.
 - [x] Kryptograficzne numery referencyjne.
 - [x] `/api/health`.
+- [x] Centralny `supplierEvidenceRegistry` jako bramka publikacji ofert.
+- [x] Polityka kwalifikacji dostawców wymuszająca Verified Supplier + staż >= 3 lata + Trade Assurance dla konkretnej transakcji.
 
 ## G. SEO i publikacja
 
@@ -89,32 +100,36 @@
 - [x] BRAND_GUIDELINES.md.
 - [x] B2B_AGREEMENT_TEMPLATE.md.
 - [x] SALES_AUTOMATION_POLICY.md.
+- [x] `SUPPLIER_QUALIFICATION_POLICY.md`.
+- [x] Rejestr i audyt dowodów dostawców.
 - [x] Regulamin serwisu.
 - [x] Polityka prywatności opisująca faktyczne przepływy danych.
 
-## I. Automatyczne testy
+## I. Automatyczne testy i deployment
 
 - [x] Build Check — Node 24.
 - [x] Migration Check — świeży PostgreSQL 16.
 - [x] Production Smoke Test przygotowany.
+- [x] Najnowszy sprawdzony deployment katalogu na właściwych projektach Vercel osiągnął `success`.
+- [x] Dodatkowy historyczny projekt z limitem buildów nie jest traktowany jako kanoniczne źródło prawdy.
 
 ## J. Elementy wymagające środowiska produkcyjnego / danych właściciela
 
-Poniższe elementy nie mogą być zakończone samym kodem repozytorium:
+Poniższe elementy nie mogą być uczciwie oznaczone jako zakończone wyłącznie na podstawie kodu repozytorium i statusu CI:
 
-- [ ] jeden kanoniczny Vercel deployment ma status `success`,
-- [ ] Vercel Root Directory = `./`,
-- [ ] projekt Vercel używa Node 24,
-- [ ] ustawiony produkcyjny `DATABASE_URL`,
+- [ ] potwierdzony jeden kanoniczny adres produkcyjny i przypisanie go do właściwego projektu,
+- [ ] Vercel Root Directory = `./` potwierdzone w ustawieniach projektu,
+- [ ] projekt Vercel używa Node 24 — potwierdzone w ustawieniach produkcyjnych,
+- [ ] ustawiony i przetestowany produkcyjny `DATABASE_URL`,
 - [ ] ustawione rzeczywiste sekrety OWNER,
 - [ ] ustawiony osobny `CRON_SECRET`,
 - [ ] wykonane `prisma migrate deploy` na produkcyjnej bazie,
-- [ ] `/api/health` zwraca gotowość aplikacji i bazy,
+- [ ] `/api/health` zwraca gotowość aplikacji i produkcyjnej bazy,
 - [ ] `/api/cron/sales-automation` działa wyłącznie z prawidłowym `CRON_SECRET`,
-- [ ] Production Smoke Test przechodzi na finalnym URL,
+- [ ] Production Smoke Test przechodzi na finalnym kanonicznym URL,
 - [ ] wzór umowy B2B uzupełniony o prawdziwe dane rejestrowe i zatwierdzony prawnie,
 - [ ] regulamin i polityka prywatności uzupełnione o prawdziwe dane administratora/podmiotu i zatwierdzone przed uruchomieniem sprzedaży.
 
 ## Warunek końcowego odbioru LIVE
 
-Projekt otrzymuje status **LIVE / PRODUCTION ACCEPTED** po zaznaczeniu wszystkich pozycji w sekcji J.
+Projekt otrzymuje status **LIVE / PRODUCTION ACCEPTED** dopiero po zaznaczeniu wszystkich pozycji w sekcji J. Sukces samego deploymentu Vercel nie jest utożsamiany z pełnym odbiorem operacyjnym i prawnym.
