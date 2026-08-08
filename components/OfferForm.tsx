@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
 
 type SubmissionResult = {
@@ -74,6 +75,10 @@ export default function OfferForm() {
           <strong>Zapytanie zostało przyjęte.</strong><br />
           Numer sprawy: <b>{result.number}</b><br />
           Status: {result.status}. Zachowaj numer do dalszego kontaktu i śledzenia obsługi.
+          <div className="cta-row" style={{ marginTop: 16 }}>
+            <Link href="/dashboard"><button type="button">PRZEJDŹ DO PANELU KLIENTA</button></Link>
+            <Link href="/catalog"><button type="button" className="cta-secondary">WRÓĆ DO KATALOGU</button></Link>
+          </div>
         </div>
       ) : null}
       {error ? <p className="form-status" role="alert">{error}</p> : null}
