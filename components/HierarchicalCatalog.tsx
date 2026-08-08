@@ -5,6 +5,7 @@ import { strictPublicOffers } from '../data/strictQualifiedOffers';
 import { strictPublicOfficeOffers } from '../data/strictQualifiedOffersOffice';
 import { strictPublicOffersExpansion2 } from '../data/strictQualifiedOffersExpansion2';
 import { strictPublicCashHandlingOffers } from '../data/strictQualifiedOffersCashHandling';
+import { strictPublicWaterOffers } from '../data/strictQualifiedOffersWater';
 
 function visual(label:string){
   const safe=label.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -14,7 +15,7 @@ function visual(label:string){
 
 export default function HierarchicalCatalog(){
   const offers=useMemo(()=>{
-    const combined=[...strictPublicOffers(),...strictPublicOfficeOffers(),...strictPublicOffersExpansion2(),...strictPublicCashHandlingOffers()];
+    const combined=[...strictPublicOffers(),...strictPublicOfficeOffers(),...strictPublicOffersExpansion2(),...strictPublicCashHandlingOffers(),...strictPublicWaterOffers()];
     const ids=new Set<string>();
     const titles=new Set<string>();
     return combined.filter((offer)=>{
