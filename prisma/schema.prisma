@@ -27,21 +27,22 @@ model Product {
 }
 
 model Offer {
-  id        Int      @id @default(autoincrement())
-  number    String   @unique
-  company   String?
-  contact   String
-  email     String
-  phone     String?
-  product   String
-  quantity  String?
-  market    String?
-  budget    String?
-  details   String?
-  status    String   @default("NEW")
-  createdAt DateTime @default(now())
-  order     Order?
-  automation SalesAutomationCase?
+  id          Int      @id @default(autoincrement())
+  number      String   @unique
+  company     String?
+  contact     String
+  email       String
+  phone       String?
+  product     String
+  quantity    String?
+  market      String?
+  budget      String?
+  details     String?
+  status      String   @default("NEW")
+  createdAt   DateTime @default(now())
+  order       Order?
+  automation  SalesAutomationCase?
+  formalities TransactionFormalities?
 
   @@index([email])
   @@index([status])
@@ -49,32 +50,32 @@ model Offer {
 }
 
 model Order {
-  id                 Int      @id @default(autoincrement())
-  number             String   @unique
-  offerId            Int      @unique
-  company            String?
-  contact            String
-  email              String
-  product            String
-  quantity           String?
-  amount             String?
-  status             String   @default("CREATED")
-  notes              String?
-  shippingMethod     String?
-  shippingAddress    String?
-  carrier            String?
-  trackingNumber     String?
-  trackingUrl        String?
-  estimatedDelivery  DateTime?
-  confirmedAt        DateTime?
-  shippedAt          DateTime?
-  deliveredAt        DateTime?
-  orderConfirmation  String?
-  commercialOffer    String?
+  id                   Int      @id @default(autoincrement())
+  number               String   @unique
+  offerId              Int      @unique
+  company              String?
+  contact              String
+  email                String
+  product              String
+  quantity             String?
+  amount               String?
+  status               String   @default("CREATED")
+  notes                String?
+  shippingMethod       String?
+  shippingAddress      String?
+  carrier              String?
+  trackingNumber       String?
+  trackingUrl          String?
+  estimatedDelivery    DateTime?
+  confirmedAt          DateTime?
+  shippedAt            DateTime?
+  deliveredAt          DateTime?
+  orderConfirmation    String?
+  commercialOffer      String?
   fulfillmentDocument String?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-  offer              Offer    @relation(fields: [offerId], references: [id], onDelete: Restrict)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  offer                Offer    @relation(fields: [offerId], references: [id], onDelete: Restrict)
 
   @@index([status])
   @@index([email])
@@ -105,15 +106,52 @@ model SalesAutomationCase {
 }
 
 model SalesAutomationEvent {
-  id        Int      @id @default(autoincrement())
-  caseId    Int
-  type      String
-  message   String
-  createdAt DateTime @default(now())
+  id             Int                 @id @default(autoincrement())
+  caseId         Int
+  type           String
+  message        String
+  createdAt      DateTime            @default(now())
   automationCase SalesAutomationCase @relation(fields: [caseId], references: [id], onDelete: Cascade)
 
   @@index([caseId])
   @@index([createdAt])
+}
+
+model TransactionFormalities {
+  id                           Int      @id @default(autoincrement())
+  offerId                      Int      @unique
+  sourceDocumentVersion        String   @default("FORMALNOSCI-PPL-2026-08-08")
+  sourceDocumentName           String   @default("formalności projektu Profesja Premium Limited.pdf")
+  productSnapshot              String?
+  quantitySnapshot             String?
+  marketSnapshot               String?
+  valueSnapshot                String?
+  financingRequested           Boolean  @default(false)
+  financingAmount              String?
+  shippingMethodSnapshot       String?
+  shippingAddressSnapshot      String?
+  estimatedDeliverySnapshot    DateTime?
+  negotiationStatus            String   @default("COLLECTING_FACTS")
+  clientDeclarationStatus      String   @default("PENDING")
+  insuranceConsentStatus       String   @default("PENDING")
+  shippingConsentStatus        String   @default("PENDING")
+  businessUseConsentStatus     String   @default("PENDING")
+  interestConsentStatus        String   @default("PENDING")
+  intermediationConsentStatus  String   @default("PENDING")
+  monthlySettlementStatus      String   @default("PENDING")
+  earlyTerminationStatus       String   @default("PENDING")
+  finalSignatureStatus         String   @default("PENDING")
+  signatureMethod              String?
+  signedAt                     DateTime?
+  autoFilledAt                 DateTime?
+  lastNegotiationAt            DateTime?
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
+  offer                        Offer    @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@index([negotiationStatus])
+  @@index([finalSignatureStatus])
+  @@index([updatedAt])
 }
 
 model OwnerLoginAttempt {
