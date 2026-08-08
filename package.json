@@ -5,10 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@prisma/client": "6.19.0",
     "next": "latest",
+    "prisma": "6.19.0",
     "react": "latest",
     "react-dom": "latest"
   },
