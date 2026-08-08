@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers';
-import { createHmac, timingSafeEqual } from 'node:crypto';
+import { createHmac, scryptSync, timingSafeEqual } from 'node:crypto';
 
 const COOKIE = 'profesja_owner_session';
 const MAX_AGE = 60 * 60 * 8;
@@ -13,15 +13,17 @@ function sign(value: string) {
 }
 
 export function ownerAuthConfigured() {
-  return Boolean(process.env.OWNER_EMAIL && process.env.OWNER_PASSWORD && secret());
+  return Boolean(process.env.OWNER_EMAIL && process.env.OWNER_PASSWORD_HASH && process.env.OWNER_PASSWORD_SALT && secret());
 }
 
 export function verifyOwnerCredentials(email: string, password: string) {
   const expectedEmail = process.env.OWNER_EMAIL || '';
-  const expectedPassword = process.env.OWNER_PASSWORD || '';
-  if (!expectedEmail || !expectedPassword || !secret()) return false;
-  const a = Buffer.from(password);
-  const b = Buffer.from(expectedPassword);
+  const expectedHash = process.env.OWNER_PASSWORD_HASH || '';
+  const salt = process.env.OWNER_PASSWORD_SALT || '';
+  if (!expectedEmail || !expectedHash || !salt || !secret()) return false;
+  const actual = scryptSync(password, salt, 64).toString('hex');
+  const a = Buffer.from(actual, 'hex');
+  const b = Buffer.from(expectedHash, 'hex');
   const passwordOk = a.length === b.length && timingSafeEqual(a, b);
   return email.trim().toLowerCase() === expectedEmail.trim().toLowerCase() && passwordOk;
 }
