@@ -1,6 +1,8 @@
+import { randomBytes } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { isOwnerSession } from '../../../../lib/ownerAuth';
 import { prisma } from '../../../../lib/prisma';
+import { ensureSalesAutomationCase } from '../../../../lib/salesAutomation';
 
 const ORDER_STATUSES = ['CREATED', 'CONFIRMED', 'IN_PROGRESS', 'READY_TO_SHIP', 'SHIPPED', 'DELIVERED', 'COMPLETED', 'CANCELLED'] as const;
 
@@ -18,7 +20,7 @@ function optionalDate(value: unknown) {
 function orderNumber() {
   const now = new Date();
   const date = now.toISOString().slice(0, 10).replace(/-/g, '');
-  const random = Math.random().toString(36).slice(2, 8).toUpperCase();
+  const random = randomBytes(4).toString('hex').toUpperCase();
   return `ORD-${date}-${random}`;
 }
 
@@ -54,6 +56,12 @@ export async function POST(request: Request) {
         notes: offer.details,
       },
     });
+
+    try {
+      await ensureSalesAutomationCase(offer.id);
+    } catch (automationError) {
+      console.error('Sales automation sync after order creation failed', automationError);
+    }
 
     return NextResponse.json({ ok: true, order }, { status: 201 });
   } catch (error) {
@@ -104,7 +112,15 @@ export async function PATCH(request: Request) {
     const order = await prisma.order.update({
       where: { id: orderId },
       data,
+      select: { id: true, offerId: true, number: true, status: true },
     });
+
+    try {
+      await ensureSalesAutomationCase(order.offerId);
+    } catch (automationError) {
+      console.error('Sales automation sync after order update failed', automationError);
+    }
+
     return NextResponse.json({ ok: true, order });
   } catch (error) {
     console.error('OWNER order update failed', error);
