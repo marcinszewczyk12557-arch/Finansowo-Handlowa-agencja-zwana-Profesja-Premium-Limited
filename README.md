@@ -14,6 +14,9 @@ Kompletna aplikacja B2B dla Finansowo-Handlowej Agencji PROFESJA PREMIUM LIMITED
 - automatyczne uzupełnianie faktów negocjacyjno-transakcyjnych bez automatycznego podpisywania zgód,
 - workflow ofert i realizacji zamówień,
 - logistyka, przewoźnik, tracking i terminy dostawy,
+- VELOX LOGISTICS — moduł dyspozytorski transportu door-to-door,
+- BIOVERA — sklep/moduł detaliczny w budowie, bez aktywnej sprzedaży produktów regulowanych,
+- sklepy internetowe w budowie pod `/shops`,
 - dokumenty handlowe przygotowane do druku / PDF,
 - PostgreSQL + Prisma,
 - migracje produkcyjne,
@@ -70,6 +73,9 @@ Publiczne:
 - `/products/[id]`
 - `/offers/new`
 - `/dashboard`
+- `/shops`
+- `/shops/velox-logistics`
+- `/shops/biovera`
 - `/about`
 - `/contact`
 - `/terms`
@@ -84,6 +90,7 @@ OWNER:
 - `/admin/products`
 - `/admin/offers`
 - `/admin/orders`
+- `/admin/dispatch`
 - `/admin/orders/[id]/document/[type]`
 
 Systemowe:
@@ -100,9 +107,10 @@ Systemowe:
 7. Jeżeli występuje finansowanie, system prowadzi ścieżkę operacyjną, ale decyzję podejmuje wyłącznie uprawniony partner finansujący.
 8. Po potwierdzonej akceptacji i wymaganych formalnościach może zostać utworzone zamówienie `ORD-...`.
 9. Zamówienie przechodzi statusy realizacji i logistyki, a fakty logistyczne są synchronizowane z pakietem formalności.
-10. OWNER może przygotować potwierdzenie zamówienia, ofertę handlową i dokument realizacji.
-11. Klient może sprawdzić etap sprawy/zamówienia po numerze i adresie e-mail.
-12. Dzienny reconciliation job kontroluje spójność wszystkich spraw; OWNER może uruchomić pełną synchronizację również ręcznie.
+10. Dla VELOX operator może prowadzić osobny workflow dyspozytorski: przyjęcie → wybór przewoźnika → planowanie odbioru → odbiór → transport → doręczenie.
+11. OWNER może przygotować potwierdzenie zamówienia, ofertę handlową i dokument realizacji.
+12. Klient może sprawdzić etap sprawy/zamówienia po numerze i adresie e-mail, w tym bezpieczny status VELOX.
+13. Dzienny reconciliation job kontroluje spójność wszystkich spraw; OWNER może uruchomić pełną synchronizację również ręcznie.
 
 ## Poufność automatyzacji
 
@@ -128,7 +136,8 @@ Log audytowy zapisuje etap i kategorię ograniczenia, ale nie kopiuje treści ch
 - publiczne endpointy ograniczają i walidują dane wejściowe,
 - harmonogram automatyzacji wymaga `CRON_SECRET`,
 - decyzje finansowe nie są podejmowane autonomicznie przez aplikację,
-- zgody, podpisy i oświadczenia woli pozostają human-in-the-loop.
+- zgody, podpisy i oświadczenia woli pozostają human-in-the-loop,
+- BIOVERA nie uruchamia sprzedaży produktów regulowanych bez odrębnego potwierdzenia zgodności prawnej i operacyjnej.
 
 ## CI / QA
 
@@ -153,6 +162,8 @@ Warunek uznania produkcji za zakończoną:
 - `/api/health` zwraca gotowość aplikacji i bazy,
 - Production Smoke Test przechodzi w całości.
 
+Aktualny stan zamknięcia projektu znajduje się w `PROJECT_COMPLETION.md`.
+
 ## Dokumentacja dodatkowa
 
 - `BRAND_GUIDELINES.md` — podstawowe zasady identyfikacji wizualnej i komunikacji,
@@ -160,6 +171,7 @@ Warunek uznania produkcji za zakończoną:
 - `SALES_AUTOMATION_POLICY.md` — zasady automatyzacji, poufności i human-in-the-loop,
 - `TRANSACTION_MANAGEMENT_PROCEDURE.md` — procedura zarządczo-wykonawcza i reguły automatycznego uzupełniania formalności,
 - `docs/FORMALITIES_SOURCE_MANIFEST.md` — rejestr integralności dokumentu źródłowego formalności,
-- `DEPLOYMENT.md` — procedura wdrożenia.
+- `DEPLOYMENT.md` — procedura wdrożenia,
+- `PROJECT_COMPLETION.md` — końcowy status projektu.
 
 © PROFESJA PREMIUM LIMITED™ — Wszelkie prawa zastrzeżone.
