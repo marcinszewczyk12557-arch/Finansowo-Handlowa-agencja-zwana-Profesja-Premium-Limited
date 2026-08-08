@@ -62,14 +62,14 @@ export default function Dashboard() {
 
           <article className="card">
             <h2>Katalog premium</h2>
-            <p>Przeglądaj aktualne kategorie i pozycje przygotowane do indywidualnej wyceny.</p>
+            <p>Przeglądaj aktualne kategorie i pozycje przygotowane do indywidualnej wyceny B2B.</p>
             <Link href="/catalog"><button>Otwórz katalog</button></Link>
           </article>
 
           <article className="card">
-            <h2>Finansowanie B2B</h2>
-            <p>Skorzystaj z orientacyjnego kalkulatora finansowania. Ostateczne warunki zależą od konkretnej oferty finansującej.</p>
-            <Link href="/#raty"><button>Policz ratę</button></Link>
+            <h2>Indywidualna wycena B2B</h2>
+            <p>Końcowe warunki handlowe, dostępność, dostawa i ewentualne finansowanie są ustalane dla konkretnego zapytania i zatwierdzonej oferty.</p>
+            <Link href="/offers/new"><button>Poproś o wycenę</button></Link>
           </article>
         </section>
 
