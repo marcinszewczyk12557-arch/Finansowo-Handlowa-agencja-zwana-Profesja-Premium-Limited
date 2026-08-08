@@ -4,31 +4,36 @@ on:
   workflow_dispatch:
     inputs:
       base_url:
-        description: Production base URL, e.g. https://example.vercel.app
-        required: true
+        description: Production base URL
+        required: false
+        default: https://profesja-premium-limited.vercel.app
         type: string
 
 jobs:
   smoke:
     runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ inputs.base_url || 'https://profesja-premium-limited.vercel.app' }}
     steps:
+      - name: Show target
+        run: echo "Testing ${BASE_URL}"
       - name: Check home page
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error --location --max-time 20 "${{ inputs.base_url }}/" >/dev/null
+          curl --fail --silent --show-error --location --max-time 20 "${BASE_URL}/" >/dev/null
       - name: Check catalog
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error --location --max-time 20 "${{ inputs.base_url }}/catalog" >/dev/null
+          curl --fail --silent --show-error --location --max-time 20 "${BASE_URL}/catalog" >/dev/null
       - name: Check offer form
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error --location --max-time 20 "${{ inputs.base_url }}/offers/new" >/dev/null
+          curl --fail --silent --show-error --location --max-time 20 "${BASE_URL}/offers/new" >/dev/null
       - name: Check client dashboard
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error --location --max-time 20 "${{ inputs.base_url }}/dashboard" >/dev/null
+          curl --fail --silent --show-error --location --max-time 20 "${BASE_URL}/dashboard" >/dev/null
       - name: Check application and database readiness
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error --location --max-time 20 "${{ inputs.base_url }}/api/health"
+          curl --fail --silent --show-error --location --max-time 20 "${BASE_URL}/api/health"
