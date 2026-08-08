@@ -41,6 +41,7 @@ model Offer {
   status    String   @default("NEW")
   createdAt DateTime @default(now())
   order     Order?
+  automation SalesAutomationCase?
 
   @@index([email])
   @@index([status])
@@ -79,6 +80,40 @@ model Order {
   @@index([email])
   @@index([createdAt])
   @@index([trackingNumber])
+}
+
+model SalesAutomationCase {
+  id                        Int      @id @default(autoincrement())
+  offerId                   Int      @unique
+  mode                      String   @default("SALES")
+  stage                     String   @default("INTAKE")
+  financingRequested        Boolean  @default(false)
+  financingAmount           String?
+  financingStatus           String   @default("NOT_REQUESTED")
+  confidentialityLevel      String   @default("STRICT")
+  externalDisclosureAllowed Boolean  @default(false)
+  nextAction                String?
+  lastRunAt                 DateTime?
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+  offer                     Offer    @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  events                    SalesAutomationEvent[]
+
+  @@index([stage])
+  @@index([financingStatus])
+  @@index([updatedAt])
+}
+
+model SalesAutomationEvent {
+  id        Int      @id @default(autoincrement())
+  caseId    Int
+  type      String
+  message   String
+  createdAt DateTime @default(now())
+  automationCase SalesAutomationCase @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@index([caseId])
+  @@index([createdAt])
 }
 
 model OwnerLoginAttempt {
