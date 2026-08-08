@@ -9,6 +9,7 @@ Kompletna aplikacja B2B dla Finansowo-Handlowej Agencji PROFESJA PREMIUM LIMITED
 - indywidualne zapytania ofertowe B2B,
 - panel klienta i bezpieczne sprawdzanie statusu sprawy/zamówienia,
 - panel OWNER do obsługi ofert i zamówień,
+- Automatyzacja Finansowo‑Sprzedażowa z polityką poufności STRICT,
 - workflow ofert i realizacji zamówień,
 - logistyka, przewoźnik, tracking i terminy dostawy,
 - dokumenty handlowe przygotowane do druku / PDF,
@@ -46,6 +47,7 @@ Wymagane dla pełnej wersji produkcyjnej:
 - `OWNER_PASSWORD_HASH`
 - `OWNER_SESSION_SECRET`
 - `NEXT_PUBLIC_SITE_URL`
+- `CRON_SECRET` — oddzielny, losowy sekret zabezpieczający harmonogram automatyzacji
 
 Sekretów i haseł nie należy commitować do repozytorium.
 
@@ -76,20 +78,41 @@ OWNER:
 - `/owner/login`
 - `/owner`
 - `/admin`
+- `/admin/automation`
 - `/admin/products`
 - `/admin/offers`
 - `/admin/orders`
 - `/admin/orders/[id]/document/[type]`
 
+Systemowe:
+- `/api/cron/sales-automation` — zabezpieczony `CRON_SECRET` endpoint kontroli automatyzacji
+
 ## Proces B2B
 
 1. Klient wybiera produkt lub składa indywidualne zapytanie.
-2. System tworzy numer sprawy `PPL-...`.
-3. OWNER prowadzi sprawę przez statusy oferty.
-4. Po akceptacji OWNER tworzy zamówienie `ORD-...`.
-5. Zamówienie przechodzi statusy realizacji i logistyki.
-6. OWNER może przygotować potwierdzenie zamówienia, ofertę handlową i dokument realizacji.
-7. Klient może sprawdzić etap sprawy/zamówienia po numerze i adresie e-mail.
+2. System tworzy numer sprawy `PPL-...` oraz sprawę automatyzacji.
+3. Automatyzacja synchronizuje etap procesu i wskazuje następną czynność.
+4. OWNER prowadzi warunki handlowe i rejestruje akceptację klienta.
+5. Jeżeli występuje finansowanie, system prowadzi ścieżkę operacyjną, ale decyzję podejmuje wyłącznie uprawniony partner finansujący.
+6. Po potwierdzonej akceptacji może zostać utworzone zamówienie `ORD-...`.
+7. Zamówienie przechodzi statusy realizacji i logistyki.
+8. OWNER może przygotować potwierdzenie zamówienia, ofertę handlową i dokument realizacji.
+9. Klient może sprawdzić etap sprawy/zamówienia po numerze i adresie e-mail.
+10. Dzienny reconciliation job kontroluje spójność wszystkich spraw; OWNER może uruchomić pełną synchronizację również ręcznie.
+
+## Poufność automatyzacji
+
+Każda sprawa ma domyślnie `STRICT` oraz `externalDisclosureAllowed = false`.
+
+Automatyzacja nie ujawnia ani nie eksportuje automatycznie:
+- informacji o konkurencji i relacjach zawodowych z konkurencją,
+- informacji z miejsca pracy,
+- danych osobowych,
+- tajemnicy handlowej,
+- źródeł dostaw, danych dostawców i hurtowników,
+- marż, cen zakupowych i innych wewnętrznych danych handlowych.
+
+Log audytowy zapisuje etap i kategorię ograniczenia, ale nie kopiuje treści chronionych. Szczegóły znajdują się w `SALES_AUTOMATION_POLICY.md`.
 
 ## Bezpieczeństwo
 
@@ -98,7 +121,9 @@ OWNER:
 - blokada seryjnych prób logowania,
 - brak indeksowania paneli administracyjnych,
 - brak publikacji danych dostawców i wewnętrznych danych operacyjnych,
-- publiczne endpointy ograniczają i walidują dane wejściowe.
+- publiczne endpointy ograniczają i walidują dane wejściowe,
+- harmonogram automatyzacji wymaga `CRON_SECRET`,
+- decyzje finansowe nie są podejmowane autonomicznie przez aplikację.
 
 ## CI / QA
 
@@ -119,6 +144,7 @@ Warunek uznania produkcji za zakończoną:
 - deployment Vercel = success,
 - produkcyjny PostgreSQL działa,
 - migracje są wdrożone,
+- `CRON_SECRET` jest skonfigurowany,
 - `/api/health` zwraca gotowość aplikacji i bazy,
 - Production Smoke Test przechodzi w całości.
 
@@ -126,6 +152,7 @@ Warunek uznania produkcji za zakończoną:
 
 - `BRAND_GUIDELINES.md` — podstawowe zasady identyfikacji wizualnej i komunikacji,
 - `B2B_AGREEMENT_TEMPLATE.md` — roboczy wzór umowy handlowej B2B,
+- `SALES_AUTOMATION_POLICY.md` — zasady automatyzacji, poufności i human-in-the-loop,
 - `DEPLOYMENT.md` — procedura wdrożenia.
 
 © PROFESJA PREMIUM LIMITED™ — Wszelkie prawa zastrzeżone.
