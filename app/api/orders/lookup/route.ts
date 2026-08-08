@@ -5,6 +5,32 @@ function clean(value: string | null, max = 254) {
   return (value || '').trim().slice(0, max);
 }
 
+const formalitiesSelect = {
+  sourceDocumentVersion: true,
+  negotiationStatus: true,
+  productSnapshot: true,
+  quantitySnapshot: true,
+  marketSnapshot: true,
+  valueSnapshot: true,
+  financingRequested: true,
+  financingAmount: true,
+  shippingMethodSnapshot: true,
+  estimatedDeliverySnapshot: true,
+  clientDeclarationStatus: true,
+  insuranceConsentStatus: true,
+  shippingConsentStatus: true,
+  businessUseConsentStatus: true,
+  interestConsentStatus: true,
+  intermediationConsentStatus: true,
+  monthlySettlementStatus: true,
+  earlyTerminationStatus: true,
+  finalSignatureStatus: true,
+  signatureMethod: true,
+  signedAt: true,
+  autoFilledAt: true,
+  updatedAt: true,
+} as const;
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const reference = clean(searchParams.get('reference'), 80);
@@ -42,7 +68,12 @@ export async function GET(request: Request) {
         fulfillmentDocument: true,
         createdAt: true,
         updatedAt: true,
-        offer: { select: { number: true } },
+        offer: {
+          select: {
+            number: true,
+            formalities: { select: formalitiesSelect },
+          },
+        },
       },
     });
 
@@ -52,7 +83,13 @@ export async function GET(request: Request) {
 
     const offer = await prisma.offer.findFirst({
       where: { number: reference, email },
-      select: { number: true, product: true, status: true, createdAt: true },
+      select: {
+        number: true,
+        product: true,
+        status: true,
+        createdAt: true,
+        formalities: { select: formalitiesSelect },
+      },
     });
 
     if (offer) {
@@ -61,7 +98,7 @@ export async function GET(request: Request) {
           ok: true,
           kind: 'offer',
           offer,
-          message: 'Zapytanie istnieje w systemie, ale zamówienie nie zostało jeszcze utworzone. Aktualny etap sprawy jest widoczny poniżej.',
+          message: 'Zapytanie istnieje w systemie. Dane formalności są uzupełniane z przebiegu negocjacji i transakcji, natomiast zgody i podpis wymagają odrębnej, świadomej czynności klienta.',
         },
         { headers: { 'Cache-Control': 'no-store' } },
       );
