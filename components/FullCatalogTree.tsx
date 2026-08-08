@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import catalogTaxonomy, { TaxonomyBranch } from '../data/catalogTaxonomy';
 import catalogTaxonomyExpansion from '../data/catalogTaxonomyExpansion';
 import catalogTaxonomyExpansion2 from '../data/catalogTaxonomyExpansion2';
+import catalogTaxonomyExpansion3 from '../data/catalogTaxonomyExpansion3';
 
 const VARIANTS_PER_LEAF = 12;
 const variantLabels = ['PREMIUM','PRO','INDUSTRIAL','BUSINESS','HEAVY DUTY','COMPACT','ENERGY EFFICIENT','SMART / CONNECTED','OEM','PRIVATE LABEL','CUSTOM CONFIGURATION','BULK / CONTRACT'];
@@ -31,7 +32,7 @@ function leavesOf(node:TaxonomyBranch):TaxonomyBranch[]{return leafEntries(node)
 function normalize(value:string){return value.toLocaleLowerCase('pl-PL').normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 
 export default function FullCatalogTree(){
-  const taxonomy=useMemo(()=>mergeNodes(mergeNodes(catalogTaxonomy,catalogTaxonomyExpansion),catalogTaxonomyExpansion2),[]);
+  const taxonomy=useMemo(()=>mergeNodes(mergeNodes(mergeNodes(catalogTaxonomy,catalogTaxonomyExpansion),catalogTaxonomyExpansion2),catalogTaxonomyExpansion3),[]);
   const [query,setQuery]=useState('');
   const [selectedRootName,setSelectedRootName]=useState(taxonomy[0]?.name??'');
   const [selectedGroupName,setSelectedGroupName]=useState(taxonomy[0]?.children?.[0]?.name??'');
