@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { isOwnerSession } from '../../../../lib/ownerAuth';
 import { prisma } from '../../../../lib/prisma';
 
+const ORDER_STATUSES = ['CREATED', 'CONFIRMED', 'IN_PROGRESS', 'READY_TO_SHIP', 'SHIPPED', 'DELIVERED', 'COMPLETED', 'CANCELLED'] as const;
+
 function orderNumber() {
   const now = new Date();
   const date = now.toISOString().slice(0, 10).replace(/-/g, '');
@@ -46,5 +48,31 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('OWNER order creation failed', error);
     return NextResponse.json({ ok: false, error: 'Nie udało się utworzyć zamówienia.' }, { status: 500 });
+  }
+}
+
+export async function PATCH(request: Request) {
+  if (!(await isOwnerSession())) {
+    return NextResponse.json({ ok: false, error: 'Brak autoryzacji OWNER.' }, { status: 401 });
+  }
+
+  const body = await request.json().catch(() => ({}));
+  const orderId = Number(body.orderId);
+  const status = String(body.status || '').trim().toUpperCase();
+
+  if (!Number.isInteger(orderId) || orderId <= 0 || !ORDER_STATUSES.includes(status as (typeof ORDER_STATUSES)[number])) {
+    return NextResponse.json({ ok: false, error: 'Nieprawidłowy identyfikator lub status zamówienia.' }, { status: 400 });
+  }
+
+  try {
+    const order = await prisma.order.update({
+      where: { id: orderId },
+      data: { status },
+      select: { id: true, number: true, status: true, updatedAt: true },
+    });
+    return NextResponse.json({ ok: true, order });
+  } catch (error) {
+    console.error('OWNER order status update failed', error);
+    return NextResponse.json({ ok: false, error: 'Nie udało się zmienić statusu zamówienia.' }, { status: 500 });
   }
 }
