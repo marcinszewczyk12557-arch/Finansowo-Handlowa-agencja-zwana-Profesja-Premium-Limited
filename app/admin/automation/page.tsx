@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import AutomationRunControl from '../../../components/AutomationRunControl';
 import { isOwnerSession, ownerAuthConfigured } from '../../../lib/ownerAuth';
 import { prisma } from '../../../lib/prisma';
 
@@ -38,7 +39,7 @@ export default async function AutomationDashboard() {
       <main className="section">
         <p className="eyebrow">OWNER • Automatyzacja</p>
         <h1>Automatyzacja Finansowo‑Sprzedażowa</h1>
-        <p>Centralny widok procesu od zapytania przez ofertę i opcjonalne finansowanie po zamówienie, dokumenty, logistykę i zamknięcie sprawy.</p>
+        <p>Centralny proces od zapytania przez ofertę i opcjonalne finansowanie po zamówienie, dokumenty, logistykę i zamknięcie sprawy.</p>
 
         <section className="admin-stats">
           <article className="card"><strong>{cases.length}</strong><span>aktywnych/ostatnich spraw</span></article>
@@ -49,8 +50,11 @@ export default async function AutomationDashboard() {
 
         <section className="section admin-note">
           <h2>Poufność STRICT</h2>
-          <p>Domyślnie żadna sprawa nie zezwala na zewnętrzne ujawnianie danych. Informacje o konkurencji, kontaktach zawodowych z konkurencją, informacje z pracy, dane osobowe i tajemnice handlowe pozostają poza automatycznym eksportem. Integracje wymagają osobnego, kontrolowanego wdrożenia.</p>
+          <p>Domyślnie żadna sprawa nie zezwala na zewnętrzne ujawnianie danych. Informacje o konkurencji, kontaktach zawodowych z konkurencją, informacje z pracy, dane osobowe, źródła dostaw, marże i tajemnice handlowe pozostają poza automatycznym eksportem.</p>
+          <p>Automatyzacja finansowa przygotowuje proces i rejestruje wynik partnera, ale nie podejmuje decyzji kredytowej ani nie zatwierdza finansowania w imieniu instytucji finansującej.</p>
         </section>
+
+        {!databaseError ? <AutomationRunControl /> : null}
 
         {databaseError ? <section className="admin-note"><h2>Baza niedostępna</h2><p>Uruchom migracje i sprawdź DATABASE_URL.</p></section> : null}
 
@@ -69,7 +73,7 @@ export default async function AutomationDashboard() {
                 {item.offer.order ? <p><strong>Zamówienie:</strong> {item.offer.order.number} • {item.offer.order.status}</p> : null}
                 {item.events?.length ? (
                   <details>
-                    <summary>Ostatnie zdarzenia</summary>
+                    <summary>Ostatnie zdarzenia audytowe</summary>
                     {item.events.map((event: any) => <p key={event.id}><small>{event.createdAt.toLocaleString('pl-PL')} — {event.message}</small></p>)}
                   </details>
                 ) : null}
