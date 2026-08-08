@@ -80,3 +80,10 @@ model Order {
   @@index([createdAt])
   @@index([trackingNumber])
 }
+
+model OwnerLoginAttempt {
+  key          String   @id
+  failures     Int      @default(0)
+  blockedUntil DateTime?
+  updatedAt    DateTime @updatedAt
+}
