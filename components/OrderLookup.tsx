@@ -24,28 +24,44 @@ type OrderResult = {
   offer: { number: string };
 };
 
+type OfferResult = {
+  number: string;
+  product: string;
+  status: string;
+  createdAt: string;
+};
+
 export default function OrderLookup() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [order, setOrder] = useState<OrderResult | null>(null);
+  const [offer, setOffer] = useState<OfferResult | null>(null);
+  const [message, setMessage] = useState('');
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
     setError('');
     setOrder(null);
+    setOffer(null);
+    setMessage('');
 
     const form = new FormData(event.currentTarget);
     const reference = String(form.get('reference') || '').trim();
     const email = String(form.get('email') || '').trim();
 
     try {
-      const response = await fetch(`/api/orders/lookup?reference=${encodeURIComponent(reference)}&email=${encodeURIComponent(email)}`);
+      const response = await fetch(`/api/orders/lookup?reference=${encodeURIComponent(reference)}&email=${encodeURIComponent(email)}`, { cache: 'no-store' });
       const data = await response.json();
-      if (!response.ok || !data.ok) throw new Error(data.error || 'Nie udało się sprawdzić zamówienia.');
-      setOrder(data.order);
+      if (!response.ok || !data.ok) throw new Error(data.error || 'Nie udało się sprawdzić sprawy.');
+      if (data.kind === 'offer') {
+        setOffer(data.offer);
+        setMessage(data.message || 'Zapytanie jest w obsłudze.');
+      } else {
+        setOrder(data.order);
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Nie udało się sprawdzić zamówienia.');
+      setError(err instanceof Error ? err.message : 'Nie udało się sprawdzić sprawy.');
     } finally {
       setLoading(false);
     }
@@ -53,8 +69,8 @@ export default function OrderLookup() {
 
   return (
     <section className="section admin-note">
-      <p className="eyebrow">Status zamówienia</p>
-      <h2>Sprawdź realizację B2B</h2>
+      <p className="eyebrow">Status sprawy</p>
+      <h2>Sprawdź zapytanie lub realizację B2B</h2>
       <p>Wpisz numer sprawy PPL lub numer zamówienia ORD oraz ten sam adres e-mail, który został podany w zapytaniu.</p>
       <form className="premium-form" onSubmit={submit}>
         <div className="form-grid">
@@ -63,7 +79,17 @@ export default function OrderLookup() {
         </div>
         <button type="submit" disabled={loading}>{loading ? 'SPRAWDZAM...' : 'SPRAWDŹ STATUS'}</button>
       </form>
-      {error ? <p className="form-status">{error}</p> : null}
+      {error ? <p className="form-status" role="alert">{error}</p> : null}
+      {offer ? (
+        <article className="card" style={{ marginTop: 20 }}>
+          <p className="eyebrow">Zapytanie {offer.status}</p>
+          <h3>{offer.number}</h3>
+          <p><strong>Produkt / usługa:</strong> {offer.product}</p>
+          <p><strong>Aktualny etap:</strong> {offer.status}</p>
+          <p><strong>Data zgłoszenia:</strong> {new Date(offer.createdAt).toLocaleString('pl-PL')}</p>
+          <p>{message}</p>
+        </article>
+      ) : null}
       {order ? (
         <article className="card" style={{ marginTop: 20 }}>
           <p className="eyebrow">Zamówienie {order.status}</p>
