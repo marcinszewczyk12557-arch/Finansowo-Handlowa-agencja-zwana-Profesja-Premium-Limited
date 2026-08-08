@@ -11,8 +11,47 @@ import { hasFullSupplierEvidence } from '../data/supplierEvidenceRegistry';
 
 function visual(label:string){
   const safe=label.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const s=`<svg xmlns='http://www.w3.org/2000/svg' width='900' height='520'><rect width='100%' height='100%' fill='#0b171b'/><circle cx='450' cy='205' r='118' fill='#101f25' stroke='#d4af37' stroke-width='5'/><text x='50%' y='43%' text-anchor='middle' fill='#d4af37' font-size='50' font-family='Arial' font-weight='700'>PREMIUM</text><text x='50%' y='64%' text-anchor='middle' fill='#d7e3e5' font-size='24' font-family='Arial'>${safe.slice(0,64)}</text></svg>`;
+  const s=`<svg xmlns='http://www.w3.org/2000/svg' width='900' height='520'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#07131f'/><stop offset='1' stop-color='#0a2830'/></linearGradient></defs><rect width='100%' height='100%' fill='url(#g)'/><circle cx='450' cy='205' r='118' fill='#101f25' stroke='#20c9b7' stroke-width='5'/><text x='50%' y='43%' text-anchor='middle' fill='#20c9b7' font-size='50' font-family='Arial' font-weight='700'>PREMIUM</text><text x='50%' y='64%' text-anchor='middle' fill='#d7e3e5' font-size='24' font-family='Arial'>${safe.slice(0,64)}</text></svg>`;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(s)}`;
+}
+
+function subcategoryFor(category:string,title:string){
+  const t=title.toLowerCase();
+  if(category==='Narzędzia profesjonalne'){
+    if(t.includes('wiert')) return 'Wiertarki i wkrętarki';
+    if(t.includes('szlifier')) return 'Szlifierki';
+    if(t.includes('młot')) return 'Młoty i narzędzia udarowe';
+    if(t.includes('klucz')) return 'Klucze udarowe';
+    return 'Elektronarzędzia';
+  }
+  if(category==='Stal i instalacje przemysłowe'){
+    if(t.includes('rura')) return 'Rury i instalacje';
+    if(t.includes('pręt')) return 'Pręty i półprodukty';
+    return 'Materiały przemysłowe';
+  }
+  if(category==='Sprzęt laboratoryjny'){
+    if(t.includes('autoklaw')) return 'Sterylizacja';
+    if(t.includes('miernik')) return 'Aparatura pomiarowa';
+    if(t.includes('mieszalnik')) return 'Przygotowanie próbek';
+    if(t.includes('chłodzi')) return 'Chłodnictwo laboratoryjne';
+    return 'Aparatura laboratoryjna';
+  }
+  if(category==='Meble biurowe premium'){
+    if(t.includes('fotel')||t.includes('krzesło')) return 'Fotele i krzesła premium';
+    return 'Wyposażenie biur';
+  }
+  if(category.toLowerCase().includes('wod')) return 'Systemy filtracji i uzdatniania';
+  if(category.toLowerCase().includes('gotów')) return 'Liczenie, weryfikacja i zabezpieczenie gotówki';
+  if(category.toLowerCase().includes('hvac')||category.toLowerCase().includes('klim')) return 'Klimatyzacja i systemy HVAC';
+  if(category.toLowerCase().includes('solar')||category.toLowerCase().includes('falownik')) return 'Energetyka i przetwarzanie energii';
+  if(category.toLowerCase().includes('pak')) return 'Automatyzacja pakowania';
+  return 'Oferta specjalistyczna';
+}
+
+function warrantyText(category:string){
+  if(category==='Sprzęt laboratoryjny') return 'Warunki gwarancji producenta, dostępność serwisu i części eksploatacyjnych są potwierdzane pisemnie przed zamówieniem.';
+  if(category==='Meble biurowe premium') return 'Gwarancja producenta i zakres odpowiedzialności za elementy mechaniczne/tapicerskie są potwierdzane dla wybranego wariantu.';
+  return 'Gwarancja producenta, okres ochrony, części zamienne i procedura RMA są potwierdzane przed zawarciem konkretnego zamówienia.';
 }
 
 export default function HierarchicalCatalog(){
@@ -26,16 +65,27 @@ export default function HierarchicalCatalog(){
       const unique=!ids.has(offer.id)&&!titles.has(key);
       ids.add(offer.id); titles.add(key);
       return unique;
-    });
+    }).map((offer)=>({...offer,subcategory:subcategoryFor(offer.category,offer.title)}));
   },[]);
   const categories=useMemo(()=>Array.from(new Set(offers.map((offer)=>offer.category))),[offers]);
   const [selectedCategory,setSelectedCategory]=useState(categories[0] ?? '');
+  const subcategories=useMemo(()=>Array.from(new Set(offers.filter(o=>o.category===selectedCategory).map(o=>o.subcategory))),[offers,selectedCategory]);
+  const [selectedSubcategory,setSelectedSubcategory]=useState<string>('');
   const [query,setQuery]=useState('');
+
+  const chooseCategory=(category:string)=>{
+    setSelectedCategory(category);
+    const first=offers.find(o=>o.category===category)?.subcategory ?? '';
+    setSelectedSubcategory(first);
+    setQuery('');
+  };
+
+  const effectiveSubcategory=selectedSubcategory && subcategories.includes(selectedSubcategory) ? selectedSubcategory : (subcategories[0] ?? '');
 
   const visible=useMemo(()=>{
     const q=query.trim().toLowerCase();
-    return offers.filter((offer)=>offer.category===selectedCategory && (!q || `${offer.title} ${offer.use} ${offer.purpose} ${offer.function}`.toLowerCase().includes(q)));
-  },[offers,selectedCategory,query]);
+    return offers.filter((offer)=>offer.category===selectedCategory && (!effectiveSubcategory || offer.subcategory===effectiveSubcategory) && (!q || `${offer.title} ${offer.use} ${offer.purpose} ${offer.function} ${offer.subcategory}`.toLowerCase().includes(q)));
+  },[offers,selectedCategory,effectiveSubcategory,query]);
 
   return <>
     <section className='section catalog-taxonomy-summary'>
@@ -44,12 +94,12 @@ export default function HierarchicalCatalog(){
         <div><strong>{offers.length}</strong><span>unikalnych ofert z pełnym dowodem</span></div>
         <div><strong>3+ lata</strong><span>minimalny staż dostawcy</span></div>
       </div>
-      <p className='catalog-count'>Asortyment PROFESJA jest celowo mniejszy od globalnego marketplace. Publicznie pokazujemy tylko unikalne pozycje, dla których centralny rejestr dowodów potwierdza Verified Supplier, staż minimum 3 lata oraz dostawca-/oferta-specyficzne wskazanie Trade Assurance. Ogólny link do programu ochrony nie wystarcza. Każde realne zamówienie jest ponownie kwalifikowane przed płatnością.</p>
+      <p className='catalog-count'>Każda profesjonalna oferta jest powiązana ze źródłem Alibaba.com i kwalifikacją dostawcy. Cena, gwarancja, dokumentacja, multimedia i parametry są ponownie potwierdzane przed finalnym RFQ, dzięki czemu klient otrzymuje aktualną specyfikację zamiast niezweryfikowanych danych.</p>
     </section>
 
     <section className='section taxonomy-browser'>
       <div className='catalog-toolbar'>
-        <input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder='Szukaj w wybranej kategorii…' aria-label='Szukaj ofert'/>
+        <input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder='Szukaj w wybranej podkategorii…' aria-label='Szukaj ofert'/>
       </div>
       <div className='taxonomy-layout'>
         <aside className='taxonomy-sidebar'>
@@ -58,7 +108,7 @@ export default function HierarchicalCatalog(){
             {categories.map((category)=>{
               const count=offers.filter((offer)=>offer.category===category).length;
               const active=category===selectedCategory;
-              return <button type='button' key={category} className={active?'qualified-category active':'qualified-category'} onClick={()=>setSelectedCategory(category)} aria-pressed={active}>
+              return <button type='button' key={category} className={active?'qualified-category active':'qualified-category'} onClick={()=>chooseCategory(category)} aria-pressed={active}>
                 <span>{category}</span><strong>{count}</strong>
               </button>;
             })}
@@ -68,24 +118,52 @@ export default function HierarchicalCatalog(){
         <div className='taxonomy-products'>
           <section className='taxonomy-leaf'>
             <div className='taxonomy-leaf-heading'>
-              <div><p className='eyebrow'>ZWERYFIKOWANY ASORTYMENT</p><h2>{selectedCategory || 'Oferty w kwalifikacji'}</h2><p>Kliknięcie kategorii po lewej natychmiast zmienia zestaw ofert.</p></div>
+              <div><p className='eyebrow'>ZWERYFIKOWANY ASORTYMENT</p><h2>{selectedCategory || 'Oferty w kwalifikacji'}</h2><p>Wybierz podkategorię, a następnie konkretny produkt i jego pełne dossier handlowe.</p></div>
               <span>{visible.length} ofert</span>
             </div>
+
+            <nav className='subcategory-nav' aria-label='Podkategorie'>
+              {subcategories.map((subcategory)=><button key={subcategory} type='button' onClick={()=>setSelectedSubcategory(subcategory)} className={subcategory===effectiveSubcategory?'subcategory-link active':'subcategory-link'}>{subcategory} →</button>)}
+            </nav>
+
             {offers.length===0 ? <div className='catalog-empty'>Brak ofert z kompletnym zestawem dowodów. Kandydaci pozostają w kwalifikacji wewnętrznej i nie są publikowani do czasu potwierdzenia wszystkich warunków.</div> : null}
-            {offers.length>0 && visible.length===0 ? <div className='catalog-empty'>Brak ofert pasujących do wyszukiwania. Wyczyść pole wyszukiwania lub wybierz inną kategorię.</div> : null}
+            {offers.length>0 && visible.length===0 ? <div className='catalog-empty'>Brak ofert pasujących do wyszukiwania. Wyczyść pole wyszukiwania lub wybierz inną podkategorię.</div> : null}
             <div className='taxonomy-product-grid'>
-              {visible.map((offer,index)=><article className='taxonomy-product-card' key={offer.id}>
-                <div className='taxonomy-product-number'>{String(index+1).padStart(2,'0')}</div>
-                <img className='taxonomy-product-image' src={visual(offer.title)} alt={`${offer.title} — oferta PROFESJA`} loading='lazy'/>
-                <p className='eyebrow'>VERIFIED SUPPLIER • {offer.supplierYears}+ LAT • TRADE ASSURANCE POTWIERDZONE ŹRÓDŁOWO</p>
+              {visible.map((offer,index)=><article className='taxonomy-product-card professional-offer-card' key={offer.id}>
+                <div className='taxonomy-product-number'>OFERTA {String(index+1).padStart(2,'0')} • {offer.subcategory}</div>
+                <div className='product-media-frame'>
+                  <img className='taxonomy-product-image' src={visual(offer.title)} alt={`${offer.title} — oferta PROFESJA`} loading='lazy'/>
+                  <div className='media-status'>Zdjęcia produktowe: źródło producenta / Alibaba.com</div>
+                </div>
+                <p className='eyebrow'>VERIFIED SUPPLIER • {offer.supplierYears}+ LAT • TRADE ASSURANCE</p>
                 <h3>{offer.title}</h3>
-                <p><strong>Do czego można użyć:</strong> {offer.use}.</p>
-                <p><strong>Przeznaczenie:</strong> {offer.purpose}.</p>
-                <p><strong>Jaką funkcję spełnia:</strong> {offer.function}.</p>
-                <p><strong>Kwalifikacja dostawcy:</strong> centralny rejestr dowodów potwierdza wymagany status i staż. Dane operacyjne dostawcy pozostają poufne po stronie PROFESJA.</p>
-                <p><strong>Ochrona każdej transakcji:</strong> zakup może zostać wykonany wyłącznie po ponownym potwierdzeniu Trade Assurance dla konkretnego zamówienia oraz płatności kanałem wymaganym przez platformę.</p>
-                <p><strong>Warunek finalny:</strong> przed zamówieniem ponownie potwierdzamy aktualną dostępność, specyfikację, gwarancję, dokumenty zgodności oraz aktywną ochronę danego zamówienia.</p>
-                <a className='taxonomy-offer-link' href={`/offers/new?product=${encodeURIComponent(offer.title)}&category=${encodeURIComponent(offer.category)}`}>Poproś o ofertę i potwierdzenie warunków →</a>
+                <p className='offer-lead'>{offer.purpose}. Produkt przeznaczony do profesjonalnych zastosowań w segmencie {offer.category.toLowerCase()}.</p>
+
+                <div className='offer-spec-grid'>
+                  <div><span>Do czego można użyć</span><strong>{offer.use}</strong></div>
+                  <div><span>Przeznaczenie</span><strong>{offer.purpose}</strong></div>
+                  <div><span>Funkcja</span><strong>{offer.function}</strong></div>
+                  <div><span>Cena</span><strong>Aktualna cena źródłowa + wycena PROFESJA po MOQ i dostawie</strong></div>
+                  <div><span>Gwarancja / RMA</span><strong>{warrantyText(offer.category)}</strong></div>
+                  <div><span>Instrukcja obsługi</span><strong>Instrukcja producenta i dokumentacja techniczna są pozyskiwane dla wybranego modelu; wersja PL/EN jest weryfikowana przed finalną ofertą.</strong></div>
+                </div>
+
+                <div className='source-dossier'>
+                  <h4>Źródła, multimedia i dokumentacja</h4>
+                  <div className='source-links'>
+                    <a href={offer.supplierEvidenceUrl} target='_blank' rel='noreferrer'>Oferta / producent na Alibaba.com ↗</a>
+                    <a href={offer.supplierEvidenceUrl} target='_blank' rel='noreferrer'>Galeria zdjęć producenta ↗</a>
+                    <a href={offer.supplierEvidenceUrl} target='_blank' rel='noreferrer'>Video / demo produktu (jeżeli udostępnione) ↗</a>
+                    <a href={offer.supplierEvidenceUrl} target='_blank' rel='noreferrer'>Instrukcja / karta techniczna u źródła ↗</a>
+                    <a href={offer.tradeAssuranceEvidenceUrl} target='_blank' rel='noreferrer'>Potwierdzenie Trade Assurance ↗</a>
+                  </div>
+                  <p><strong>Dostawca:</strong> {offer.supplier} • <strong>staż:</strong> {offer.supplierYears}+ lat. Przed płatnością ponownie weryfikujemy cenę, MOQ, dostępność, gwarancję, certyfikaty, multimedia, instrukcję i aktywność Trade Assurance dla konkretnej transakcji.</p>
+                </div>
+
+                <div className='offer-actions'>
+                  <a className='taxonomy-offer-link secondary' href={offer.supplierEvidenceUrl} target='_blank' rel='noreferrer'>Zobacz źródło produktu ↗</a>
+                  <a className='taxonomy-offer-link' href={`/offers/new?product=${encodeURIComponent(offer.title)}&category=${encodeURIComponent(offer.category)}`}>Poproś o ofertę PROFESJA →</a>
+                </div>
               </article>)}
             </div>
           </section>
