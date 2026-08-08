@@ -3,31 +3,43 @@
 import { useMemo, useState } from 'react';
 import catalogTaxonomy, { type TaxonomyBranch } from '../data/catalogTaxonomy';
 import { globalBrandsBranch } from '../data/globalBrands';
-import { CATALOG_MARKUPS, priceWithMarkup } from '../data/pricing';
+import { markupForVariant, priceWithMarkup } from '../data/pricing';
+import { defaultSafetyNotice, ownerSupplierLinkNotice, smartphoneProfiles, variantsForCategory } from '../data/catalogOfferProfiles';
+import { getOwnerSupplierLink } from '../data/ownerSupplierLinks';
+import { homeAssets1 } from '../data/homeAssets1';
+import { homeAssets2 } from '../data/homeAssets2';
+import { homeAssets3 } from '../data/homeAssets3';
+import { homeAssets4 } from '../data/homeAssets4';
 
-const productSeries = ['SELECT', 'PRO', 'EXECUTIVE', 'INDUSTRIAL', 'SIGNATURE'];
 const USD_TO_PLN = 4;
 const fullTaxonomy: TaxonomyBranch[] = [...catalogTaxonomy, globalBrandsBranch];
+const variantNames = ['SELECT', 'STANDARD', 'PLUS', 'PRO', 'PRO MAX', 'BUSINESS', 'CREATOR', 'PERFORMANCE', 'INDUSTRIAL', 'SIGNATURE', 'ULTRA', 'CUSTOM', 'ENTERPRISE', 'SPECIAL'];
+const smartphoneImages = [
+  homeAssets1.nubia01, homeAssets1.nubia02, homeAssets1.nubia03, homeAssets1.nubia04,
+  homeAssets2.nubia05, homeAssets2.nubia06, homeAssets2.nubia07, homeAssets2.nubia08,
+  homeAssets3.nubia09, homeAssets3.nubia10, homeAssets3.nubia11, homeAssets3.nubia12,
+  homeAssets4.nubia13, homeAssets4.nubia14, homeAssets4.nubia15,
+];
 
-const alibabaBenchmarks: Record<string, { low: number; high: number; note: string }> = {
-  'Smartfony Premium': { low: 44, high: 106.4, note: 'smartfony 5G / OEM / private label' },
-  'Laptopy Premium': { low: 180, high: 520, note: 'laptopy biznesowe i OEM' },
-  'Energia i Fotowoltaika': { low: 342, high: 5599, note: 'systemy solarne, baterie i magazyny energii' },
-  HVAC: { low: 100, high: 260, note: 'klimatyzacja split i rozwiązania HVAC' },
-  'Meble Premium': { low: 60, high: 800, note: 'meble biurowe, hotelowe i outdoor' },
-  'Drzwi i Bramy Premium': { low: 120, high: 900, note: 'drzwi, bramy i systemy wejściowe' },
-  'Maszyny i Sprzęt Ciężki': { low: 1500, high: 22000, note: 'minikoparki, ładowarki i sprzęt budowlany' },
-  'Wyposażenie Przedsiębiorstw': { low: 26, high: 500, note: 'stanowiska pracy i wyposażenie komercyjne' },
-  'Wellness Premium': { low: 180, high: 1800, note: 'wyposażenie wellness i spa' },
-  'Smart Home Premium': { low: 18, high: 280, note: 'automatyka, sterowanie i urządzenia smart' },
-  'Luxury Interior': { low: 115, high: 800, note: 'wyposażenie wnętrz i meble premium' },
-  'Outdoor Luxury': { low: 115.88, high: 799, note: 'meble ogrodowe, tarasowe i hotelowe' },
-  'Premium Lighting': { low: 12, high: 220, note: 'oświetlenie dekoracyjne i komercyjne' },
-  'Executive Office': { low: 60, high: 500, note: 'biurka zarządcze, fotele i boksy akustyczne' },
-  'Hospitality Premium': { low: 149, high: 799, note: 'wyposażenie hoteli i resortów' },
-  'Audio Video Premium': { low: 35, high: 650, note: 'audio, video i systemy multimedialne' },
-  'E-Mobility': { low: 59, high: 539, note: 'hulajnogi, e-bike i mobilność elektryczna' },
-  'Leisure Premium': { low: 80, high: 680, note: 'rekreacja, outdoor i mobilność' },
+const alibabaBenchmarks: Record<string, { low: number; high: number; note: string; url: string }> = {
+  'Smartfony Premium': { low: 233, high: 1310, note: 'smartfony 5G, REDMAGIC/Nubia i modele OEM — przed ofertą potwierdzany jest dokładny SKU', url: 'https://www.alibaba.com/wholesale/redmagic-smartphone.html' },
+  'Laptopy Premium': { low: 180, high: 2090, note: 'laptopy biznesowe, gamingowe i stacje robocze', url: 'https://www.alibaba.com/countrysearch/CN/china-lenovo-laptops.html' },
+  'Energia i Fotowoltaika': { low: 342, high: 5599, note: 'systemy solarne, baterie i magazyny energii', url: 'https://www.alibaba.com/showroom/solar-energy-storage-system.html' },
+  HVAC: { low: 100, high: 260, note: 'klimatyzacja i rozwiązania HVAC', url: 'https://www.alibaba.com/showroom/hvac.html' },
+  'Meble Premium': { low: 60, high: 800, note: 'meble biurowe, hotelowe i outdoor', url: 'https://www.alibaba.com/showroom/office-furniture.html' },
+  'Drzwi i Bramy Premium': { low: 120, high: 900, note: 'drzwi, bramy i systemy wejściowe', url: 'https://www.alibaba.com/showroom/automatic-door.html' },
+  'Maszyny i Sprzęt Ciężki': { low: 1500, high: 22000, note: 'minikoparki, ładowarki i sprzęt budowlany', url: 'https://www.alibaba.com/showroom/excavator.html' },
+  'Wyposażenie Przedsiębiorstw': { low: 26, high: 500, note: 'wyposażenie komercyjne i warsztatowe', url: 'https://www.alibaba.com/showroom/commercial-equipment.html' },
+  'Wellness Premium': { low: 180, high: 1800, note: 'wyposażenie wellness, spa i fitness', url: 'https://www.alibaba.com/showroom/spa-equipment.html' },
+  'Smart Home Premium': { low: 18, high: 280, note: 'automatyka, sterowanie i urządzenia smart', url: 'https://www.alibaba.com/showroom/smart-home.html' },
+  'Luxury Interior': { low: 115, high: 800, note: 'wyposażenie wnętrz i materiały premium', url: 'https://www.alibaba.com/showroom/luxury-interior.html' },
+  'Outdoor Luxury': { low: 115.88, high: 799, note: 'meble i wyposażenie outdoor', url: 'https://www.alibaba.com/showroom/outdoor-furniture.html' },
+  'Premium Lighting': { low: 12, high: 220, note: 'oświetlenie dekoracyjne, techniczne i komercyjne', url: 'https://www.alibaba.com/showroom/commercial-lighting.html' },
+  'Executive Office': { low: 60, high: 500, note: 'wyposażenie gabinetów i przestrzeni zarządczych', url: 'https://www.alibaba.com/showroom/executive-office-furniture.html' },
+  'Hospitality Premium': { low: 149, high: 799, note: 'wyposażenie hoteli i resortów', url: 'https://www.alibaba.com/showroom/hotel-furniture.html' },
+  'Audio Video Premium': { low: 35, high: 650, note: 'audio, video, studio i systemy multimedialne', url: 'https://www.alibaba.com/showroom/professional-audio.html' },
+  'E-Mobility': { low: 59, high: 539, note: 'mobilność elektryczna i infrastruktura', url: 'https://www.alibaba.com/showroom/electric-scooter.html' },
+  'Leisure Premium': { low: 80, high: 680, note: 'rekreacja i wyposażenie rozrywkowe', url: 'https://www.alibaba.com/showroom/leisure-equipment.html' },
 };
 
 type LeafPath = { category: string; path: string[]; leaf: string };
@@ -48,58 +60,119 @@ function hashText(text: string) {
   return hash;
 }
 
-function alibabaBasePricePln(category: string, path: string, index: number) {
-  const b = alibabaBenchmarks[category] ?? { low: 50, high: 500, note: 'benchmark sourcingowy Alibaba' };
-  const seed = ((hashText(path) % 100) / 100 + index * 0.17) % 1;
+function basePrice(category: string, path: string, index: number) {
+  const b = alibabaBenchmarks[category] ?? { low: 50, high: 500, note: 'benchmark sourcingowy Alibaba', url: 'https://www.alibaba.com/' };
+  const seed = ((hashText(path) % 100) / 100 + index * 0.113) % 1;
   const usd = b.low + (b.high - b.low) * seed;
-  return { usd, pln: usd * USD_TO_PLN, note: b.note };
+  return { usd, pln: usd * USD_TO_PLN, note: b.note, url: b.url };
 }
 
 function formatPln(value: number) {
   return new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN', maximumFractionDigits: 0 }).format(value);
 }
 
-function productVisual(path: string[], series: string) {
+function genericVisual(path: string[], label: string) {
   const text = path.join(' ').toLowerCase();
-  const brand = path[0] === 'Globalne produkty czołowych producentów' ? path[1] : path[0];
-  let shape = `<rect x='162' y='40' width='196' height='160' rx='18' fill='#101a20' stroke='#30d3c2' stroke-width='4'/><rect x='182' y='58' width='156' height='100' rx='8' fill='#0a0f12' stroke='#d4af37' stroke-width='2'/><path d='M140 205h240l-24 24H164z' fill='#202b31' stroke='#60737c'/>`;
-  if (/audio|jbl|yamaha|roland|tascam|pioneer|technics|mikser|kolumn|głoś|studio|nagłoś/.test(text)) {
-    shape = `<rect x='150' y='34' width='220' height='204' rx='20' fill='#10181d' stroke='#d4af37' stroke-width='4'/><circle cx='260' cy='102' r='44' fill='#071013' stroke='#30d3c2' stroke-width='5'/><circle cx='260' cy='102' r='17' fill='#d4af37'/><circle cx='260' cy='182' r='25' fill='#071013' stroke='#83939b' stroke-width='4'/><rect x='390' y='58' width='74' height='150' rx='10' fill='#121d22' stroke='#30d3c2' stroke-width='3'/><g stroke='#d4af37' stroke-width='3'>${[78,100,122,144,166,188].map(y=>`<line x1='404' y1='${y}' x2='450' y2='${y}'/>`).join('')}</g>`;
-  } else if (/martin|lighting|lamp|oświet/.test(text)) {
-    shape = `<circle cx='260' cy='112' r='64' fill='#0b1216' stroke='#d4af37' stroke-width='5'/><circle cx='260' cy='112' r='36' fill='#30d3c2' opacity='.75'/><path d='M218 170h84l34 60H184z' fill='#172229' stroke='#83939b' stroke-width='4'/><path d='M260 50l120-30M300 70l130 10M220 70L90 35' stroke='#d4af37' stroke-width='4' opacity='.7'/>`;
-  } else if (/smartfon|iphone|galaxy|mobile|telefon/.test(text)) {
-    shape = `<rect x='206' y='28' width='108' height='218' rx='22' fill='#0b1115' stroke='#30d3c2' stroke-width='5'/><rect x='220' y='48' width='80' height='158' rx='9' fill='#142129'/><circle cx='236' cy='222' r='8' fill='#d4af37'/><circle cx='286' cy='64' r='9' fill='#d4af37'/><circle cx='263' cy='64' r='9' fill='#83939b'/>`;
-  } else if (/gramofon|turntable|dj/.test(text)) {
-    shape = `<rect x='118' y='62' width='284' height='166' rx='16' fill='#121b20' stroke='#d4af37' stroke-width='4'/><circle cx='230' cy='145' r='64' fill='#06090b' stroke='#30d3c2' stroke-width='4'/><circle cx='230' cy='145' r='10' fill='#d4af37'/><path d='M340 92v92l-58 18' stroke='#d9e1e4' stroke-width='8' fill='none' stroke-linecap='round'/>`;
-  }
-  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='520' height='300' viewBox='0 0 520 300'><defs><linearGradient id='g' x1='0' x2='1'><stop stop-color='#071116'/><stop offset='1' stop-color='#101b21'/></linearGradient></defs><rect width='520' height='300' rx='24' fill='url(#g)'/>${shape}<text x='28' y='270' fill='#f2d778' font-family='Arial,sans-serif' font-size='24' font-weight='700'>${brand.replace(/&/g,'&amp;')}</text><text x='492' y='270' text-anchor='end' fill='#30d3c2' font-family='Arial,sans-serif' font-size='15' letter-spacing='2'>${series}</text></svg>`;
+  const brand = path[0] === globalBrandsBranch.name ? path[1] : path[0];
+  let glyph = '◈';
+  if (/audio|jbl|yamaha|roland|tascam|pioneer|technics|mikser|kolumn|studio|nagłoś/.test(text)) glyph = '◉';
+  else if (/lighting|lamp|oświet|martin/.test(text)) glyph = '✦';
+  else if (/laptop|komputer|monitor|it|lenovo|apple|asus|acer|hp|msi|dell/.test(text)) glyph = '▰';
+  else if (/energia|fotowolta|bess|falownik/.test(text)) glyph = '⚡';
+  else if (/maszyn|kopark|ładowark|wózek/.test(text)) glyph = '⬢';
+  else if (/meble|biurko|fotel|hotel/.test(text)) glyph = '▣';
+  const safeBrand = brand.replace(/&/g, '&amp;');
+  const safeLabel = label.replace(/&/g, '&amp;');
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='720' viewBox='0 0 1200 720'><defs><linearGradient id='g' x1='0' x2='1'><stop stop-color='#071116'/><stop offset='1' stop-color='#13252c'/></linearGradient></defs><rect width='1200' height='720' rx='32' fill='url(#g)'/><circle cx='600' cy='315' r='190' fill='#0d1b21' stroke='#2fcfbe' stroke-width='8'/><text x='600' y='375' text-anchor='middle' fill='#d4af37' font-family='Arial,sans-serif' font-size='180' font-weight='700'>${glyph}</text><text x='60' y='620' fill='#f2d778' font-family='Arial,sans-serif' font-size='54' font-weight='700'>${safeBrand}</text><text x='1140' y='620' text-anchor='end' fill='#30d3c2' font-family='Arial,sans-serif' font-size='34'>${safeLabel}</text><text x='60' y='672' fill='#afbec4' font-family='Arial,sans-serif' font-size='24'>Prezentacja HD • finalne zdjęcie po potwierdzeniu SKU</text></svg>`;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
 
+function isPhoneLeaf(item: LeafPath) {
+  return item.category === 'Smartfony Premium' && !/ładowark|etui|stacj|słuchawk/i.test(item.leaf);
+}
+
 function Tree({ branches, depth = 0 }: { branches: TaxonomyBranch[]; depth?: number }) {
-  return <div className={`taxonomy-tree taxonomy-depth-${depth}`}>{branches.map((branch) => <details key={`${depth}-${branch.name}`} open={depth === 0}><summary>{branch.name}{branch.children?.length ? <span>{branch.children.length} elementy</span> : <span>5 produktów</span>}</summary>{branch.children?.length ? <Tree branches={branch.children} depth={depth + 1} /> : null}</details>)}</div>;
+  return <div className={`taxonomy-tree taxonomy-depth-${depth}`}>{branches.map((branch) => <details key={`${depth}-${branch.name}`} open={depth === 0}><summary>{branch.name}{branch.children?.length ? <span>{branch.children.length} elementy</span> : <span>10+ ofert</span>}</summary>{branch.children?.length ? <Tree branches={branch.children} depth={depth + 1} /> : null}</details>)}</div>;
 }
 
 export default function HierarchicalCatalog() {
   const leaves = useMemo(() => allLeafPaths(), []);
+  const totalOffers = useMemo(() => leaves.reduce((sum, item) => sum + variantsForCategory(item.category, item.path.join(' / ')), 0), [leaves]);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('Wszystkie');
   const filteredLeaves = useMemo(() => {
     const q = query.trim().toLowerCase();
     return leaves.filter((item) => (category === 'Wszystkie' || item.category === category) && (!q || item.path.join(' ').toLowerCase().includes(q)));
   }, [leaves, query, category]);
+  const visibleOfferCount = filteredLeaves.reduce((sum, item) => sum + variantsForCategory(item.category, item.path.join(' / ')), 0);
 
   return <>
     <section className="section catalog-taxonomy-summary">
-      <div className="catalog-meta"><div><strong>{fullTaxonomy.length}</strong><span>kategorii głównych</span></div><div><strong>{leaves.length}</strong><span>najniższych elementów katalogu</span></div><div><strong>{leaves.length * 5}</strong><span>pozycji produktowych — po 5 na każdy element</span></div></div>
-      <p className="catalog-count">Dla kategorii sourcingowych pięć poziomów ofertowych stosuje narzut PROFESJA: <strong>+72%, +75%, +78%, +81% i +84%</strong> względem benchmarku bazowego Alibaba. Dla globalnych marek cena jest potwierdzana indywidualnie po weryfikacji modelu, kanału dystrybucji i dostępności.</p>
+      <div className="catalog-meta"><div><strong>{fullTaxonomy.length}</strong><span>kategorii głównych</span></div><div><strong>{leaves.length}</strong><span>najniższych elementów katalogu</span></div><div><strong>{totalOffers}</strong><span>pozycji produktowych — minimum 10 na każdy element</span></div></div>
+      <p className="catalog-count">Katalog generuje teraz <strong>minimum 10 wariantów</strong> dla każdego elementu, a w najbardziej różnorodnych segmentach 12. Dla sourcingu ceny PROFESJA mieszczą się w uzgodnionym przedziale <strong>+72% do +84%</strong> względem aktualnego benchmarku bazowego. Dokładny SKU, producent, MOQ, transport, gwarancja i zgodność są zatwierdzane przed sprzedażą.</p>
     </section>
+
     <section className="section taxonomy-browser">
       <div className="catalog-toolbar"><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Szukaj kategorii, marki, serii lub produktu..." aria-label="Szukaj w hierarchii katalogu"/><select value={category} onChange={(e) => setCategory(e.target.value)} aria-label="Kategoria główna"><option>Wszystkie</option>{fullTaxonomy.map((item) => <option key={item.name}>{item.name}</option>)}</select></div>
-      <p className="catalog-count">Zakres bieżącego widoku: <strong>{filteredLeaves.length}</strong> elementów / <strong>{filteredLeaves.length * 5}</strong> produktów.</p>
+      <p className="catalog-count">Zakres bieżącego widoku: <strong>{filteredLeaves.length}</strong> elementów / <strong>{visibleOfferCount}</strong> wariantów produktowych.</p>
       <div className="taxonomy-layout">
         <aside className="taxonomy-sidebar"><h3>Struktura katalogu</h3><Tree branches={fullTaxonomy}/></aside>
-        <div className="taxonomy-products">{filteredLeaves.map((item, leafIndex) => { const pathLabel = item.path.join(' / '); const globalBrand = item.category === globalBrandsBranch.name; return <section className="taxonomy-leaf" key={pathLabel}><div className="taxonomy-leaf-heading"><div><p className="eyebrow">{item.category}</p><h2>{item.leaf}</h2><p>{pathLabel}</p></div><span>5 profesjonalnych wariantów</span></div><div className="taxonomy-product-grid">{productSeries.map((series, index) => { const base = alibabaBasePricePln(item.category, pathLabel, index); const markup = CATALOG_MARKUPS[index]; const sellPrice = priceWithMarkup(base.pln, markup); return <article className="taxonomy-product-card" key={`${pathLabel}-${series}`}><div className="taxonomy-product-number">{String(leafIndex + 1).padStart(3, '0')}.{index + 1}</div><img className="taxonomy-product-image" src={productVisual(item.path, series)} alt={`${item.leaf} ${series} — prezentacja produktowa wysokiej rozdzielczości`} loading="lazy"/><p className="eyebrow">{item.leaf}</p><h3>{item.leaf} {series}</h3><p><strong>Opis profesjonalny:</strong> wariant {series.toLowerCase()} przygotowany dla segmentu {item.leaf.toLowerCase()}, z doborem parametrów, producenta, certyfikacji i logistyki pod wymagania klienta B2B.</p><p><strong>Zastosowanie:</strong> zakup firmowy, inwestycyjny, wyposażenie, projekt integracyjny lub dalsza odsprzedaż — zależnie od kategorii.</p><p><strong>Prezentacja:</strong> karta handlowa PL/EN, porównanie wariantów, materiał produktowy w wysokiej rozdzielczości i zestawienie kosztów dla zatwierdzonego modelu.</p><p><strong>Dokumentacja:</strong> instrukcja, dokumentacja bezpieczeństwa i dokumenty zgodności dostępne dla finalnie wybranego produktu.</p>{globalBrand ? <><p><strong>Marka globalna:</strong> pozycja prezentuje rodzinę produktów producenta. Autentyczność, dokładny model, gwarancja i kanał dystrybucji są weryfikowane przed ofertą.</p><div className="taxonomy-price"><small>Cena PROFESJA</small><strong>Wycena indywidualna</strong><em>po potwierdzeniu modelu i dostępności</em></div></> : <><p><strong>Benchmark Alibaba:</strong> {base.note}; cena bazowa ok. USD {base.usd.toFixed(2)}.</p><div className="taxonomy-price"><small>Cena bazowa Alibaba (kurs roboczy)</small><em>{formatPln(base.pln)}</em><small>Cena PROFESJA — narzut +{Math.round((markup - 1) * 100)}%</small><strong>{formatPln(sellPrice)}</strong></div></>}<a className="taxonomy-offer-link" href={`/offers/new?product=${encodeURIComponent(`${item.leaf} ${series}`)}`}>Poproś o ofertę i prezentację →</a></article>; })}</div></section>; })}</div>
+        <div className="taxonomy-products">
+          {filteredLeaves.map((item, leafIndex) => {
+            const pathLabel = item.path.join(' / ');
+            const count = variantsForCategory(item.category, pathLabel);
+            const globalBrand = item.category === globalBrandsBranch.name;
+            return <section className="taxonomy-leaf" key={pathLabel}>
+              <div className="taxonomy-leaf-heading"><div><p className="eyebrow">{item.category}</p><h2>{item.leaf}</h2><p>{pathLabel}</p></div><span>{count} zróżnicowanych ofert</span></div>
+              <div className="taxonomy-product-grid">
+                {Array.from({ length: count }, (_, index) => {
+                  const label = variantNames[index] ?? `WARIANT ${index + 1}`;
+                  const benchmark = basePrice(item.category, pathLabel, index);
+                  const markup = markupForVariant(index, count);
+                  const sellPrice = priceWithMarkup(benchmark.pln, markup);
+                  const phone = isPhoneLeaf(item) ? smartphoneProfiles[index % smartphoneProfiles.length] : null;
+                  const productName = phone ? `${phone.brand} ${phone.model}` : `${item.leaf} ${label}`;
+                  const supplierKey = `${pathLabel} :: ${productName}`;
+                  const ownerSupplierUrl = getOwnerSupplierLink(supplierKey);
+                  const image = phone ? smartphoneImages[index % smartphoneImages.length] : genericVisual(item.path, label);
+                  const warranty = phone?.warrantyMonths ?? 12;
+                  const manualUrl = phone?.manualUrl || '';
+                  const videoUrl = phone?.videoUrl || '';
+                  const referenceUrl = phone?.alibabaReferenceUrl || benchmark.url;
+                  return <article className="taxonomy-product-card" key={`${pathLabel}-${index}`}>
+                    <div className="taxonomy-product-number">{String(leafIndex + 1).padStart(3, '0')}.{String(index + 1).padStart(2, '0')}</div>
+                    <img className="taxonomy-product-image" src={image} alt={`${productName} — prezentacja oferty`} loading="lazy" decoding="async" />
+                    <p className="eyebrow">{phone ? `${phone.brand} • ${phone.series}` : item.leaf}</p>
+                    <h3>{productName}</h3>
+                    {phone ? <>
+                      <p><strong>Potwierdzony model:</strong> {phone.brand} {phone.model}. Nazwa modelu i rodziny jest oparta na aktualnej dokumentacji producenta; konkretny wariant pamięci/koloru/SKU jest potwierdzany przed ofertą.</p>
+                      <p><strong>Funkcje:</strong> {phone.functions}</p>
+                      <p><strong>Przeznaczenie:</strong> {phone.intendedUse}</p>
+                      <p><strong>Bezpieczne użytkowanie:</strong> {phone.safeUse}</p>
+                    </> : <>
+                      <p><strong>Opis profesjonalny:</strong> zróżnicowany wariant {label.toLowerCase()} dla segmentu {item.leaf.toLowerCase()}, dobierany według marki, parametrów, funkcji, producenta i zastosowania B2B.</p>
+                      <p><strong>Przeznaczenie:</strong> zakup firmowy, inwestycja, wyposażenie, integracja, projekt OEM/ODM lub dalsza odsprzedaż — zależnie od rodzaju towaru.</p>
+                      <p><strong>Bezpieczne użytkowanie:</strong> {defaultSafetyNotice}</p>
+                    </>}
+                    <p><strong>Towar przewozowy:</strong> przed wysyłką potwierdzane są wymagania transportowe, opakowanie, oznaczenia, zasilanie/bateria, dokumenty zgodności i ewentualne ograniczenia przewozowe właściwe dla konkretnego SKU.</p>
+                    <p><strong>Gwarancja:</strong> minimum {warranty} miesięcy dla tej oferty; jeżeli źródłowa oferta dostawcy nie potwierdza minimum 12 miesięcy, nie jest kwalifikowana do publikacji jako gotowa oferta sprzedażowa.</p>
+                    <div className="taxonomy-doc-links">
+                      {manualUrl ? <a href={manualUrl} target="_blank" rel="noreferrer">Instrukcja / wsparcie producenta ↗</a> : <span>Instrukcja: dołączana po potwierdzeniu SKU</span>}
+                      {videoUrl ? <a href={videoUrl} target="_blank" rel="noreferrer">Prezentacja / materiał producenta ↗</a> : <span>Video/prezentacja: po potwierdzeniu modelu</span>}
+                    </div>
+                    {globalBrand ? <div className="taxonomy-price"><small>Marka globalna — cena po potwierdzeniu modelu i kanału dystrybucji</small><strong>Wycena indywidualna</strong><em>gwarancja i autentyczność weryfikowane przed ofertą</em></div> : <div className="taxonomy-price"><small>Benchmark źródłowy: ok. USD {benchmark.usd.toFixed(2)}</small><em>{benchmark.note}</em><small>Cena PROFESJA — narzut +{Math.round((markup - 1) * 100)}%</small><strong>{formatPln(sellPrice)}</strong></div>}
+                    <div className="taxonomy-source-links">
+                      <a href={referenceUrl} target="_blank" rel="noreferrer">Źródło / benchmark Alibaba ↗</a>
+                      {ownerSupplierUrl ? <a href={ownerSupplierUrl} target="_blank" rel="noreferrer" className="owner-source-confirmed">Producent Alibaba — zatwierdzony przez właściciela ↗</a> : <span className="owner-source-pending">Producent Alibaba: do przypisania przez właściciela</span>}
+                    </div>
+                    {!ownerSupplierUrl ? <p className="owner-link-note">{ownerSupplierLinkNotice}</p> : null}
+                    <a className="taxonomy-offer-link" href={`/offers/new?product=${encodeURIComponent(productName)}`}>Poproś o ofertę, prezentację i dokumentację →</a>
+                  </article>;
+                })}
+              </div>
+            </section>;
+          })}
+        </div>
       </div>
     </section>
   </>;
