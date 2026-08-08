@@ -10,6 +10,8 @@ Kompletna aplikacja B2B dla Finansowo-Handlowej Agencji PROFESJA PREMIUM LIMITED
 - panel klienta i bezpieczne sprawdzanie statusu sprawy/zamówienia,
 - panel OWNER do obsługi ofert i zamówień,
 - Automatyzacja Finansowo‑Sprzedażowa z polityką poufności STRICT,
+- procedura zarządczo-wykonawcza z pakietem `TransactionFormalities`,
+- automatyczne uzupełnianie faktów negocjacyjno-transakcyjnych bez automatycznego podpisywania zgód,
 - workflow ofert i realizacji zamówień,
 - logistyka, przewoźnik, tracking i terminy dostawy,
 - dokumenty handlowe przygotowane do druku / PDF,
@@ -90,15 +92,17 @@ Systemowe:
 ## Proces B2B
 
 1. Klient wybiera produkt lub składa indywidualne zapytanie.
-2. System tworzy numer sprawy `PPL-...` oraz sprawę automatyzacji.
+2. System tworzy numer sprawy `PPL-...`, sprawę automatyzacji i rekord `TransactionFormalities`.
 3. Automatyzacja synchronizuje etap procesu i wskazuje następną czynność.
-4. OWNER prowadzi warunki handlowe i rejestruje akceptację klienta.
-5. Jeżeli występuje finansowanie, system prowadzi ścieżkę operacyjną, ale decyzję podejmuje wyłącznie uprawniony partner finansujący.
-6. Po potwierdzonej akceptacji może zostać utworzone zamówienie `ORD-...`.
-7. Zamówienie przechodzi statusy realizacji i logistyki.
-8. OWNER może przygotować potwierdzenie zamówienia, ofertę handlową i dokument realizacji.
-9. Klient może sprawdzić etap sprawy/zamówienia po numerze i adresie e-mail.
-10. Dzienny reconciliation job kontroluje spójność wszystkich spraw; OWNER może uruchomić pełną synchronizację również ręcznie.
+4. Dane wynikające z negocjacji i transakcji — produkt, ilość, rynek, wartość, finansowanie oraz dane logistyczne — aktualizują pakiet formalności.
+5. Zgody i podpisy nigdy nie są ustawiane automatycznie przez sam przebieg negocjacji; pozostają `PENDING` do odrębnej czynności właściwej osoby.
+6. OWNER prowadzi warunki handlowe i rejestruje akceptację klienta.
+7. Jeżeli występuje finansowanie, system prowadzi ścieżkę operacyjną, ale decyzję podejmuje wyłącznie uprawniony partner finansujący.
+8. Po potwierdzonej akceptacji i wymaganych formalnościach może zostać utworzone zamówienie `ORD-...`.
+9. Zamówienie przechodzi statusy realizacji i logistyki, a fakty logistyczne są synchronizowane z pakietem formalności.
+10. OWNER może przygotować potwierdzenie zamówienia, ofertę handlową i dokument realizacji.
+11. Klient może sprawdzić etap sprawy/zamówienia po numerze i adresie e-mail.
+12. Dzienny reconciliation job kontroluje spójność wszystkich spraw; OWNER może uruchomić pełną synchronizację również ręcznie.
 
 ## Poufność automatyzacji
 
@@ -123,7 +127,8 @@ Log audytowy zapisuje etap i kategorię ograniczenia, ale nie kopiuje treści ch
 - brak publikacji danych dostawców i wewnętrznych danych operacyjnych,
 - publiczne endpointy ograniczają i walidują dane wejściowe,
 - harmonogram automatyzacji wymaga `CRON_SECRET`,
-- decyzje finansowe nie są podejmowane autonomicznie przez aplikację.
+- decyzje finansowe nie są podejmowane autonomicznie przez aplikację,
+- zgody, podpisy i oświadczenia woli pozostają human-in-the-loop.
 
 ## CI / QA
 
@@ -153,6 +158,8 @@ Warunek uznania produkcji za zakończoną:
 - `BRAND_GUIDELINES.md` — podstawowe zasady identyfikacji wizualnej i komunikacji,
 - `B2B_AGREEMENT_TEMPLATE.md` — roboczy wzór umowy handlowej B2B,
 - `SALES_AUTOMATION_POLICY.md` — zasady automatyzacji, poufności i human-in-the-loop,
+- `TRANSACTION_MANAGEMENT_PROCEDURE.md` — procedura zarządczo-wykonawcza i reguły automatycznego uzupełniania formalności,
+- `docs/FORMALITIES_SOURCE_MANIFEST.md` — rejestr integralności dokumentu źródłowego formalności,
 - `DEPLOYMENT.md` — procedura wdrożenia.
 
 © PROFESJA PREMIUM LIMITED™ — Wszelkie prawa zastrzeżone.
