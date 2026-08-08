@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import OfferStatusControl from '../../../components/OfferStatusControl';
 import { isOwnerSession, ownerAuthConfigured } from '../../../lib/ownerAuth';
 import { prisma } from '../../../lib/prisma';
 
@@ -24,6 +25,8 @@ export default async function AdminOffers() {
   const newCount = offers.filter((offer) => offer.status === 'NEW').length;
   const preparingCount = offers.filter((offer) => offer.status === 'PREPARING').length;
   const acceptedCount = offers.filter((offer) => offer.status === 'ACCEPTED').length;
+  const inProgressCount = offers.filter((offer) => offer.status === 'IN_PROGRESS').length;
+  const completedCount = offers.filter((offer) => offer.status === 'COMPLETED').length;
 
   return (
     <>
@@ -37,6 +40,8 @@ export default async function AdminOffers() {
           <article className="card"><strong>{newCount}</strong><span>nowych zapytań</span></article>
           <article className="card"><strong>{preparingCount}</strong><span>ofert w przygotowaniu</span></article>
           <article className="card"><strong>{acceptedCount}</strong><span>ofert zaakceptowanych</span></article>
+          <article className="card"><strong>{inProgressCount}</strong><span>w realizacji</span></article>
+          <article className="card"><strong>{completedCount}</strong><span>zakończonych</span></article>
         </section>
 
         {databaseError ? (
@@ -63,6 +68,7 @@ export default async function AdminOffers() {
                   <p><strong>Ilość:</strong> {offer.quantity || '—'} • <strong>Rynek:</strong> {offer.market || '—'}</p>
                   <p><strong>Budżet:</strong> {offer.budget || '—'}</p>
                   {offer.details ? <p><strong>Wymagania:</strong> {offer.details}</p> : null}
+                  <OfferStatusControl offerId={offer.id} currentStatus={offer.status} />
                   <p><small>{offer.createdAt.toLocaleString('pl-PL')}</small></p>
                 </article>
               ))}
@@ -97,7 +103,7 @@ export default async function AdminOffers() {
 
         <section className="section admin-note">
           <h2>Proces ofertowy</h2>
-          <p>Zapytanie → weryfikacja parametrów → potwierdzenie dokumentacji → wycena → przedstawienie warunków → akceptacja → realizacja.</p>
+          <p>NEW → PREPARING → OFFER_SENT → ACCEPTED → IN_PROGRESS → COMPLETED. Status CANCELLED pozostaje dostępny dla spraw anulowanych.</p>
         </section>
       </main>
       <Footer />
