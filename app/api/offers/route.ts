@@ -1,6 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../lib/prisma';
+import { ensureSalesAutomationCase } from '../../../lib/salesAutomation';
 
 function text(value: unknown, max = 500) {
   return typeof value === 'string' ? value.trim().replace(/\u0000/g, '').slice(0, max) : '';
@@ -50,6 +51,7 @@ export async function POST(request: Request) {
         details: text(body.details, 5000) || null,
       },
       select: {
+        id: true,
         number: true,
         product: true,
         status: true,
@@ -57,7 +59,17 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({ ok: true, offer }, { status: 201, headers: { 'Cache-Control': 'no-store' } });
+    try {
+      await ensureSalesAutomationCase(offer.id, {
+        financingRequested: body.financingRequested === true,
+        financingAmount: text(body.financingAmount, 120) || null,
+      });
+    } catch (automationError) {
+      console.error('Sales automation initialization failed', automationError);
+    }
+
+    const { id: _id, ...publicOffer } = offer;
+    return NextResponse.json({ ok: true, offer: publicOffer }, { status: 201, headers: { 'Cache-Control': 'no-store' } });
   } catch (error) {
     console.error('B2B offer submission failed', error);
     return NextResponse.json(
