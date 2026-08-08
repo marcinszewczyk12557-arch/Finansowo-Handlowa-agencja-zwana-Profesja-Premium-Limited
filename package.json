@@ -12,7 +12,8 @@
     "postinstall": "prisma generate",
     "db:generate": "prisma generate",
     "db:deploy": "prisma migrate deploy",
-    "db:status": "prisma migrate status"
+    "db:status": "prisma migrate status",
+    "smoke:production": "node scripts/production-smoke.mjs"
   },
   "dependencies": {
     "@prisma/client": "6.19.0",
