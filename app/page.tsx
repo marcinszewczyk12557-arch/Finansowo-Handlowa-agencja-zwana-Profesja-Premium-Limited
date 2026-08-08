@@ -35,30 +35,26 @@ const nubiaSeriesOffers = nubiaOfferImages.map((image, index) => ({
     : 'gaming, multimedia, praca mobilna i zastosowania profesjonalne',
 }));
 
-const privateLabelSuppliers = [
+const privateLabelPrograms = [
   {
-    name: 'Shenzhen Cwell Electronic Technology Co., Ltd.',
-    tenure: '18 lat na Alibaba',
-    moq: 'od 10 szt. w wybranych ofertach',
-    strengths: 'pełna personalizacja • ODM • boot logo • opakowanie • etykieta • konfiguracja pamięci i sieci',
+    name: 'Private Label — Smartfony i urządzenia mobilne',
+    moq: 'MOQ potwierdzane indywidualnie dla wybranego projektu',
+    strengths: 'logo klienta • ekran startowy • opakowanie • etykieta • konfiguracja pamięci i sieci',
   },
   {
-    name: 'Shenzhen Omis Electronics Technology Co., Ltd.',
-    tenure: '16 lat na Alibaba',
-    moq: 'MOQ zależne od wariantu',
-    strengths: 'pełna personalizacja • ODM • logo • firmware • ROM • aplikacje • opakowanie i etykieta',
+    name: 'ODM — Elektronika użytkowa',
+    moq: 'MOQ zależne od konfiguracji, funkcjonalności i zakresu personalizacji',
+    strengths: 'projekt produktu • branding • firmware • aplikacje • akcesoria • dokumentacja',
   },
   {
-    name: 'Shenzhen Songming Communication Technology Co., Ltd.',
-    tenure: '6 lat na Alibaba',
-    moq: 'typowo od 3000 szt. dla serii OEM',
-    strengths: 'OEM/ODM • własny projekt ID • hardware • software • firmware • ROM • smartfony 4G/5G',
+    name: 'OEM — Serie produktowe B2B',
+    moq: 'wielkość partii ustalana dla konkretnego modelu i specyfikacji',
+    strengths: 'hardware • software • warianty pamięci • kolory • oznakowanie • instrukcje',
   },
   {
-    name: 'Shenzhen Qimei Electronic Technology Co., Ltd.',
-    tenure: '5 lat na Alibaba',
-    moq: 'typowo od 3000 szt. dla serii OEM',
-    strengths: 'smartfony OEM/ODM • 4G/5G • serie private label • konfiguracja oferty pod markę klienta',
+    name: 'Custom Brand — Rozwiązania na zamówienie',
+    moq: 'indywidualnie według zakresu projektu',
+    strengths: 'pełna personalizacja • identyfikacja marki • opakowanie • zestawy akcesoriów • konfiguracja oferty',
   },
 ];
 
@@ -121,7 +117,7 @@ export default function Home() {
         <section className="section featured-offers-section">
           <p className="eyebrow">Oferta specjalna Nubia / REDMAGIC</p>
           <h2>Smartfony premium w indywidualnej ofercie B2B</h2>
-          <p>Każdy dostarczony materiał produktowy został przypisany do osobnej pozycji. Dokładny model, pamięć, kolor, dostępność i warunki gwarancyjne potwierdzamy przed zamówieniem.</p>
+          <p>Każdy materiał produktowy jest przypisany do osobnej pozycji. Dokładny model, pamięć, kolor, dostępność i warunki gwarancyjne potwierdzamy przed zamówieniem.</p>
           <div className="featured-offer-grid">
             {nubiaSeriesOffers.map((offer, index) => (
               <article className="featured-offer-card" key={offer.title}>
@@ -131,7 +127,7 @@ export default function Home() {
                   <h3>{offer.title}</h3>
                   <p><strong>Opis:</strong> seria smartfonów premium dobierana do zastosowania, wymagań technicznych i budżetu klienta biznesowego.</p>
                   <p><strong>Zastosowanie:</strong> {offer.application}.</p>
-                  <p><strong>Obsługa:</strong> sourcing, dobór wariantu, organizacja importu i dokumentacja handlowa.</p>
+                  <p><strong>Obsługa:</strong> dobór wariantu, organizacja importu i dokumentacja handlowa.</p>
                   <strong className="featured-price">Wycena indywidualna</strong>
                   <Link href={`/offers/new?product=${encodeURIComponent(offer.title)}`}>POPROŚ O OFERTĘ →</Link>
                 </div>
@@ -142,21 +138,20 @@ export default function Home() {
 
         <section className="section featured-offers-section">
           <p className="eyebrow">NO NAME • NO LOGO • PRIVATE LABEL</p>
-          <h2>Seria produktów elektronicznych z miejscem na logo klienta</h2>
-          <p>Program OEM/ODM może obejmować logo na urządzeniu, ekran startowy, opakowanie, etykietę, a zależnie od producenta również firmware, ROM, pamięć, sieć i aplikacje.</p>
+          <h2>Serie produktów elektronicznych z miejscem na logo klienta</h2>
+          <p>Program OEM/ODM może obejmować logo na urządzeniu, ekran startowy, opakowanie, etykietę, a zależnie od projektu również firmware, pamięć, sieć i aplikacje.</p>
           <div className="featured-offer-grid">
-            {privateLabelSuppliers.map((supplier, index) => (
-              <article className="featured-offer-card" key={supplier.name}>
-                <img src={homeAssets0.noNameLogo} alt={`Private Label — miejsce na logo klienta — ${supplier.name}`} />
+            {privateLabelPrograms.map((program, index) => (
+              <article className="featured-offer-card" key={program.name}>
+                <img src={homeAssets0.noNameLogo} alt={`Private Label — miejsce na logo klienta — ${program.name}`} />
                 <div className="featured-offer-copy">
-                  <span>OEM / ODM {index + 1}/{privateLabelSuppliers.length}</span>
-                  <h3>{supplier.name}</h3>
-                  <p><strong>Historia profilu:</strong> {supplier.tenure}.</p>
-                  <p><strong>Możliwości:</strong> {supplier.strengths}.</p>
-                  <p><strong>MOQ:</strong> {supplier.moq}.</p>
+                  <span>OEM / ODM {index + 1}/{privateLabelPrograms.length}</span>
+                  <h3>{program.name}</h3>
+                  <p><strong>Możliwości:</strong> {program.strengths}.</p>
+                  <p><strong>MOQ:</strong> {program.moq}.</p>
                   <p><strong>Branding klienta:</strong> zakres personalizacji jest potwierdzany dla wybranego modelu i wielkości zamówienia.</p>
                   <strong className="featured-price">Wycena indywidualna B2B</strong>
-                  <Link href={`/offers/new?product=${encodeURIComponent(`Private Label — ${supplier.name}`)}`}>ZAPYTAJ O PRIVATE LABEL →</Link>
+                  <Link href={`/offers/new?product=${encodeURIComponent(program.name)}`}>ZAPYTAJ O PRIVATE LABEL →</Link>
                 </div>
               </article>
             ))}
