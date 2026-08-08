@@ -2,7 +2,6 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import GlobalBrandsShowcase from '../../components/GlobalBrandsShowcase';
 import HierarchicalCatalog from '../../components/HierarchicalCatalog';
-import RedmagicSourceGallery from '../../components/RedmagicSourceGallery';
 import './catalog-enhancements.css';
 
 export default function CatalogPage() {
@@ -22,7 +21,6 @@ export default function CatalogPage() {
         </section>
 
         <GlobalBrandsShowcase />
-        <RedmagicSourceGallery />
         <HierarchicalCatalog />
       </main>
       <Footer />
