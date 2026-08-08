@@ -1,8 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520" role="img" aria-labelledby="title desc">
   <title id="title">Profesja Premium Limited</title>
   <desc id="desc">Turkusowy geometryczny znak Profesja Premium Limited zgodny z przekazanym wzorem.</desc>
-  <rect width="640" height="520" fill="#ffffff"/>
-  <g fill="none" stroke="#25cbb9" stroke-width="38" stroke-linecap="square" stroke-linejoin="miter">
+  <g fill="none" stroke="#16bfae" stroke-width="38" stroke-linecap="square" stroke-linejoin="miter">
     <path d="M112 388 L274 112 L456 387"/>
     <path d="M193 388 L319 176 L445 388"/>
     <path d="M193 388 H500"/>
