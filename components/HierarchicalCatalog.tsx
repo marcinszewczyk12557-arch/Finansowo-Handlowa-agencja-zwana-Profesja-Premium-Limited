@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { strictPublicOffers } from '../data/strictQualifiedOffers';
+import { strictPublicOfficeOffers } from '../data/strictQualifiedOffersOffice';
 
 function visual(label:string){
   const safe=label.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -10,7 +11,17 @@ function visual(label:string){
 }
 
 export default function HierarchicalCatalog(){
-  const offers=useMemo(()=>strictPublicOffers(),[]);
+  const offers=useMemo(()=>{
+    const combined=[...strictPublicOffers(),...strictPublicOfficeOffers()];
+    const ids=new Set<string>();
+    const titles=new Set<string>();
+    return combined.filter((offer)=>{
+      const key=offer.title.trim().toLowerCase();
+      const unique=!ids.has(offer.id)&&!titles.has(key);
+      ids.add(offer.id); titles.add(key);
+      return unique;
+    });
+  },[]);
   const categories=useMemo(()=>Array.from(new Set(offers.map((offer)=>offer.category))),[offers]);
   const [selectedCategory,setSelectedCategory]=useState(categories[0] ?? '');
   const [query,setQuery]=useState('');
