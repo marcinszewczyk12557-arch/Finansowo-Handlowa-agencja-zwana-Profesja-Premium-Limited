@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { isOwnerSession } from '../../../../../../lib/ownerAuth';
 import { prisma } from '../../../../../../lib/prisma';
+import { ensureSalesAutomationCase } from '../../../../../../lib/salesAutomation';
 
 const ALLOWED_STATUSES = [
   'NEW',
@@ -35,6 +36,13 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
       data: { status },
       select: { id: true, number: true, status: true },
     });
+
+    try {
+      await ensureSalesAutomationCase(offerId);
+    } catch (automationError) {
+      console.error('Sales automation sync after offer status failed', automationError);
+    }
+
     return NextResponse.json({ ok: true, offer });
   } catch (error) {
     console.error('OWNER offer status update failed', error);
