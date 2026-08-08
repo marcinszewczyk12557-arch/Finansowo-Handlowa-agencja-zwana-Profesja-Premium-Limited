@@ -85,6 +85,12 @@ export default function OfferForm() {
       <p><small>Nie wpisuj w polu opisowym danych o konkurencji, poufnych informacji z miejsca pracy, tajemnic handlowych ani danych osobowych, które nie są niezbędne do obsługi zapytania.</small></p>
 
       <section className="admin-note" style={{ marginTop: 20 }}>
+        <h3>Procedura zarządczo-wykonawcza</h3>
+        <p>Po utworzeniu sprawy system tworzy pakiet formalności powiązany z numerem `PPL-...`. Dane wynikające z negocjacji — m.in. produkt, ilość, wartość, finansowanie, sposób i adres dostawy oraz termin — mogą być uzupełniane i aktualizowane automatycznie wraz z przebiegiem transakcji.</p>
+        <p>Automatyczne uzupełnienie danych nie oznacza zaakceptowania oświadczeń ani podpisania dokumentów. Zgody i podpisy pozostają oznaczone jako oczekujące do chwili odrębnego, świadomego działania właściwej osoby.</p>
+      </section>
+
+      <section className="admin-note" style={{ marginTop: 20 }}>
         <h3>Przed wysłaniem i dalszą finalizacją</h3>
         <p>Obsługa jest prowadzona online przez Metropolis Corp. Marcin Szewczyk w ramach projektu PROFESJA PREMIUM LIMITED™. Korespondencja i dokumenty elektroniczne tworzą historię ustaleń sprawy, jednak wiążące warunki transakcji wynikają z zaakceptowanej oferty, potwierdzenia zamówienia lub umowy.</p>
         <p>Sposób i koszt dostawy, w tym ewentualna usługa door-to-door, są ustalane dla konkretnej transakcji. Jeżeli oferta przewiduje pokrycie kosztu transportu przez klienta, warunek ten zostanie wskazany przed zawarciem transakcji.</p>
@@ -106,7 +112,7 @@ export default function OfferForm() {
         <div className="form-status" role="status">
           <strong>Zapytanie zostało przyjęte.</strong><br />
           Numer sprawy: <b>{result.number}</b><br />
-          Status: {result.status}. Zachowaj numer do dalszego kontaktu i śledzenia obsługi.
+          Status: {result.status}. Pakiet formalności został przypisany do sprawy i będzie uzupełniany danymi transakcyjnymi; wymagane zgody i podpisy pozostają osobnym etapem.
           <div className="cta-row" style={{ marginTop: 16 }}>
             <Link href="/dashboard"><button type="button">PRZEJDŹ DO PANELU KLIENTA</button></Link>
             <Link href="/catalog"><button type="button" className="cta-secondary">WRÓĆ DO KATALOGU</button></Link>
