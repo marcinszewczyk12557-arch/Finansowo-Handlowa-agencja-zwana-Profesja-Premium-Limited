@@ -14,10 +14,10 @@ export default function CatalogPage() {
           <p className="eyebrow">Katalog Profesja Premium Limited</p>
           <h2>Rozbudowany katalog B2B — sourcing, marki globalne, prezentacje i indywidualne wyceny</h2>
           <p>
-            Katalog działa wielopoziomowo: kategoria główna → podkategoria → element szczegółowy → pięć wariantów handlowych.
-            Każda pozycja otrzymuje profesjonalny opis, zastosowanie, zakres prezentacji i dokumentacji. Dla kategorii sourcingowych
-            ceny PROFESJA są prezentowane z narzutem od +72% do +84% względem benchmarku Alibaba. Dla światowych marek dokładny
-            model, autentyczność, dostępność, kanał dystrybucji, gwarancja i cena są potwierdzane indywidualnie przed ofertą.
+            Katalog działa wielopoziomowo: kategoria główna → podkategoria → element szczegółowy → minimum dziesięć wariantów handlowych.
+            Każda pozycja otrzymuje profesjonalny opis, zastosowanie, zakres prezentacji i dokumentacji. Ceny PROFESJA są przygotowywane
+            według wewnętrznej polityki handlowej. Dla światowych marek dokładny model, autentyczność, dostępność, gwarancja i cena są
+            potwierdzane indywidualnie przed ofertą.
           </p>
         </section>
 
