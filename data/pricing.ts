@@ -1,4 +1,12 @@
-export const MIN_ORDER_QUANTITY = 10;
+export const PROFESJA_VOLUME_DISCOUNT_QTY = 10;
+
+/**
+ * Compatibility alias used by older components.
+ * This is NOT a supplier MOQ. Supplier MOQ is product/category specific
+ * and must be confirmed against the current sourcing benchmark.
+ */
+export const MIN_ORDER_QUANTITY = PROFESJA_VOLUME_DISCOUNT_QTY;
+
 export const MIN_PRICE_MULTIPLIER = 1.72;
 export const MAX_PRICE_MULTIPLIER = 1.84;
 
@@ -14,9 +22,9 @@ export function markupForVariant(index: number, totalVariants: number) {
 
 export function multiplierForQuantity(quantity: number) {
   const qty = Math.max(1, Math.floor(quantity || 1));
-  if (qty >= MIN_ORDER_QUANTITY) return MIN_PRICE_MULTIPLIER;
+  if (qty >= PROFESJA_VOLUME_DISCOUNT_QTY) return MIN_PRICE_MULTIPLIER;
   if (qty <= 1) return MAX_PRICE_MULTIPLIER;
-  const step = (MAX_PRICE_MULTIPLIER - MIN_PRICE_MULTIPLIER) / (MIN_ORDER_QUANTITY - 1);
+  const step = (MAX_PRICE_MULTIPLIER - MIN_PRICE_MULTIPLIER) / (PROFESJA_VOLUME_DISCOUNT_QTY - 1);
   return MAX_PRICE_MULTIPLIER - step * (qty - 1);
 }
 
@@ -35,8 +43,8 @@ export function totalPriceForQuantity(basePrice: number, quantity: number) {
 
 export function pricingRange(basePrice: number) {
   return {
-    minUnit: unitPriceForQuantity(basePrice, MIN_ORDER_QUANTITY),
+    minUnit: unitPriceForQuantity(basePrice, PROFESJA_VOLUME_DISCOUNT_QTY),
     maxUnit: unitPriceForQuantity(basePrice, 1),
-    minOrderTotal: totalPriceForQuantity(basePrice, MIN_ORDER_QUANTITY),
+    minOrderTotal: totalPriceForQuantity(basePrice, PROFESJA_VOLUME_DISCOUNT_QTY),
   };
 }
