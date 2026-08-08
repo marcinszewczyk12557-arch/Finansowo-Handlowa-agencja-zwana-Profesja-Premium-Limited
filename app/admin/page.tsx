@@ -14,15 +14,21 @@ export default async function AdminPanel() {
     <main className="section">
       <p className="eyebrow">Panel OWNER</p>
       <h1>PROFESJA PREMIUM LIMITED™</h1>
-      <p>Centrum zarządzania katalogiem, zapytaniami B2B, zamówieniami, materiałami i publikacją treści.</p>
+      <p>Centrum zarządzania katalogiem, zapytaniami B2B, automatyzacją finansowo‑sprzedażową, zamówieniami, materiałami i publikacją treści.</p>
 
       <section className="admin-stats" aria-label="Statystyki panelu">
         <article className="card"><strong>{products.length}</strong><span>produktów</span></article>
         <article className="card"><strong>{categories}</strong><span>kategorii</span></article>
-        <article className="card"><strong>PL / EN</strong><span>materiały</span></article>
+        <article className="card"><strong>STRICT</strong><span>poufność automatyzacji</span></article>
       </section>
 
       <section className="grid" aria-label="Moduły administracyjne">
+        <article className="card">
+          <h2>Automatyzacja Finansowo‑Sprzedażowa</h2>
+          <p>Obsługuj pełną ścieżkę zapytanie → oferta → opcjonalne finansowanie → zamówienie → realizacja, z domyślną blokadą zewnętrznego ujawniania danych.</p>
+          <Link href="/admin/automation"><button>Otwórz automatyzację</button></Link>
+        </article>
+
         <article className="card">
           <h2>Katalog produktów</h2>
           <p>Przeglądaj aktualne pozycje katalogowe, opisy, gwarancje i materiały ofertowe.</p>
@@ -49,10 +55,12 @@ export default async function AdminPanel() {
       </section>
 
       <section className="section admin-note">
-        <h2>Bezpieczeństwo publikacji</h2>
+        <h2>Bezpieczeństwo publikacji i poufność</h2>
         <p>
           Publiczne karty nie ujawniają danych dostawców ani wewnętrznych parametrów kalkulacji handlowej.
-          Dokumentacja, gwarancje, certyfikaty i warunki finansowania powinny być potwierdzane przed przedstawieniem konkretnej oferty klientowi.
+          Automatyzacja nie eksportuje informacji o konkurencji, kontaktach zawodowych, danych z miejsca pracy,
+          danych osobowych ani tajemnicy handlowej. Dokumentacja, gwarancje, certyfikaty i warunki finansowania
+          powinny być potwierdzane przed przedstawieniem konkretnej oferty klientowi.
         </p>
       </section>
     </main>
