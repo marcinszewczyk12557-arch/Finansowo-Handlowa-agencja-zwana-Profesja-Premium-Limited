@@ -2,6 +2,32 @@
 
 import { FormEvent, useState } from 'react';
 
+type FormalitiesResult = {
+  sourceDocumentVersion: string;
+  negotiationStatus: string;
+  productSnapshot: string | null;
+  quantitySnapshot: string | null;
+  marketSnapshot: string | null;
+  valueSnapshot: string | null;
+  financingRequested: boolean;
+  financingAmount: string | null;
+  shippingMethodSnapshot: string | null;
+  estimatedDeliverySnapshot: string | null;
+  clientDeclarationStatus: string;
+  insuranceConsentStatus: string;
+  shippingConsentStatus: string;
+  businessUseConsentStatus: string;
+  interestConsentStatus: string;
+  intermediationConsentStatus: string;
+  monthlySettlementStatus: string;
+  earlyTerminationStatus: string;
+  finalSignatureStatus: string;
+  signatureMethod: string | null;
+  signedAt: string | null;
+  autoFilledAt: string | null;
+  updatedAt: string;
+};
+
 type OrderResult = {
   number: string;
   product: string;
@@ -21,7 +47,7 @@ type OrderResult = {
   fulfillmentDocument: string | null;
   createdAt: string;
   updatedAt: string;
-  offer: { number: string };
+  offer: { number: string; formalities: FormalitiesResult | null };
 };
 
 type OfferResult = {
@@ -29,7 +55,59 @@ type OfferResult = {
   product: string;
   status: string;
   createdAt: string;
+  formalities: FormalitiesResult | null;
 };
+
+const formalitiesLabels: Array<[keyof FormalitiesResult, string]> = [
+  ['clientDeclarationStatus', 'Oświadczenie klienta'],
+  ['insuranceConsentStatus', 'Ubezpieczenie / warunek ubezpieczeniowy'],
+  ['shippingConsentStatus', 'Warunki wysyłki'],
+  ['businessUseConsentStatus', 'Przeznaczenie biznesowe / udostępnienie'],
+  ['interestConsentStatus', 'Warunki oprocentowania'],
+  ['intermediationConsentStatus', 'Pośrednictwo i dokumentacja wierzytelności'],
+  ['monthlySettlementStatus', 'Rozliczenia miesięczne'],
+  ['earlyTerminationStatus', 'Warunki wcześniejszego zakończenia'],
+  ['finalSignatureStatus', 'Podpis końcowy'],
+];
+
+function statusLabel(status: unknown) {
+  if (status === 'ACCEPTED') return 'zaakceptowano';
+  if (status === 'NOT_APPLICABLE') return 'nie dotyczy';
+  if (status === 'REJECTED') return 'odrzucono';
+  return 'oczekuje';
+}
+
+function FormalitiesPanel({ formalities }: { formalities: FormalitiesResult | null }) {
+  if (!formalities) {
+    return <section className="admin-note" style={{ marginTop: 16 }}><h3>Formalności transakcyjne</h3><p>Pakiet formalności nie został jeszcze utworzony dla tej sprawy.</p></section>;
+  }
+
+  const accepted = formalitiesLabels.filter(([key]) => ['ACCEPTED', 'NOT_APPLICABLE'].includes(String(formalities[key]))).length;
+
+  return (
+    <section className="admin-note" style={{ marginTop: 16 }}>
+      <p className="eyebrow">Procedura zarządczo-wykonawcza</p>
+      <h3>Formalności transakcyjne: {accepted}/{formalitiesLabels.length}</h3>
+      <p><strong>Status negocjacyjny:</strong> {formalities.negotiationStatus}</p>
+      <p>Dane produktu, ilości, wartości, rynku, finansowania i dostawy są synchronizowane z przebiegu sprawy. Żadna zgoda ani podpis nie są akceptowane automatycznie.</p>
+      <details>
+        <summary>Pokaż status poszczególnych formalności</summary>
+        {formalitiesLabels.map(([key, label]) => <p key={key}><strong>{label}:</strong> {statusLabel(formalities[key])}</p>)}
+      </details>
+      <details>
+        <summary>Pokaż dane uzupełnione z transakcji</summary>
+        <p><strong>Produkt:</strong> {formalities.productSnapshot || '—'}</p>
+        <p><strong>Ilość:</strong> {formalities.quantitySnapshot || '—'}</p>
+        <p><strong>Rynek:</strong> {formalities.marketSnapshot || '—'}</p>
+        <p><strong>Wartość:</strong> {formalities.valueSnapshot || '—'}</p>
+        <p><strong>Finansowanie:</strong> {formalities.financingRequested ? (formalities.financingAmount || 'tak — kwota do ustalenia') : 'nie'}</p>
+        <p><strong>Dostawa:</strong> {formalities.shippingMethodSnapshot || '—'}</p>
+        {formalities.estimatedDeliverySnapshot ? <p><strong>Planowana dostawa:</strong> {new Date(formalities.estimatedDeliverySnapshot).toLocaleString('pl-PL')}</p> : null}
+      </details>
+      {formalities.signedAt ? <p><strong>Podpis zarejestrowano:</strong> {new Date(formalities.signedAt).toLocaleString('pl-PL')} {formalities.signatureMethod ? `• ${formalities.signatureMethod}` : ''}</p> : <p><strong>Podpis:</strong> oczekuje na odrębną czynność klienta.</p>}
+    </section>
+  );
+}
 
 export default function OrderLookup() {
   const [loading, setLoading] = useState(false);
@@ -88,6 +166,7 @@ export default function OrderLookup() {
           <p><strong>Aktualny etap:</strong> {offer.status}</p>
           <p><strong>Data zgłoszenia:</strong> {new Date(offer.createdAt).toLocaleString('pl-PL')}</p>
           <p>{message}</p>
+          <FormalitiesPanel formalities={offer.formalities} />
         </article>
       ) : null}
       {order ? (
@@ -111,6 +190,7 @@ export default function OrderLookup() {
           {order.deliveredAt ? <p><strong>Dostarczono:</strong> {new Date(order.deliveredAt).toLocaleString('pl-PL')}</p> : null}
           <p><strong>Utworzono:</strong> {new Date(order.createdAt).toLocaleString('pl-PL')}</p>
           <p><strong>Ostatnia aktualizacja:</strong> {new Date(order.updatedAt).toLocaleString('pl-PL')}</p>
+          <FormalitiesPanel formalities={order.offer.formalities} />
         </article>
       ) : null}
     </section>
