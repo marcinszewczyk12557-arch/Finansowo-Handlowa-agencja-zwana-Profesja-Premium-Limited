@@ -6,6 +6,7 @@ import { strictPublicOfficeOffers } from '../data/strictQualifiedOffersOffice';
 import { strictPublicOffersExpansion2 } from '../data/strictQualifiedOffersExpansion2';
 import { strictPublicCashHandlingOffers } from '../data/strictQualifiedOffersCashHandling';
 import { strictPublicWaterOffers } from '../data/strictQualifiedOffersWater';
+import { strictPublicHvacOffers } from '../data/strictQualifiedOffersHvac';
 import { hasFullSupplierEvidence } from '../data/supplierEvidenceRegistry';
 
 function visual(label:string){
@@ -16,7 +17,7 @@ function visual(label:string){
 
 export default function HierarchicalCatalog(){
   const offers=useMemo(()=>{
-    const candidates=[...strictPublicOffers(),...strictPublicOfficeOffers(),...strictPublicOffersExpansion2(),...strictPublicCashHandlingOffers(),...strictPublicWaterOffers()];
+    const candidates=[...strictPublicOffers(),...strictPublicOfficeOffers(),...strictPublicOffersExpansion2(),...strictPublicCashHandlingOffers(),...strictPublicWaterOffers(),...strictPublicHvacOffers()];
     const combined=candidates.filter(hasFullSupplierEvidence);
     const ids=new Set<string>();
     const titles=new Set<string>();
