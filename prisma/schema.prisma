@@ -71,8 +71,8 @@ model Order {
   pickupAt             DateTime?
   estimatedDelivery    DateTime?
   confirmedAt          DateTime?
-  shippedAt            DateTime?
-  deliveredAt          DateTime?
+  shippedAt             DateTime?
+  deliveredAt           DateTime?
   orderConfirmation    String?
   commercialOffer      String?
   fulfillmentDocument String?
@@ -164,4 +164,28 @@ model OwnerLoginAttempt {
   failures     Int      @default(0)
   blockedUntil DateTime?
   updatedAt    DateTime @updatedAt
+}
+
+model OwnerSupplierSource {
+  id             String   @id @default(cuid())
+  catalogPath    String
+  publicName     String
+  supplierName   String?
+  supplierType   String   @default("SUPPLIER")
+  platform       String   @default("ALIBABA")
+  supplierUrl    String
+  sku            String?
+  basePrice      String?
+  currency       String   @default("USD")
+  warrantyMonths Int      @default(12)
+  notes          String?
+  status         String   @default("DRAFT")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([catalogPath])
+  @@index([publicName])
+  @@index([supplierName])
+  @@index([status])
+  @@index([updatedAt])
 }
