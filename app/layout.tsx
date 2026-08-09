@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import './featured-offers.css';
 import './professional.css';
+import './phase-one.css';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://profesja-premium-limited.vercel.app';
 
