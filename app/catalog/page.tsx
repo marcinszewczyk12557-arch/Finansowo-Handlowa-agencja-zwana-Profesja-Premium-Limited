@@ -1,6 +1,7 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import FullCatalogTree from '../../components/FullCatalogTree';
+import CatalogWorkbench from '../../components/CatalogWorkbench';
 import HierarchicalCatalog from '../../components/HierarchicalCatalog';
 import InstallmentCalculator from '../../components/InstallmentCalculator';
 import LandedCostCalculator from '../../components/LandedCostCalculator';
@@ -17,6 +18,7 @@ export default function CatalogPage(){
         <p>Pełne drzewo obejmuje szeroki zakres kategorii, grup produktowych i wariantów dostępnych do indywidualnego pozyskania. Osobno publikujemy oferty, dla których zakończono kwalifikację dostawcy i materiału źródłowego. Dzięki temu katalog jest bardzo szeroki, a status „zweryfikowana oferta” pozostaje zarezerwowany wyłącznie dla pozycji faktycznie potwierdzonych.</p>
       </section>
       <FullCatalogTree/>
+      <CatalogWorkbench/>
       <HierarchicalCatalog/>
       <section className='section catalog-calculators'>
         <div className='taxonomy-leaf-heading'>
