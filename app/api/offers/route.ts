@@ -4,6 +4,8 @@ import { prisma } from '../../../lib/prisma';
 import { ensureSalesAutomationCase } from '../../../lib/salesAutomation';
 import { syncTransactionFormalities } from '../../../lib/transactionFormalities';
 
+const MAX_BODY_BYTES = 16 * 1024;
+
 function text(value: unknown, max = 500) {
   return typeof value === 'string' ? value.trim().replace(/\u0000/g, '').slice(0, max) : '';
 }
@@ -19,25 +21,47 @@ function referenceNumber() {
   return `PPL-${date}-${random}`;
 }
 
+function json(data: unknown, status = 200) {
+  return NextResponse.json(data, {
+    status,
+    headers: {
+      'Cache-Control': 'no-store, max-age=0',
+      Pragma: 'no-cache',
+      'X-Robots-Tag': 'noindex, nofollow, noarchive',
+    },
+  });
+}
+
 export async function POST(request: Request) {
+  const contentType = request.headers.get('content-type') || '';
+  if (!contentType.toLowerCase().includes('application/json')) {
+    return json({ ok: false, error: 'Nieprawidłowy format żądania.' }, 415);
+  }
+
+  const contentLength = Number(request.headers.get('content-length') || '0');
+  if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
+    return json({ ok: false, error: 'Żądanie jest zbyt duże.' }, 413);
+  }
+
+  let body: Record<string, unknown>;
   try {
-    const contentType = request.headers.get('content-type') || '';
-    if (!contentType.includes('application/json')) {
-      return NextResponse.json({ ok: false, error: 'Nieprawidłowy format żądania.' }, { status: 415 });
-    }
+    body = await request.json();
+  } catch {
+    return json({ ok: false, error: 'Nieprawidłowe dane żądania.' }, 400);
+  }
 
-    const body = await request.json();
-    const contact = text(body.contact, 160);
-    const email = text(body.email, 254).toLowerCase();
-    const product = text(body.product, 300);
+  const contact = text(body.contact, 160);
+  const email = text(body.email, 254).toLowerCase();
+  const product = text(body.product, 300);
 
-    if (!contact || !isEmail(email) || !product) {
-      return NextResponse.json(
-        { ok: false, error: 'Uzupełnij osobę kontaktową, poprawny adres e-mail oraz produkt lub usługę.' },
-        { status: 400 },
-      );
-    }
+  if (!contact || !isEmail(email) || !product) {
+    return json(
+      { ok: false, error: 'Uzupełnij osobę kontaktową, poprawny adres e-mail oraz produkt lub usługę.' },
+      400,
+    );
+  }
 
+  try {
     const offer = await prisma.offer.create({
       data: {
         number: referenceNumber(),
@@ -76,12 +100,12 @@ export async function POST(request: Request) {
     }
 
     const { id: _id, ...publicOffer } = offer;
-    return NextResponse.json({ ok: true, offer: publicOffer }, { status: 201, headers: { 'Cache-Control': 'no-store' } });
+    return json({ ok: true, offer: publicOffer }, 201);
   } catch (error) {
     console.error('B2B offer submission failed', error);
-    return NextResponse.json(
+    return json(
       { ok: false, error: 'Nie udało się zapisać zapytania. Spróbuj ponownie lub skontaktuj się e-mailem.' },
-      { status: 500 },
+      500,
     );
   }
 }
