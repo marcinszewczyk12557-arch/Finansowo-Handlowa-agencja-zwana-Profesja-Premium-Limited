@@ -14,7 +14,7 @@ export default function Footer() {
           <Link href="/about">O nas</Link>
           <Link href="/catalog">Katalog</Link>
           <Link href="/offers/new">Zapytanie B2B</Link>
-          <Link href="/#raty">Finansowanie</Link>
+          <Link href="/#finansowanie">Finansowanie</Link>
           <Link href="/contact">Kontakt</Link>
           <Link href="/faq">FAQ</Link>
           <Link href="/privacy">Polityka prywatności</Link>
