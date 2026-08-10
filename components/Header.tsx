@@ -17,7 +17,7 @@ export default function Header() {
 
       <div className="reference-header__inner">
         <Link href="/" className="reference-brand" aria-label="Profesja Premium Limited — strona główna">
-          <img src="/profesja-logo.svg" alt="Logo Profesja Premium Limited" />
+          <img src="/profesja-logo.svg" alt="Logo PROFESJA PREMIUM LIMITED™" />
           <span>
             <strong>PROFESJA</strong>
             <small>PREMIUM LIMITED™</small>
@@ -29,7 +29,7 @@ export default function Header() {
           <Link href="/offers/new">OFERTA</Link>
           <Link href="/catalog">KATALOG PRODUKTÓW</Link>
           <Link href="/shops">SKLEPY W BUDOWIE</Link>
-          <Link href="/#raty">FINANSOWANIE</Link>
+          <Link href="/#finansowanie">FINANSOWANIE</Link>
           <Link href="/about">IMPORT</Link>
           <Link href="/offers/new?product=OEM%20ODM">OEM / ODM</Link>
           <Link href="/contact">KONTAKT</Link>
