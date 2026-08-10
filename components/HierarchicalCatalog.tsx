@@ -91,10 +91,10 @@ export default function HierarchicalCatalog(){
     <section className='section catalog-taxonomy-summary'>
       <div className='catalog-meta'>
         <div><strong>{categories.length}</strong><span>kategorii po pełnej kwalifikacji</span></div>
-        <div><strong>{offers.length}</strong><span>unikalnych ofert z pełnym dowodem</span></div>
-        <div><strong>3+ lata</strong><span>minimalny staż dostawcy</span></div>
+        <div><strong>{offers.length}</strong><span>unikalnych ofert po weryfikacji</span></div>
+        <div><strong>3+ lata</strong><span>minimalny wymagany staż dostawcy</span></div>
       </div>
-      <p className='catalog-count'>Każda profesjonalna oferta jest powiązana ze źródłem Alibaba.com i kwalifikacją dostawcy. Cena, gwarancja, dokumentacja, multimedia i parametry są ponownie potwierdzane przed finalnym RFQ, dzięki czemu klient otrzymuje aktualną specyfikację zamiast niezweryfikowanych danych.</p>
+      <p className='catalog-count'>Każda profesjonalna oferta przechodzi wewnętrzną kwalifikację dostawcy i dokumentacji. Cena, gwarancja, dostępność, multimedia oraz parametry są ponownie potwierdzane przed finalnym zapytaniem ofertowym, dzięki czemu klient otrzymuje aktualną specyfikację dla konkretnej transakcji.</p>
     </section>
 
     <section className='section taxonomy-browser'>
@@ -118,7 +118,7 @@ export default function HierarchicalCatalog(){
         <div className='taxonomy-products'>
           <section className='taxonomy-leaf'>
             <div className='taxonomy-leaf-heading'>
-              <div><p className='eyebrow'>ZWERYFIKOWANY ASORTYMENT</p><h2>{selectedCategory || 'Oferty w kwalifikacji'}</h2><p>Wybierz podkategorię, a następnie konkretny produkt i jego pełne dossier handlowe.</p></div>
+              <div><p className='eyebrow'>ZWERYFIKOWANY ASORTYMENT</p><h2>{selectedCategory || 'Oferty w kwalifikacji'}</h2><p>Wybierz podkategorię, a następnie konkretny produkt i jego dossier handlowe.</p></div>
               <span>{visible.length} ofert</span>
             </div>
 
@@ -133,9 +133,9 @@ export default function HierarchicalCatalog(){
                 <div className='taxonomy-product-number'>OFERTA {String(index+1).padStart(2,'0')} • {offer.subcategory}</div>
                 <div className='product-media-frame'>
                   <img className='taxonomy-product-image' src={visual(offer.title)} alt={`${offer.title} — oferta PROFESJA`} loading='lazy'/>
-                  <div className='media-status'>Zdjęcia produktowe: źródło producenta / Alibaba.com</div>
+                  <div className='media-status'>Materiały produktowe i dokumentacja: weryfikowane przed przedstawieniem oferty</div>
                 </div>
-                <p className='eyebrow'>VERIFIED SUPPLIER • {offer.supplierYears}+ LAT • TRADE ASSURANCE</p>
+                <p className='eyebrow'>ZWERYFIKOWANY DOSTAWCA • {offer.supplierYears}+ LAT</p>
                 <h3>{offer.title}</h3>
                 <p className='offer-lead'>{offer.purpose}. Produkt przeznaczony do profesjonalnych zastosowań w segmencie {offer.category.toLowerCase()}.</p>
 
@@ -143,25 +143,17 @@ export default function HierarchicalCatalog(){
                   <div><span>Do czego można użyć</span><strong>{offer.use}</strong></div>
                   <div><span>Przeznaczenie</span><strong>{offer.purpose}</strong></div>
                   <div><span>Funkcja</span><strong>{offer.function}</strong></div>
-                  <div><span>Cena</span><strong>Aktualna cena źródłowa + wycena PROFESJA po MOQ i dostawie</strong></div>
+                  <div><span>Cena</span><strong>Indywidualna wycena PROFESJA po potwierdzeniu wariantu, MOQ, dostawy i warunków transakcji</strong></div>
                   <div><span>Gwarancja / RMA</span><strong>{warrantyText(offer.category)}</strong></div>
                   <div><span>Instrukcja obsługi</span><strong>Instrukcja producenta i dokumentacja techniczna są pozyskiwane dla wybranego modelu; wersja PL/EN jest weryfikowana przed finalną ofertą.</strong></div>
                 </div>
 
                 <div className='source-dossier'>
-                  <h4>Źródła, multimedia i dokumentacja</h4>
-                  <div className='source-links'>
-                    <a href={offer.supplierEvidenceUrl} target='_blank' rel='noreferrer'>Oferta / producent na Alibaba.com ↗</a>
-                    <a href={offer.supplierEvidenceUrl} target='_blank' rel='noreferrer'>Galeria zdjęć producenta ↗</a>
-                    <a href={offer.supplierEvidenceUrl} target='_blank' rel='noreferrer'>Video / demo produktu (jeżeli udostępnione) ↗</a>
-                    <a href={offer.supplierEvidenceUrl} target='_blank' rel='noreferrer'>Instrukcja / karta techniczna u źródła ↗</a>
-                    <a href={offer.tradeAssuranceEvidenceUrl} target='_blank' rel='noreferrer'>Potwierdzenie Trade Assurance ↗</a>
-                  </div>
-                  <p><strong>Dostawca:</strong> {offer.supplier} • <strong>staż:</strong> {offer.supplierYears}+ lat. Przed płatnością ponownie weryfikujemy cenę, MOQ, dostępność, gwarancję, certyfikaty, multimedia, instrukcję i aktywność Trade Assurance dla konkretnej transakcji.</p>
+                  <h4>Weryfikacja i dokumentacja handlowa</h4>
+                  <p>Źródło dostawy, warunki zakupu i dane kontrahenta pozostają elementem wewnętrznego procesu sourcingowego PROFESJA. Przed płatnością ponownie weryfikujemy cenę, MOQ, dostępność, gwarancję, certyfikaty, multimedia, instrukcję oraz dokumentację dla konkretnej transakcji.</p>
                 </div>
 
                 <div className='offer-actions'>
-                  <a className='taxonomy-offer-link secondary' href={offer.supplierEvidenceUrl} target='_blank' rel='noreferrer'>Zobacz źródło produktu ↗</a>
                   <a className='taxonomy-offer-link' href={`/offers/new?product=${encodeURIComponent(offer.title)}&category=${encodeURIComponent(offer.category)}`}>Poproś o ofertę PROFESJA →</a>
                 </div>
               </article>)}
