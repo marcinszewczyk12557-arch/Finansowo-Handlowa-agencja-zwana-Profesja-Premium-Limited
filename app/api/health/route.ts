@@ -8,14 +8,13 @@ export async function GET() {
   const databaseConfigured = Boolean(process.env.DATABASE_URL);
 
   let database: 'ok' | 'unconfigured' | 'error' = databaseConfigured ? 'ok' : 'unconfigured';
-  let databaseMessage: string | undefined;
 
   if (databaseConfigured) {
     try {
       await prisma.$queryRaw`SELECT 1`;
     } catch (error) {
       database = 'error';
-      databaseMessage = error instanceof Error ? error.message.slice(0, 180) : 'Database connection failed';
+      console.error('Health check database connection failed', error);
     }
   }
 
@@ -23,7 +22,7 @@ export async function GET() {
 
   return NextResponse.json(
     {
-      ok: true,
+      ok: ready,
       service: 'PROFESJA PREMIUM LIMITED',
       app: 'online',
       database,
@@ -32,11 +31,13 @@ export async function GET() {
       commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) || null,
       checkedAt: new Date().toISOString(),
       responseMs: Date.now() - startedAt,
-      ...(databaseMessage ? { databaseMessage } : {}),
     },
     {
       status: ready ? 200 : 503,
-      headers: { 'Cache-Control': 'no-store, max-age=0' },
+      headers: {
+        'Cache-Control': 'no-store, max-age=0',
+        'X-Robots-Tag': 'noindex, nofollow, noarchive',
+      },
     },
   );
 }
