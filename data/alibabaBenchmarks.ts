@@ -4,17 +4,17 @@ export type AlibabaBenchmark = {
   alibabaUsd: [number, number];
   moq: string;
   landedPln: [number, number];
+  salePln: [number, number];
   comparableEuMarketPln?: [number, number];
-  targetSalePln?: [number, number];
   note: string;
   checkedAt: string;
 };
 
 // Benchmark pomocniczy PROFESJA PREMIUM LIMITED™.
 // Kursy walut są robocze i przed ofertą muszą zostać odświeżone.
-// Alibaba/MOQ służy do oceny kosztu sourcingu; nie wyznacza automatycznie ceny sprzedaży.
-// Cena PROFESJA ma docelowo wynosić ok. 72–84% aktualnej ceny rynkowej
-// porównywalnego produktu/konfiguracji w UE, o ile koszt landed i warunki transakcji to umożliwiają.
+// Alibaba/MOQ służy do oceny kosztu sourcingu i dostępności wariantów.
+// Cena sprzedażowa PROFESJA = koszt landed × 1,72–1,84 (+72% do +84%),
+// z kontrolą, aby oferta pozostawała rozsądnie zbliżona do cen porównywalnych produktów w UE.
 // Dla produktów markowych benchmark Alibaba nie zastępuje autoryzowanego kanału dystrybucji ani weryfikacji autentyczności.
 export const alibabaBenchmarks: AlibabaBenchmark[] = [
   {
@@ -23,7 +23,8 @@ export const alibabaBenchmarks: AlibabaBenchmark[] = [
     alibabaUsd: [49, 92],
     moq: 'najczęściej 1 szt.; część ofert 10–200+ szt.',
     landedPln: [320, 650],
-    note: 'Wyłącznie Private Label / bez marki. Nie stosować do oryginalnych Nubia/REDMAGIC; markowe smartfony wyceniać względem oficjalnego rynku UE.',
+    salePln: [550, 1196],
+    note: 'Benchmark bez istotnej zmiany. Wyłącznie Private Label / bez marki. Nie stosować do oryginalnych Nubia/REDMAGIC; markowe smartfony wyceniać względem oficjalnego rynku UE.',
     checkedAt: '2026-08-10'
   },
   {
@@ -32,7 +33,8 @@ export const alibabaBenchmarks: AlibabaBenchmark[] = [
     alibabaUsd: [1500, 3500],
     moq: '1 zestaw',
     landedPln: [18000, 28000],
-    note: 'Publiczne listingi Alibaba nadal pokazują ok. 1 500 USD dla 1–3,5 t i ok. 2 000 USD dla wybranych 3,5 t przy MOQ 1. Do realnej oferty doliczać transport, odprawę, zgodność UE i specyfikację silnika.',
+    salePln: [30960, 51520],
+    note: 'Benchmark bez istotnej zmiany. Publiczne listingi nadal pokazują ok. 1 500 USD dla podstawowych konfiguracji i ok. 2 000 USD dla wybranych 3,5 t przy MOQ 1. Do oferty doliczać transport, odprawę, zgodność UE i specyfikację silnika.',
     checkedAt: '2026-08-10'
   },
   {
@@ -41,9 +43,9 @@ export const alibabaBenchmarks: AlibabaBenchmark[] = [
     alibabaUsd: [529, 1800],
     moq: '1 szt. dla wielu pełnowymiarowych modeli; wybrane serie 2–10+ szt.',
     landedPln: [4500, 10000],
+    salePln: [7740, 18400],
     comparableEuMarketPln: [4300, 13000],
-    targetSalePln: [7200, 10900],
-    note: 'Zakres rozszerzony w górę: wiarygodne pełne modele 4D/5D na Alibaba występują ok. 529–1 800 USD przy MOQ 1, natomiast porównywalne oferty UE obejmują ok. 999–2 999 EUR. Nie używać prostych foteli 3D/fixed-roller jako benchmarku premium 4D.',
+    note: 'Zakres Alibaba pozostaje aktualny. Dla konfiguracji premium cena wynikająca wyłącznie z narzutu może przekroczyć część rynku UE, dlatego finalną ofertę należy porównywać z konkretnym modelem europejskim i zakresem gwarancji.',
     checkedAt: '2026-08-10'
   },
   {
@@ -52,17 +54,19 @@ export const alibabaBenchmarks: AlibabaBenchmark[] = [
     alibabaUsd: [989, 2100],
     moq: '1 zestaw / 1 jednostka; część ofert 2 szt.',
     landedPln: [8000, 18000],
-    note: 'Brak istotnej zmiany benchmarku. Dla kompletnych realizacji wielostrefowych, sterowania, uruchomienia i montażu cena musi być kalkulowana projektowo.',
+    salePln: [13760, 33120],
+    note: 'Brak istotnej zmiany benchmarku. Aktualne oferty Gree/Haier i systemy multi-zone nadal mieszczą się w zbliżonym przedziale; pełne realizacje z montażem i uruchomieniem wyceniać projektowo.',
     checkedAt: '2026-08-10'
   },
   {
     category: 'Meble Premium / Executive Office',
     reference: 'komplet gabinetowy executive: biurko + szafa/side cabinet + krzesło zależnie od oferty',
-    alibabaUsd: [500, 1503],
+    alibabaUsd: [500, 1960],
     moq: '1–2 zestawy typowo; wybrane serie 5–30 szt.',
-    landedPln: [4000, 10000],
+    landedPln: [4000, 12000],
+    salePln: [6880, 22080],
     comparableEuMarketPln: [4900, 29400],
-    note: 'Rynek UE jest bardzo szeroki: zestawy showroom/business od ok. 1 125 EUR, luksusowe zestawy markowe mogą przekraczać 6 700 EUR. Benchmarkować zawsze względem materiału, liczby elementów, dostawy i montażu.',
+    note: 'Istotna korekta górnego benchmarku: aktualne luksusowe zestawy executive dochodzą do ok. 1 960 USD przy MOQ 1. Zakres sprzedażowy po narzucie nadal mieści się w szerokim przedziale porównywalnych ofert UE.',
     checkedAt: '2026-08-10'
   },
   {
@@ -71,15 +75,15 @@ export const alibabaBenchmarks: AlibabaBenchmark[] = [
     alibabaUsd: [750, 2899],
     moq: '1 zestaw / od 5 000 W zależnie od dostawcy',
     landedPln: [45000, 55000],
-    note: 'Najtańsze listingi ok. 750–1 050 USD nie są porównywalne 1:1 z pełnym 20 kWp + 20 kWh. Zachować konserwatywny koszt landed i wymagać potwierdzenia pojemności baterii, falownika, paneli, dokumentacji i warunków dostawy.',
+    salePln: [77400, 101200],
+    note: 'Benchmark bez istotnej zmiany. Najtańsze listingi 20 kW często nie obejmują pełnego magazynu 20 kWh; przed ofertą potwierdzić baterię, falownik, panele, dokumentację, Incoterms i zgodność UE.',
     checkedAt: '2026-08-10'
   }
 ];
 
-export const marketPriceShare = {
+export const pricingMarkup = {
   min: 0.72,
   max: 0.84,
-  target: 0.80,
-  formula: 'sale = comparableMarketPrice × marketShare',
-  note: 'MOQ dostawcy, koszt landed oraz rabat/udział ceny rynkowej PROFESJA są niezależnymi parametrami.'
+  formula: 'sale = landedCost × (1 + markup)',
+  note: 'MOQ, koszt landed, porównanie z rynkiem UE i narzut handlowy są kontrolowane oddzielnie.'
 };
