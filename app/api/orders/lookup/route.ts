@@ -1,8 +1,14 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../../lib/prisma';
 
-function clean(value: string | null, max = 254) {
-  return (value || '').trim().slice(0, max);
+const MAX_BODY_BYTES = 4096;
+
+function clean(value: unknown, max = 254) {
+  return typeof value === 'string' ? value.trim().replace(/\u0000/g, '').slice(0, max) : '';
+}
+
+function isEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(value);
 }
 
 const formalitiesSelect = {
@@ -31,13 +37,47 @@ const formalitiesSelect = {
   updatedAt: true,
 } as const;
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const reference = clean(searchParams.get('reference'), 80);
-  const email = clean(searchParams.get('email')).toLowerCase();
+function json(data: unknown, status = 200) {
+  return NextResponse.json(data, {
+    status,
+    headers: {
+      'Cache-Control': 'no-store, max-age=0',
+      Pragma: 'no-cache',
+      'X-Robots-Tag': 'noindex, nofollow, noarchive',
+    },
+  });
+}
 
-  if (!reference || !email || !email.includes('@')) {
-    return NextResponse.json({ ok: false, error: 'Podaj numer sprawy lub zamówienia oraz poprawny adres e-mail.' }, { status: 400 });
+export async function GET() {
+  return json(
+    { ok: false, error: 'Ta operacja wymaga bezpiecznego żądania POST.' },
+    405,
+  );
+}
+
+export async function POST(request: Request) {
+  const contentType = request.headers.get('content-type') || '';
+  if (!contentType.toLowerCase().includes('application/json')) {
+    return json({ ok: false, error: 'Nieprawidłowy format żądania.' }, 415);
+  }
+
+  const contentLength = Number(request.headers.get('content-length') || '0');
+  if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
+    return json({ ok: false, error: 'Żądanie jest zbyt duże.' }, 413);
+  }
+
+  let body: Record<string, unknown>;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ ok: false, error: 'Nieprawidłowe dane żądania.' }, 400);
+  }
+
+  const reference = clean(body.reference, 80);
+  const email = clean(body.email, 254).toLowerCase();
+
+  if (!reference || !isEmail(email)) {
+    return json({ ok: false, error: 'Podaj numer sprawy lub zamówienia oraz poprawny adres e-mail.' }, 400);
   }
 
   try {
@@ -81,7 +121,7 @@ export async function GET(request: Request) {
     });
 
     if (order) {
-      return NextResponse.json({ ok: true, kind: 'order', order }, { headers: { 'Cache-Control': 'no-store' } });
+      return json({ ok: true, kind: 'order', order });
     }
 
     const offer = await prisma.offer.findFirst({
@@ -96,20 +136,17 @@ export async function GET(request: Request) {
     });
 
     if (offer) {
-      return NextResponse.json(
-        {
-          ok: true,
-          kind: 'offer',
-          offer,
-          message: 'Zapytanie istnieje w systemie. Dane formalności są uzupełniane z przebiegu negocjacji i transakcji, natomiast zgody i podpis wymagają odrębnej, świadomej czynności klienta.',
-        },
-        { headers: { 'Cache-Control': 'no-store' } },
-      );
+      return json({
+        ok: true,
+        kind: 'offer',
+        offer,
+        message: 'Zapytanie istnieje w systemie. Dane formalności są uzupełniane z przebiegu negocjacji i transakcji, natomiast zgody i podpis wymagają odrębnej, świadomej czynności klienta.',
+      });
     }
 
-    return NextResponse.json({ ok: false, error: 'Nie znaleziono sprawy ani zamówienia dla podanych danych.' }, { status: 404 });
+    return json({ ok: false, error: 'Nie znaleziono sprawy ani zamówienia dla podanych danych.' }, 404);
   } catch (error) {
     console.error('Client order lookup failed', error);
-    return NextResponse.json({ ok: false, error: 'Nie udało się sprawdzić sprawy lub zamówienia.' }, { status: 500 });
+    return json({ ok: false, error: 'Nie udało się sprawdzić sprawy lub zamówienia.' }, 500);
   }
 }
