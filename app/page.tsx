@@ -33,7 +33,7 @@ const originalSmartphones = [
     model: 'Z80 Ultra',
     retailEur: 799,
     profesjaPln: 2765,
-    availability: 'oficjalna dystrybucja UE — dostępność potwierdzana przed zamówieniem',
+    availability: 'oficjalny sklep UE: dostępny, deklarowana wysyłka 3–5 dni; stan potwierdzany przed zamówieniem',
   },
   {
     image: homeAssets1.nubia02,
@@ -57,7 +57,7 @@ const originalSmartphones = [
     model: '11 Pro',
     retailEur: 699,
     profesjaPln: 2419,
-    availability: 'oryginalny smartfon gamingowy REDMAGIC — dostępność potwierdzana przed zamówieniem',
+    availability: 'oficjalny sklep UE: obecnie wyprzedany; dostępność alternatywnych wariantów potwierdzana przed zamówieniem',
   },
   {
     image: homeAssets2.nubia05,
