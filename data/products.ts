@@ -30,7 +30,9 @@ const commonWarranty = 'Warunki gwarancji są potwierdzane indywidualnie dla zat
 const commonMedia = 'Dedykowana prezentacja PL/EN oraz materiały wizualne — przygotowywane dla zatwierdzonego wariantu';
 const minimumBusinessOrder = 'Minimalna łączna wartość zamówienia B2B: 95 000 zł. Ilość minimalna zależy od kategorii i konfiguracji.';
 const phoneMinimum = 'Minimalne zamówienie: 14 sztuk oraz minimalna łączna wartość zamówienia 95 000 zł.';
-const sale = (base: number) => Math.round(base * 1.85);
+// base = benchmark rynkowy porównywalnego produktu/konfiguracji, nie koszt dostawcy.
+// Docelowo katalog pokazuje ok. 80% rynku; finalna oferta mieści się zwykle w polityce 72–84% po weryfikacji kosztu landed, MOQ i warunków transakcji.
+const sale = (base: number) => Math.round(base * 0.80);
 const money = (value: number) => `${value.toLocaleString('pl-PL')} zł`;
 const price = (base: number) => `Cena katalogowa: ${money(sale(base))}`;
 
@@ -107,7 +109,7 @@ const products: CatalogProduct[] = [
     ['Pakiet wyposażenia magazynu', 'Wyposażenie Przedsiębiorstw', 14500, 'Wyposażenie stanowisk magazynowych, składowania i obsługi technicznej.'],
     ['Kompletne stanowisko pracy Enterprise', 'Wyposażenie Przedsiębiorstw', 28000, 'Indywidualny pakiet wyposażenia stanowiska pracy dla dowolnej branży.'],
 
-    ['Fotel masażujący 4D Zero Gravity', 'Wellness Premium', 16000, 'Fotel premium z masażem wielostrefowym, ogrzewaniem i funkcją zero gravity.'],
+    ['Fotel masażujący 4D Zero Gravity', 'Wellness Premium', 13000, 'Fotel premium z masażem wielostrefowym, ogrzewaniem i funkcją zero gravity.'],
     ['Kabina infrared Home Spa', 'Wellness Premium', 22000, 'Kabina infrared do stref wellness, hoteli i gabinetów premium.'],
     ['Strefa relaksu Executive', 'Wellness Premium', 32000, 'Kompletny zestaw wyposażenia strefy relaksu dla firmy lub hotelu.'],
     ['Wellness Suite Signature', 'Wellness Premium', 55000, 'Rozbudowany pakiet urządzeń wellness klasy premium.'],
