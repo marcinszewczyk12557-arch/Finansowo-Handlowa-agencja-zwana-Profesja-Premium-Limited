@@ -145,7 +145,12 @@ export default function OrderLookup() {
     const email = String(form.get('email') || '').trim();
 
     try {
-      const response = await fetch(`/api/orders/lookup?reference=${encodeURIComponent(reference)}&email=${encodeURIComponent(email)}`, { cache: 'no-store' });
+      const response = await fetch('/api/orders/lookup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reference, email }),
+        cache: 'no-store',
+      });
       const data = await response.json();
       if (!response.ok || !data.ok) throw new Error(data.error || 'Nie udało się sprawdzić sprawy.');
       if (data.kind === 'offer') {
