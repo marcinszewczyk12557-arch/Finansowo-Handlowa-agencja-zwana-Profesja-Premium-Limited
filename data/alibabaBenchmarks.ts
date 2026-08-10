@@ -4,8 +4,8 @@ export type AlibabaBenchmark = {
   alibabaUsd: [number, number];
   moq: string;
   landedPln: [number, number];
-  salePln: [number, number];
   comparableEuMarketPln?: [number, number];
+  targetSalePln?: [number, number];
   note: string;
   checkedAt: string;
 };
@@ -13,8 +13,9 @@ export type AlibabaBenchmark = {
 // Benchmark pomocniczy PROFESJA PREMIUM LIMITED™.
 // Kursy walut są robocze i przed ofertą muszą zostać odświeżone.
 // Alibaba/MOQ służy do oceny kosztu sourcingu i dostępności wariantów.
-// Cena sprzedażowa PROFESJA = koszt landed × 1,72–1,84 (+72% do +84%),
-// z kontrolą, aby oferta pozostawała rozsądnie zbliżona do cen porównywalnych produktów w UE.
+// Docelowa cena sprzedażowa PROFESJA jest ustalana względem porównywalnej ceny rynkowej UE,
+// zwykle na poziomie ok. 72–84% rynku dla tej samej lub możliwie najbliższej konfiguracji.
+// Koszt landed, MOQ dostawcy i rentowność są kontrolowane osobno i nie są utożsamiane z rabatem PROFESJA.
 // Dla produktów markowych benchmark Alibaba nie zastępuje autoryzowanego kanału dystrybucji ani weryfikacji autentyczności.
 export const alibabaBenchmarks: AlibabaBenchmark[] = [
   {
@@ -23,8 +24,7 @@ export const alibabaBenchmarks: AlibabaBenchmark[] = [
     alibabaUsd: [49, 92],
     moq: 'najczęściej 1 szt.; część ofert 10–200+ szt.',
     landedPln: [320, 650],
-    salePln: [550, 1196],
-    note: 'Benchmark bez istotnej zmiany. Wyłącznie Private Label / bez marki. Nie stosować do oryginalnych Nubia/REDMAGIC; markowe smartfony wyceniać względem oficjalnego rynku UE.',
+    note: 'Benchmark sourcingowy bez istotnej zmiany. Wyłącznie Private Label / bez marki. Nie stosować do oryginalnych nubia/REDMAGIC; markowe smartfony wyceniać względem oficjalnego rynku UE.',
     checkedAt: '2026-08-10'
   },
   {
@@ -33,8 +33,7 @@ export const alibabaBenchmarks: AlibabaBenchmark[] = [
     alibabaUsd: [1500, 3500],
     moq: '1 zestaw',
     landedPln: [18000, 28000],
-    salePln: [30960, 51520],
-    note: 'Benchmark bez istotnej zmiany. Publiczne listingi nadal pokazują ok. 1 500 USD dla podstawowych konfiguracji i ok. 2 000 USD dla wybranych 3,5 t przy MOQ 1. Do oferty doliczać transport, odprawę, zgodność UE i specyfikację silnika.',
+    note: 'Benchmark sourcingowy bez istotnej zmiany. Publiczne listingi nadal pokazują ok. 1 500 USD dla podstawowych konfiguracji i ok. 2 000 USD dla wybranych 3,5 t przy MOQ 1. Do oferty doliczać transport, odprawę, zgodność UE i specyfikację silnika.',
     checkedAt: '2026-08-10'
   },
   {
@@ -43,9 +42,9 @@ export const alibabaBenchmarks: AlibabaBenchmark[] = [
     alibabaUsd: [529, 1800],
     moq: '1 szt. dla wielu pełnowymiarowych modeli; wybrane serie 2–10+ szt.',
     landedPln: [4500, 10000],
-    salePln: [7740, 18400],
     comparableEuMarketPln: [4300, 13000],
-    note: 'Zakres Alibaba pozostaje aktualny. Dla konfiguracji premium cena wynikająca wyłącznie z narzutu może przekroczyć część rynku UE, dlatego finalną ofertę należy porównywać z konkretnym modelem europejskim i zakresem gwarancji.',
+    targetSalePln: [3096, 10920],
+    note: 'Zakres Alibaba pozostaje aktualny. Nie używać najtańszych, nieporównywalnych listingów jako benchmarku premium. Docelowy zakres PROFESJA wynika z 72–84% porównywalnego rynku UE i musi jednocześnie przejść kontrolę kosztu landed oraz gwarancji.',
     checkedAt: '2026-08-10'
   },
   {
@@ -54,8 +53,7 @@ export const alibabaBenchmarks: AlibabaBenchmark[] = [
     alibabaUsd: [989, 2100],
     moq: '1 zestaw / 1 jednostka; część ofert 2 szt.',
     landedPln: [8000, 18000],
-    salePln: [13760, 33120],
-    note: 'Brak istotnej zmiany benchmarku. Aktualne oferty Gree/Haier i systemy multi-zone nadal mieszczą się w zbliżonym przedziale; pełne realizacje z montażem i uruchomieniem wyceniać projektowo.',
+    note: 'Brak istotnej zmiany benchmarku sourcingowego. Aktualne oferty Gree/Midea i systemy multi-zone nadal mieszczą się w zbliżonym przedziale; pełne realizacje z montażem i uruchomieniem wyceniać projektowo. Cenę PROFESJA liczyć dopiero po ustaleniu porównywalnego kompletnego zakresu UE.',
     checkedAt: '2026-08-10'
   },
   {
@@ -64,9 +62,9 @@ export const alibabaBenchmarks: AlibabaBenchmark[] = [
     alibabaUsd: [500, 1960],
     moq: '1–2 zestawy typowo; wybrane serie 5–30 szt.',
     landedPln: [4000, 12000],
-    salePln: [6880, 22080],
     comparableEuMarketPln: [4900, 29400],
-    note: 'Istotna korekta górnego benchmarku: aktualne luksusowe zestawy executive dochodzą do ok. 1 960 USD przy MOQ 1. Zakres sprzedażowy po narzucie nadal mieści się w szerokim przedziale porównywalnych ofert UE.',
+    targetSalePln: [3528, 24696],
+    note: 'Górny benchmark sourcingowy ok. 1 960 USD pozostaje zasadny dla luksusowych zestawów executive. Docelowy przedział PROFESJA jest liczony jako 72–84% porównywalnego rynku UE, przy osobnej kontroli kosztu landed i zakresu zestawu.',
     checkedAt: '2026-08-10'
   },
   {
@@ -75,15 +73,15 @@ export const alibabaBenchmarks: AlibabaBenchmark[] = [
     alibabaUsd: [750, 2899],
     moq: '1 zestaw / od 5 000 W zależnie od dostawcy',
     landedPln: [45000, 55000],
-    salePln: [77400, 101200],
-    note: 'Benchmark bez istotnej zmiany. Najtańsze listingi 20 kW często nie obejmują pełnego magazynu 20 kWh; przed ofertą potwierdzić baterię, falownik, panele, dokumentację, Incoterms i zgodność UE.',
+    note: 'Benchmark sourcingowy bez istotnej zmiany. Najtańsze listingi 20 kW często nie obejmują pełnego magazynu 20 kWh; przed ofertą potwierdzić baterię, falownik, panele, dokumentację, Incoterms i zgodność UE. Nie wyznaczać ceny sprzedażowej z samego kosztu Alibaba bez porównywalnej pełnej instalacji UE.',
     checkedAt: '2026-08-10'
   }
 ];
 
-export const pricingMarkup = {
-  min: 0.72,
-  max: 0.84,
-  formula: 'sale = landedCost × (1 + markup)',
-  note: 'MOQ, koszt landed, porównanie z rynkiem UE i narzut handlowy są kontrolowane oddzielnie.'
+export const pricingPolicy = {
+  marketShareMin: 0.72,
+  marketShareMax: 0.84,
+  defaultMarketShare: 0.80,
+  formula: 'targetSale = comparableEuMarketPrice × marketShare',
+  note: 'MOQ dostawcy, koszt landed, dostępność, gwarancja i polityka rabatowa PROFESJA są kontrolowane oddzielnie.'
 };
