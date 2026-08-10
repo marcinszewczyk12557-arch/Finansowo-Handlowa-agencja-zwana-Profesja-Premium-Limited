@@ -7,11 +7,17 @@ export const PROFESJA_VOLUME_DISCOUNT_QTY = 10;
  */
 export const MIN_ORDER_QUANTITY = PROFESJA_VOLUME_DISCOUNT_QTY;
 
-export const MIN_PRICE_MULTIPLIER = 1.72;
-export const MAX_PRICE_MULTIPLIER = 1.84;
+/**
+ * Docelowa cena PROFESJA to 72–84% aktualnej ceny rynkowej porównywalnego
+ * produktu / konfiguracji w UE. To NIE jest narzut na koszt dostawcy.
+ * Koszt landed, MOQ dostawcy, cło/VAT, zgodność UE i logistyka są
+ * weryfikowane oddzielnie przed przedstawieniem wiążącej oferty.
+ */
+export const MIN_PRICE_MULTIPLIER = 0.72;
+export const MAX_PRICE_MULTIPLIER = 0.84;
 
-// Kept for backwards compatibility with older components.
-export const CATALOG_MARKUPS = [1.72, 1.75, 1.78, 1.81, 1.84] as const;
+// Zachowane dla kompatybilności ze starszymi komponentami.
+export const CATALOG_MARKUPS = [0.72, 0.75, 0.78, 0.81, 0.84] as const;
 
 export function markupForVariant(index: number, totalVariants: number) {
   const total = Math.max(2, Math.floor(totalVariants || 2));
@@ -28,10 +34,16 @@ export function multiplierForQuantity(quantity: number) {
   return MAX_PRICE_MULTIPLIER - step * (qty - 1);
 }
 
+/**
+ * basePrice = aktualny benchmark rynkowy porównywalnego produktu, a nie koszt dostawcy.
+ */
 export function unitPriceForQuantity(basePrice: number, quantity: number) {
   return Math.round((basePrice * multiplierForQuantity(quantity)) / 10) * 10;
 }
 
+/**
+ * Nazwa zachowana dla kompatybilności; multiplier oznacza udział ceny rynkowej.
+ */
 export function priceWithMarkup(basePrice: number, multiplier: number) {
   return Math.round((basePrice * multiplier) / 10) * 10;
 }
