@@ -79,7 +79,7 @@ const products: CatalogProduct[] = [
     ['Lenovo Legion Creator', 'Laptopy Premium', 9800, 'Konfiguracja dla grafiki, wideo, CAD i pracy kreatywnej.'],
     ['Lenovo Legion Ultimate', 'Laptopy Premium', 12500, 'Najwyższa konfiguracja mobilnej stacji roboczej i gaming premium.'],
 
-    ['Fotowoltaika 20 kWp + magazyn 20 kWh', 'Energia i Fotowoltaika', 55000, 'Kompletny zestaw PV dla firmy z magazynem energii, falownikiem hybrydowym i monitoringiem.'],
+    ['Fotowoltaika 20 kWp + magazyn 20 kWh', 'Energia i Fotowoltaika', 144000, 'Kompletny zestaw PV dla firmy z magazynem energii, falownikiem hybrydowym i monitoringiem.'],
     ['Fotowoltaika 50 kWp + magazyn 50 kWh', 'Energia i Fotowoltaika', 78000, 'Rozbudowana instalacja dla obiektów komercyjnych i średnich przedsiębiorstw.'],
     ['Fotowoltaika 100 kWp + magazyn 100 kWh', 'Energia i Fotowoltaika', 120000, 'System energetyczny klasy biznesowej z możliwością rozbudowy EMS.'],
     ['Fotowoltaika przemysłowa + magazyn skalowalny', 'Energia i Fotowoltaika', 185000, 'Indywidualnie projektowane rozwiązanie przemysłowe z magazynem energii i zarządzaniem obciążeniem.'],
