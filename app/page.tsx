@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { homeAssets0 } from '../data/homeAssets0';
 import { homeAssets1 } from '../data/homeAssets1';
 import { homeAssets2 } from '../data/homeAssets2';
 
 const categories = [
-  ['Smartfony Premium', 'nubia, REDMAGIC i urządzenia mobilne', '01'],
+  ['Smartfony Premium', 'urządzenia mobilne i rozwiązania komunikacyjne', '01'],
   ['Laptopy Premium', 'wydajne stacje mobilne i notebooki biznesowe', '02'],
   ['Energia i Fotowoltaika', 'instalacje PV, magazyny energii i systemy hybrydowe', '03'],
   ['HVAC', 'klimatyzacja, wentylacja i rozwiązania VRF/VRV', '04'],
@@ -26,63 +25,26 @@ const categories = [
   ['Leisure Premium', 'produkty rekreacyjne i wyposażenie czasu wolnego', '18'],
 ];
 
+const brandWall = [
+  ['HILTI', 'hilti'], ['Milwaukee', 'milwaukee'], ['Makita', 'makita'], ['Bosch Professional', 'bosch'], ['Festool', 'festool'], ['DeWalt', 'dewalt'],
+  ['Apple', 'apple'], ['Samsung', 'samsung'], ['Huawei', 'huawei'], ['Xiaomi', 'xiaomi'], ['OPPO', 'oppo'],
+  ['vivo', 'vivo'], ['realme', 'realme'], ['OnePlus', 'oneplus'], ['HONOR', 'honor'], ['Infinix', 'infinix'],
+  ['TECNO', 'tecno'], ['Meizu', 'meizu'], ['Nokia', 'nokia'], ['Motorola', 'motorola'], ['Google', 'google'],
+  ['Sony', 'sony'], ['Lenovo', 'lenovo'], ['ASUS', 'asus'], ['Acer', 'acer'], ['Dell', 'dell'],
+  ['HP', 'hp'], ['Microsoft', 'microsoft'], ['Intel', 'intel'], ['AMD', 'amd'], ['NVIDIA', 'nvidia'],
+  ['Bosch', 'bosch'], ['Siemens', 'siemens'], ['LG', 'lg'], ['Panasonic', 'panasonic'], ['Philips', 'philips'],
+  ['Haier', 'haier'], ['Midea', 'midea'], ['Hisense', 'hisense'], ['TCL', 'tcl'], ['Sharp', 'sharp'],
+  ['DJI', 'dji'], ['Anker', 'anker'], ['Baseus', 'baseus'], ['UGREEN', 'ugreen'], ['Lenovo Legion', 'lenovolegion'],
+];
+
 const originalSmartphones = [
-  {
-    image: homeAssets1.nubia01,
-    brand: 'nubia',
-    model: 'Z80 Ultra 16GB+512GB',
-    retailEur: 799,
-    profesjaPln: 2765,
-    availability: 'oficjalny sklep UE: dostępny, deklarowana wysyłka 3–5 dni; wariant 16GB+512GB i stan potwierdzane przed zamówieniem',
-  },
-  {
-    image: homeAssets1.nubia02,
-    brand: 'nubia',
-    model: 'Z70S Ultra',
-    retailEur: 669,
-    profesjaPln: 2315,
-    availability: 'oficjalna dystrybucja UE — wariant i stan magazynowy potwierdzane przed zamówieniem',
-  },
-  {
-    image: homeAssets1.nubia03,
-    brand: 'nubia',
-    model: 'Z70 Ultra',
-    retailEur: 529,
-    profesjaPln: 1831,
-    availability: 'oficjalny model marki nubia — dostępność zależna od wariantu',
-  },
-  {
-    image: homeAssets1.nubia04,
-    brand: 'REDMAGIC',
-    model: '11 Pro 12GB+256GB',
-    retailEur: 699,
-    profesjaPln: 2419,
-    availability: 'oficjalny sklep UE: obecnie wyprzedany; cena odnosi się do wariantu 12GB+256GB, a dostępność alternatywnych wariantów jest potwierdzana przed zamówieniem',
-  },
-  {
-    image: homeAssets2.nubia05,
-    brand: 'REDMAGIC',
-    model: '11 Air',
-    retailEur: 599,
-    profesjaPln: 2073,
-    availability: 'oryginalny smartfon gamingowy REDMAGIC — wariant pamięci potwierdzany przed zamówieniem',
-  },
-  {
-    image: homeAssets2.nubia06,
-    brand: 'REDMAGIC',
-    model: '10S Pro',
-    retailEur: 609,
-    profesjaPln: 2107,
-    availability: 'oryginalny model REDMAGIC — dostępność może być ograniczona',
-  },
-  {
-    image: homeAssets2.nubia07,
-    brand: 'REDMAGIC',
-    model: '10 Air',
-    retailEur: 449,
-    profesjaPln: 1554,
-    availability: 'oryginalny model REDMAGIC — dostępność może być ograniczona',
-  },
+  { image: homeAssets1.nubia01, brand: 'nubia', model: 'Z80 Ultra 16GB+512GB', retailEur: 799, profesjaPln: 2765, availability: 'wariant i stan potwierdzane przed zamówieniem' },
+  { image: homeAssets1.nubia02, brand: 'nubia', model: 'Z70S Ultra', retailEur: 669, profesjaPln: 2315, availability: 'wariant i stan magazynowy potwierdzane przed zamówieniem' },
+  { image: homeAssets1.nubia03, brand: 'nubia', model: 'Z70 Ultra', retailEur: 529, profesjaPln: 1831, availability: 'dostępność zależna od wariantu' },
+  { image: homeAssets1.nubia04, brand: 'REDMAGIC', model: '11 Pro 12GB+256GB', retailEur: 699, profesjaPln: 2419, availability: 'dostępność wariantu potwierdzana przed zamówieniem' },
+  { image: homeAssets2.nubia05, brand: 'REDMAGIC', model: '11 Air', retailEur: 599, profesjaPln: 2073, availability: 'wariant pamięci potwierdzany przed zamówieniem' },
+  { image: homeAssets2.nubia06, brand: 'REDMAGIC', model: '10S Pro', retailEur: 609, profesjaPln: 2107, availability: 'dostępność może być ograniczona' },
+  { image: homeAssets2.nubia07, brand: 'REDMAGIC', model: '10 Air', retailEur: 449, profesjaPln: 1554, availability: 'dostępność może być ograniczona' },
 ];
 
 export default function Home() {
@@ -106,14 +68,35 @@ export default function Home() {
             <div className="cta-row" style={{ marginTop: 24 }}><Link href="/offers/new"><button>ZAPYTAJ O OFERTĘ</button></Link><Link href="/catalog"><button className="cta-secondary">ZOBACZ KATALOG</button></Link></div>
           </div>
 
-          <div className="product-stage" aria-label="Oryginalne smartfony nubia i REDMAGIC"><div className="stage-glow" /><div className="featured-stage-photo"><img src={originalSmartphones[0].image} alt={`${originalSmartphones[0].brand} ${originalSmartphones[0].model}`} /></div><div className="stage-plinth" /></div>
+          <div className="product-stage" aria-label="Przykładowa oferta urządzeń premium"><div className="stage-glow" /><div className="featured-stage-photo"><img src={originalSmartphones[0].image} alt="Przykładowy produkt premium" /></div><div className="stage-plinth" /></div>
 
           <aside className="commerce-hero__offer">
-            <div className="brand-offer-label">ORYGINALNE SMARTFONY PREMIUM</div>
-            <img src={homeAssets0.nubiaBrand} alt="nubia / REDMAGIC" style={{ width: '100%', maxWidth: 250, margin: '14px 0', borderRadius: 10 }} />
-            <div className="feature-row"><span><b>01</b>Oryginalne modele</span><span><b>02</b>Zweryfikowana marka i model</span><span><b>03</b>Import i obsługa B2B</span><span><b>04</b>Indywidualna realizacja</span></div>
-            <div style={{ marginTop: 22, padding: 18, border: '1px solid #38434a', borderRadius: 12, background: 'rgba(8,15,19,.72)' }}><strong style={{ color: '#f0d778' }}>CENY ODNIESIONE DO RYNKU UE</strong><p style={{ marginBottom: 0, color: '#b7b7b7', lineHeight: 1.55 }}>Poziom cenowy PROFESJA ustalany jest dla konkretnego modelu, wariantu i wielkości zamówienia. Dostępność, konfiguracja i warunki zakupu są potwierdzane przed przedstawieniem wiążącej oferty.</p></div>
+            <div className="brand-offer-label">GLOBALNE MARKI • PROFESJONALNE ROZWIĄZANIA</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 10, margin: '16px 0 18px' }}>
+              {brandWall.slice(0, 6).map(([name, slug]) => (
+                <div key={`${name}-${slug}`} style={{ minHeight: 68, border: '1px solid #38434a', borderRadius: 10, background: 'rgba(255,255,255,.96)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
+                  <img src={`https://cdn.simpleicons.org/${slug}/777777`} alt={name} loading="lazy" style={{ maxWidth: '100%', maxHeight: 38, filter: 'grayscale(1)', opacity: .82 }} />
+                </div>
+              ))}
+            </div>
+            <div className="feature-row"><span><b>01</b>Zweryfikowane modele</span><span><b>02</b>Profesjonalne zastosowania</span><span><b>03</b>Obsługa B2B</span><span><b>04</b>Indywidualna realizacja</span></div>
+            <div style={{ marginTop: 22, padding: 18, border: '1px solid #38434a', borderRadius: 12, background: 'rgba(8,15,19,.72)' }}><strong style={{ color: '#f0d778' }}>INDYWIDUALNE WARUNKI OFERTOWE</strong><p style={{ marginBottom: 0, color: '#b7b7b7', lineHeight: 1.55 }}>Dostępność, konfiguracja i warunki zakupu są potwierdzane przed przedstawieniem wiążącej oferty.</p></div>
           </aside>
+        </section>
+
+        <section className="section" aria-label="Globalne marki" style={{ paddingTop: 36, paddingBottom: 40 }}>
+          <p className="eyebrow">GLOBALNE MARKI I TECHNOLOGIE</p>
+          <h2 style={{ marginBottom: 10 }}>Marki rozpoznawalne w wielu sektorach profesjonalnych</h2>
+          <p style={{ maxWidth: 900, color: '#b7b7b7', lineHeight: 1.65 }}>Logotypy prezentowane są w neutralnej, poszarzałej formie jako wizualne oznaczenie rodzin produktowych i technologii. Dostępność konkretnych modeli jest każdorazowo potwierdzana w indywidualnej ofercie.</p>
+          <div style={{ marginTop: 24, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(135px, 1fr))', gap: 12 }}>
+            {brandWall.map(([name, slug], index) => (
+              <div key={`${name}-${slug}-${index}`} style={{ minHeight: 92, border: '1px solid #303a3f', borderRadius: 12, background: 'rgba(247,247,247,.96)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, padding: 14 }}>
+                <img src={`https://cdn.simpleicons.org/${slug}/7a7a7a`} alt={`${name} — logo`} loading="lazy" style={{ width: '100%', maxWidth: 104, maxHeight: 42, objectFit: 'contain', filter: 'grayscale(1)', opacity: .8 }} />
+                <span style={{ color: '#555', fontSize: 11, fontWeight: 700, letterSpacing: '.05em', textAlign: 'center' }}>{name}</span>
+              </div>
+            ))}
+          </div>
+          <p style={{ marginTop: 18, fontSize: 12, color: '#81878a', lineHeight: 1.55 }}>Nazwy i znaki towarowe należą do ich odpowiednich właścicieli. Ich prezentacja nie oznacza partnerstwa, autoryzacji ani oficjalnego przedstawicielstwa, o ile nie wskazano tego wyraźnie dla konkretnej oferty.</p>
         </section>
 
         <section className="quick-actions">
@@ -124,21 +107,20 @@ export default function Home() {
         </section>
 
         <section className="section featured-offers-section">
-          <p className="eyebrow">Oryginalne produkty nubia / REDMAGIC</p>
-          <h2>Wybrane smartfony premium w ofercie B2B</h2>
-          <p>Prezentowane ceny mają charakter orientacyjny i są kalkulowane względem aktualnych warunków rynkowych UE. Końcowa cena zależy od modelu, wariantu pamięci, wielkości zamówienia, dostępności, kursu walut oraz kosztów realizacji.</p>
+          <p className="eyebrow">Wybrane oferty produktowe</p>
+          <h2>Przykładowe produkty w ofercie B2B</h2>
+          <p>Prezentowane ceny mają charakter orientacyjny. Końcowa cena zależy od modelu, konfiguracji, wielkości zamówienia, dostępności, kursu walut oraz kosztów realizacji.</p>
           <div className="featured-offer-grid">
             {originalSmartphones.map((offer, index) => (
               <article className="featured-offer-card" key={`${offer.brand}-${offer.model}`}>
                 <img src={offer.image} alt={`${offer.brand} ${offer.model}`} />
                 <div className="featured-offer-copy">
-                  <span>SMARTFON {String(index + 1).padStart(2, '0')} • OFERTA B2B</span>
+                  <span>OFERTA {String(index + 1).padStart(2, '0')} • B2B</span>
                   <h3>{offer.brand} {offer.model}</h3>
                   <p><strong>Marka:</strong> {offer.brand}</p>
                   <p><strong>Model:</strong> {offer.model}</p>
-                  <p><strong>Poziom detaliczny UE:</strong> od ok. €{offer.retailEur}</p>
                   <p><strong>Dostępność:</strong> {offer.availability}.</p>
-                  <p><small>Kolor, pamięć, wersja regionalna i dokładna konfiguracja są potwierdzane w indywidualnej ofercie.</small></p>
+                  <p><small>Dokładna konfiguracja jest potwierdzana w indywidualnej ofercie.</small></p>
                   <strong className="featured-price">Orientacyjna cena PROFESJA: ok. {offer.profesjaPln.toLocaleString('pl-PL')} zł / szt.</strong>
                   <Link href={`/offers/new?product=${encodeURIComponent(`${offer.brand} ${offer.model}`)}`}>POPROŚ O WYCENĘ →</Link>
                 </div>
