@@ -30,10 +30,10 @@ const originalSmartphones = [
   {
     image: homeAssets1.nubia01,
     brand: 'nubia',
-    model: 'Z80 Ultra',
+    model: 'Z80 Ultra 16GB+512GB',
     retailEur: 799,
     profesjaPln: 2765,
-    availability: 'oficjalny sklep UE: dostępny, deklarowana wysyłka 3–5 dni; stan potwierdzany przed zamówieniem',
+    availability: 'oficjalny sklep UE: dostępny, deklarowana wysyłka 3–5 dni; wariant 16GB+512GB i stan potwierdzane przed zamówieniem',
   },
   {
     image: homeAssets1.nubia02,
@@ -54,10 +54,10 @@ const originalSmartphones = [
   {
     image: homeAssets1.nubia04,
     brand: 'REDMAGIC',
-    model: '11 Pro',
+    model: '11 Pro 12GB+256GB',
     retailEur: 699,
     profesjaPln: 2419,
-    availability: 'oficjalny sklep UE: obecnie wyprzedany; dostępność alternatywnych wariantów potwierdzana przed zamówieniem',
+    availability: 'oficjalny sklep UE: obecnie wyprzedany; cena odnosi się do wariantu 12GB+256GB, a dostępność alternatywnych wariantów jest potwierdzana przed zamówieniem',
   },
   {
     image: homeAssets2.nubia05,
