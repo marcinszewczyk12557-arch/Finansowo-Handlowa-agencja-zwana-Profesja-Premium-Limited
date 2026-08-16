@@ -8,44 +8,34 @@ export const PROFESJA_VOLUME_DISCOUNT_QTY = 10;
 export const MIN_ORDER_QUANTITY = PROFESJA_VOLUME_DISCOUNT_QTY;
 
 /**
- * Docelowa cena PROFESJA to 72–84% aktualnej ceny rynkowej porównywalnego
- * produktu / konfiguracji w UE. To NIE jest narzut na koszt dostawcy.
- * Koszt landed, MOQ dostawcy, cło/VAT, zgodność UE i logistyka są
- * weryfikowane oddzielnie przed przedstawieniem wiążącej oferty.
+ * Preview pricing policy: customer sale price = verified manufacturer / supplier
+ * unit price x 3.25. The supplier price must be verified before a product is
+ * published in the qualified catalogue. Taxes, duties, transport and other
+ * transaction-specific charges remain subject to the final commercial offer.
  */
-export const MIN_PRICE_MULTIPLIER = 0.72;
-export const MAX_PRICE_MULTIPLIER = 0.84;
+export const SUPPLIER_PRICE_MULTIPLIER = 3.25;
+export const MIN_PRICE_MULTIPLIER = SUPPLIER_PRICE_MULTIPLIER;
+export const MAX_PRICE_MULTIPLIER = SUPPLIER_PRICE_MULTIPLIER;
 
-// Zachowane dla kompatybilności ze starszymi komponentami.
-export const CATALOG_MARKUPS = [0.72, 0.75, 0.78, 0.81, 0.84] as const;
+// Compatibility export used by catalogue components.
+export const CATALOG_MARKUPS = [SUPPLIER_PRICE_MULTIPLIER] as const;
 
-export function markupForVariant(index: number, totalVariants: number) {
-  const total = Math.max(2, Math.floor(totalVariants || 2));
-  const position = Math.min(Math.max(0, Math.floor(index || 0)), total - 1);
-  const step = (MAX_PRICE_MULTIPLIER - MIN_PRICE_MULTIPLIER) / (total - 1);
-  return MIN_PRICE_MULTIPLIER + step * position;
+export function markupForVariant(_index: number, _totalVariants: number) {
+  return SUPPLIER_PRICE_MULTIPLIER;
 }
 
-export function multiplierForQuantity(quantity: number) {
-  const qty = Math.max(1, Math.floor(quantity || 1));
-  if (qty >= PROFESJA_VOLUME_DISCOUNT_QTY) return MIN_PRICE_MULTIPLIER;
-  if (qty <= 1) return MAX_PRICE_MULTIPLIER;
-  const step = (MAX_PRICE_MULTIPLIER - MIN_PRICE_MULTIPLIER) / (PROFESJA_VOLUME_DISCOUNT_QTY - 1);
-  return MAX_PRICE_MULTIPLIER - step * (qty - 1);
+export function multiplierForQuantity(_quantity: number) {
+  return SUPPLIER_PRICE_MULTIPLIER;
 }
 
-/**
- * basePrice = aktualny benchmark rynkowy porównywalnego produktu, a nie koszt dostawcy.
- */
-export function unitPriceForQuantity(basePrice: number, quantity: number) {
-  return Math.round((basePrice * multiplierForQuantity(quantity)) / 10) * 10;
+/** basePrice = verified manufacturer / supplier unit price. */
+export function unitPriceForQuantity(basePrice: number, _quantity: number) {
+  return Math.round(basePrice * SUPPLIER_PRICE_MULTIPLIER * 100) / 100;
 }
 
-/**
- * Nazwa zachowana dla kompatybilności; multiplier oznacza udział ceny rynkowej.
- */
-export function priceWithMarkup(basePrice: number, multiplier: number) {
-  return Math.round((basePrice * multiplier) / 10) * 10;
+/** Compatibility name: multiplier is the commercial sale-price multiplier. */
+export function priceWithMarkup(basePrice: number, multiplier = SUPPLIER_PRICE_MULTIPLIER) {
+  return Math.round(basePrice * multiplier * 100) / 100;
 }
 
 export function totalPriceForQuantity(basePrice: number, quantity: number) {
@@ -54,9 +44,10 @@ export function totalPriceForQuantity(basePrice: number, quantity: number) {
 }
 
 export function pricingRange(basePrice: number) {
+  const unit = unitPriceForQuantity(basePrice, 1);
   return {
-    minUnit: unitPriceForQuantity(basePrice, PROFESJA_VOLUME_DISCOUNT_QTY),
-    maxUnit: unitPriceForQuantity(basePrice, 1),
-    minOrderTotal: totalPriceForQuantity(basePrice, PROFESJA_VOLUME_DISCOUNT_QTY),
+    minUnit: unit,
+    maxUnit: unit,
+    minOrderTotal: unit * PROFESJA_VOLUME_DISCOUNT_QTY,
   };
 }
