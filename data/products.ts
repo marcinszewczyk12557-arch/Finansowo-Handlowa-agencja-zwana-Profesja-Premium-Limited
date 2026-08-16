@@ -85,7 +85,7 @@ const products: CatalogProduct[] = [
     ['Fotowoltaika przemysłowa + magazyn skalowalny', 'Energia i Fotowoltaika', 185000, 'Indywidualnie projektowane rozwiązanie przemysłowe z magazynem energii i zarządzaniem obciążeniem.'],
 
     ['Klimatyzacja Multi-Split Premium', 'HVAC', 18000, 'Wielostrefowy system klimatyzacji do biur, lokali i obiektów usługowych.'],
-    ['System VRF/VRV Business', 'HVAC', 26000, 'Zaawansowany system wielostrefowy do większych obiektów komercyjnych.'],
+    ['System VRF/VRV Business', 'HVAC', 29000, 'Zaawansowany system wielostrefowy do większych obiektów komercyjnych; benchmark odnosi się do porównywalnej jednostki/systemu o potwierdzonym BOM, a montaż i elementy instalacyjne wyceniane są oddzielnie.'],
     ['Centrala wentylacyjna z odzyskiem ciepła', 'HVAC', 42000, 'Profesjonalna centrala wentylacyjna z rekuperacją i automatyką.'],
     ['HVAC Industrial Smart BMS', 'HVAC', 75000, 'Kompleksowe rozwiązanie HVAC z integracją BMS i monitoringiem parametrów.'],
 
@@ -99,7 +99,7 @@ const products: CatalogProduct[] = [
     ['Brama przemysłowa Business Pro', 'Drzwi i Bramy Premium', 28000, 'System bramowy do magazynów, hal i obiektów gospodarczych.'],
     ['System wjazdowy Prestige Access', 'Drzwi i Bramy Premium', 45000, 'Kompletny system bramy, automatyki i kontroli dostępu.'],
 
-    ['Minikoparka Compact Pro', 'Maszyny i Sprzęt Ciężki', 35000, 'Kompaktowa maszyna robocza do prac budowlanych i inżynierskich.'],
+    ['Minikoparka Compact Pro', 'Maszyny i Sprzęt Ciężki', 42000, 'Kompaktowa maszyna robocza 1–3,5 t do prac budowlanych i inżynierskich; silnik, masa, CE/Euro 5/EPA, osprzęt, transport i serwis są potwierdzane dla konkretnego wariantu.'],
     ['Ładowarka kołowa Business', 'Maszyny i Sprzęt Ciężki', 65000, 'Uniwersalna ładowarka do zastosowań budowlanych, komunalnych i magazynowych.'],
     ['Koparka pełnowymiarowa Industrial', 'Maszyny i Sprzęt Ciężki', 120000, 'Ciężka maszyna inżynierska do intensywnych prac ziemnych.'],
     ['Pakiet maszyn flotowych Enterprise', 'Maszyny i Sprzęt Ciężki', 250000, 'Indywidualnie konfigurowany zestaw maszyn i osprzętu dla przedsiębiorstwa.'],
