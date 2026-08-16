@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520" role="img" aria-labelledby="title desc">
-  <title id="title">PROFESJA PREMIUM LIMITED™</title>
-  <desc id="desc">Turkusowy geometryczny znak zgodny z przekazanym logo PROFESJA.</desc>
-  <rect width="640" height="520" fill="#ffffff"/>
-  <g fill="none" stroke="#2cc9b8" stroke-width="34" stroke-linecap="butt" stroke-linejoin="miter">
-    <path d="M112 388 L274 112"/>
-    <path d="M193 388 L319 176 L414 330 H494"/>
-    <path d="M324 100 L494 330"/>
-    <path d="M193 388 H540"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 990 817" role="img" aria-labelledby="title desc">
+  <title id="title">Logo PROFESJA</title>
+  <desc id="desc">Turkusowy geometryczny znak odtworzony z logo przekazanego przez właściciela.</desc>
+  <rect width="990" height="817" fill="#ffffff"/>
+  <g fill="none" stroke="#27c9b8" stroke-width="31" stroke-linecap="butt" stroke-linejoin="miter">
+    <path d="M255 589 L448 250"/>
+    <path d="M324 589 L493 294 L608 501 H707"/>
+    <path d="M526 250 L707 501"/>
+    <path d="M324 589 H755"/>
   </g>
 </svg>
