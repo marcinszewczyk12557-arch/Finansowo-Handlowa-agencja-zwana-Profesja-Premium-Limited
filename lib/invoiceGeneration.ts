@@ -8,14 +8,16 @@
 import { prisma } from './prisma';
 import { determineVatEligibility, VatEligibilityInput } from './vatEligibility';
 
-let _invoiceSeq = 0;
-function generateInvoiceNumber(): string {
-  _invoiceSeq += 1;
+async function generateInvoiceNumber(): Promise<string> {
   const ts = new Date();
   const y  = ts.getFullYear();
   const m  = String(ts.getMonth() + 1).padStart(2, '0');
-  const seq = String(_invoiceSeq).padStart(4, '0');
-  return `PPL/${y}/${m}/${seq}`;
+  const prefix = `PPL/${y}/${m}/`;
+  const count = await prisma.invoice.count({
+    where: { number: { startsWith: prefix } },
+  });
+  const seq = String(count + 1).padStart(4, '0');
+  return `${prefix}${seq}`;
 }
 
 export interface CreateInvoiceInput {
@@ -54,7 +56,7 @@ export async function createInvoice(input: CreateInvoiceInput) {
   }
   const gross = Math.round((net + vatAmount) * 100) / 100;
 
-  const number = generateInvoiceNumber();
+  const number = await generateInvoiceNumber();
 
   const invoice = await prisma.invoice.create({
     data: {

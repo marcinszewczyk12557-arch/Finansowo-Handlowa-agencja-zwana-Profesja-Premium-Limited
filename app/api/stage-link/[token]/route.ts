@@ -7,13 +7,17 @@ import { recordStageLinkEvent } from '../../../../lib/stageLinkService';
  * IMPORTANT: A click NEVER creates a debt, charge, financial asset
  * or any hidden obligation. This endpoint ONLY records analytics.
  */
-export async function POST(request: Request) {
+export async function POST(
+  request: Request,
+  { params }: { params: Promise<{ token: string }> },
+) {
   try {
-    const body = await request.json().catch(() => ({}));
-    const token = typeof body.token === 'string' ? body.token.trim() : '';
+    const { token } = await params;
     if (!token || token.length > 64) {
       return NextResponse.json({ ok: false, error: 'Nieprawidłowy token.' }, { status: 400 });
     }
+
+    const body = await request.json().catch(() => ({}));
 
     const eventType = typeof body.eventType === 'string'
       ? body.eventType.replace(/[^A-Z_]/gi, '_').slice(0, 64).toUpperCase()
@@ -25,8 +29,8 @@ export async function POST(request: Request) {
     if (rawMeta && typeof rawMeta === 'object' && !Array.isArray(rawMeta)) {
       const allowed = ['source', 'channel', 'ref'];
       for (const k of allowed) {
-        if (typeof rawMeta[k] === 'string') {
-          metadata[k] = rawMeta[k].slice(0, 128);
+        if (typeof (rawMeta as Record<string, unknown>)[k] === 'string') {
+          metadata[k] = ((rawMeta as Record<string, string>)[k]).slice(0, 128);
         }
       }
     }

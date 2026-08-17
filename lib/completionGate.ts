@@ -69,7 +69,7 @@ export async function evaluateCompletionGates(offerId: number): Promise<Completi
   });
 
   // Gate 3: All required formalities consents are not PENDING
-  const consentFields: Array<{ key: keyof typeof offer.formalities; label: string }> = [
+  const consentFields: Array<{ key: string; label: string }> = [
     { key: 'clientDeclarationStatus',     label: 'Oświadczenie klienta' },
     { key: 'businessUseConsentStatus',    label: 'Zgoda cel biznesowy' },
     { key: 'intermediationConsentStatus', label: 'Zgoda pośrednictwo' },
@@ -77,7 +77,7 @@ export async function evaluateCompletionGates(offerId: number): Promise<Completi
   const pendingConsents: string[] = [];
   if (offer.formalities) {
     for (const { key, label } of consentFields) {
-      if ((offer.formalities as Record<string, unknown>)[key as string] === 'PENDING') {
+      if ((offer.formalities as Record<string, unknown>)[key] === 'PENDING') {
         pendingConsents.push(label);
       }
     }
