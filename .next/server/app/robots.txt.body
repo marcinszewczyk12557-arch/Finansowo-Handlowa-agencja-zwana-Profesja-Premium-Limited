@@ -1,0 +1,8 @@
+User-Agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /owner/
+Disallow: /api/
+
+Host: https://profesja-premium-limited.vercel.app
+Sitemap: https://profesja-premium-limited.vercel.app/sitemap.xml
