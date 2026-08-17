@@ -1,0 +1,275 @@
+/* Mobile-first refinement for the PROFESJA PREMIUM LIMITED™ production homepage.
+   Kept separate from the core styles so it can be reviewed and rolled back cleanly. */
+
+.premium-home {
+  overflow-x: clip;
+}
+
+.premium-home img {
+  max-width: 100%;
+}
+
+/* Make the opening/contact strip robust on narrow screens despite its inline layout. */
+.premium-home > section[aria-label="Dni otwarcia i obsługa B2B"] {
+  min-height: 58px;
+}
+
+/* A little more depth without animation. */
+.commerce-hero {
+  isolation: isolate;
+}
+
+.commerce-hero__brand,
+.product-stage,
+.commerce-hero__offer {
+  min-width: 0;
+}
+
+.featured-stage-photo img {
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .reference-topbar__inner {
+    min-height: 34px;
+  }
+
+  .reference-topbar__right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .reference-topbar__right a:first-child {
+    max-width: calc(100vw - 110px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .reference-header__inner {
+    min-height: 66px;
+  }
+
+  .reference-nav {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .reference-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .premium-home > section[aria-label="Dni otwarcia i obsługa B2B"] {
+    padding: 10px 16px !important;
+    gap: 8px 16px !important;
+    flex-wrap: wrap;
+    align-items: center !important;
+  }
+
+  .premium-home > section[aria-label="Dni otwarcia i obsługa B2B"] > div {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .premium-home > section[aria-label="Dni otwarcia i obsługa B2B"] span {
+    margin-left: 0 !important;
+    font-size: .92rem;
+    line-height: 1.35;
+  }
+
+  .premium-home > section[aria-label="Dni otwarcia i obsługa B2B"] a {
+    white-space: nowrap;
+  }
+
+  .commerce-hero {
+    padding: 24px 16px 22px;
+    gap: 18px;
+  }
+
+  /* The header already carries the brand. Keep the hero logo elegant rather than oversized. */
+  .commerce-hero__brand > img {
+    width: 74px !important;
+    height: 74px !important;
+    margin-bottom: 10px !important;
+    border-radius: 10px;
+  }
+
+  .commerce-hero__brand .eyebrow {
+    margin-bottom: 10px;
+    font-size: .68rem;
+    line-height: 1.45;
+  }
+
+  .commerce-hero__brand h1 {
+    font-size: clamp(2.9rem, 15vw, 4.35rem);
+    letter-spacing: .035em;
+    line-height: .9;
+  }
+
+  .brand-gold {
+    margin: 12px 0 20px;
+    font-size: clamp(1.05rem, 5.4vw, 1.38rem);
+    letter-spacing: .13em;
+  }
+
+  .commerce-hero__brand h2 {
+    font-size: clamp(1.25rem, 6vw, 1.65rem);
+    max-width: 18ch;
+    margin-bottom: 12px;
+  }
+
+  .hero-services {
+    font-size: .84rem;
+    line-height: 1.65;
+    letter-spacing: .055em;
+  }
+
+  .commerce-hero__brand > p[style] {
+    font-size: .95rem;
+    line-height: 1.6 !important;
+    margin-bottom: 0;
+  }
+
+  .commerce-hero .cta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .commerce-hero .cta-row a,
+  .commerce-hero .cta-row button {
+    width: 100%;
+  }
+
+  .commerce-hero .cta-row button {
+    padding: 0 12px;
+    min-height: 46px;
+    font-size: .78rem;
+  }
+
+  /* Keep the product visible near the hero instead of feeling like a missing image. */
+  .product-stage {
+    min-height: 330px;
+    margin: 2px -6px 0;
+    border: 1px solid rgba(212,175,55,.12);
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 50% 44%, rgba(34,199,183,.12), transparent 54%),
+      linear-gradient(180deg, rgba(12,22,28,.72), rgba(6,13,18,.28));
+    overflow: hidden;
+  }
+
+  .featured-stage-photo {
+    width: min(310px, 88%);
+    align-items: center;
+  }
+
+  .featured-stage-photo img {
+    max-height: 300px;
+    filter: drop-shadow(0 20px 28px rgba(0,0,0,.48));
+  }
+
+  .stage-glow {
+    width: 360px;
+    height: 270px;
+    bottom: 28px;
+  }
+
+  .stage-plinth {
+    width: 72%;
+    height: 38px;
+    bottom: 18px;
+  }
+
+  .commerce-hero__offer {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .commerce-hero__offer > img {
+    max-width: 205px !important;
+  }
+
+  .feature-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .feature-row span {
+    min-height: 58px;
+    font-size: .76rem;
+    line-height: 1.35;
+  }
+
+  .quick-actions {
+    gap: 8px;
+  }
+
+  .quick-actions a {
+    border-radius: 10px !important;
+    padding: 16px;
+  }
+
+  .featured-offer-card > img {
+    aspect-ratio: 1 / .78;
+    padding: 12px;
+  }
+
+  .featured-offer-copy {
+    padding: 18px;
+  }
+
+  .premium-contact-block .cta-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .premium-contact-block .cta-row a,
+  .premium-contact-block .cta-row button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .reference-brand strong {
+    font-size: 1.14rem;
+  }
+
+  .reference-brand small {
+    letter-spacing: .13em;
+  }
+
+  .reference-nav {
+    gap: 16px;
+  }
+
+  .commerce-hero .cta-row {
+    grid-template-columns: 1fr;
+  }
+
+  .product-stage {
+    min-height: 300px;
+  }
+
+  .featured-stage-photo {
+    width: min(285px, 90%);
+  }
+
+  .featured-stage-photo img {
+    max-height: 272px;
+  }
+
+  .feature-row {
+    grid-template-columns: 1fr;
+  }
+
+  .category-ribbon,
+  .trust-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-footer__bottom {
+    gap: 10px;
+  }
+}
