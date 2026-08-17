@@ -43,6 +43,8 @@ model Offer {
   order       Order?
   automation  SalesAutomationCase?
   formalities TransactionFormalities?
+  invoices    Invoice[]
+  stageLinks  StageLink[]
 
   @@index([email])
   @@index([status])
@@ -164,4 +166,92 @@ model OwnerLoginAttempt {
   failures     Int      @default(0)
   blockedUntil DateTime?
   updatedAt    DateTime @updatedAt
+}
+
+// VAT eligibility: EXEMPT_0 only when eligible gates pass; otherwise STANDARD or MANUAL_REVIEW.
+model Invoice {
+  id                  Int      @id @default(autoincrement())
+  number              String   @unique
+  offerId             Int
+  orderId             Int?
+  status              String   @default("DRAFT")
+  issuerName          String
+  issuerAddress       String
+  issuerTaxId         String
+  buyerName           String
+  buyerAddress        String
+  buyerTaxId          String?
+  currency            String   @default("PLN")
+  netAmount           String
+  vatRate             String
+  vatAmount           String
+  grossAmount         String
+  vatEligibility      String   @default("STANDARD")
+  vatEligibilityNote  String?
+  poReference         String?
+  contractReference   String?
+  deliveryEvidence    String?
+  issuedAt            DateTime @default(now())
+  dueDate             DateTime?
+  paidAt              DateTime?
+  bankIban            String?
+  notes               String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  offer               Offer    @relation(fields: [offerId], references: [id], onDelete: Restrict)
+  factoringPackage    FactoringPackage?
+
+  @@index([offerId])
+  @@index([status])
+  @@index([issuedAt])
+}
+
+// Factoring package: export fields for domestic/international factoring workflows.
+model FactoringPackage {
+  id                  Int      @id @default(autoincrement())
+  invoiceId           Int      @unique
+  assignmentStatus    String   @default("NOT_ASSIGNED")
+  assignmentConsentAt DateTime?
+  assigneeNote        String?
+  auditReference      String?
+  exportedAt          DateTime?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  invoice             Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([assignmentStatus])
+}
+
+// Stage-link: short-link abstraction for workflow stage tracking.
+// A click records an event but NEVER creates a debt, charge or hidden obligation.
+model StageLink {
+  id            Int      @id @default(autoincrement())
+  token         String   @unique
+  offerId       Int
+  stage         String
+  shortUrl      String?
+  provider      String?
+  purpose       String
+  expiresAt     DateTime?
+  disabled      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  offer         Offer    @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  events        StageLinkEvent[]
+
+  @@index([offerId])
+  @@index([token])
+  @@index([stage])
+}
+
+model StageLinkEvent {
+  id         Int       @id @default(autoincrement())
+  linkId     Int
+  eventType  String
+  metadata   String?
+  recordedAt DateTime  @default(now())
+  link       StageLink @relation(fields: [linkId], references: [id], onDelete: Cascade)
+
+  @@index([linkId])
+  @@index([recordedAt])
 }
