@@ -1,5 +1,6 @@
 /* Mobile-first refinement for the PROFESJA PREMIUM LIMITED™ production homepage.
-   Kept separate from the core styles so it can be reviewed and rolled back cleanly. */
+   No animations. The duplicated hero logo is intentionally removed from page.tsx;
+   on phones the product image takes its place so the smartphone is visible immediately. */
 
 .premium-home {
   overflow-x: clip;
@@ -9,12 +10,10 @@
   max-width: 100%;
 }
 
-/* Make the opening/contact strip robust on narrow screens despite its inline layout. */
 .premium-home > section[aria-label="Dni otwarcia i obsługa B2B"] {
   min-height: 58px;
 }
 
-/* A little more depth without animation. */
 .commerce-hero {
   isolation: isolate;
 }
@@ -27,6 +26,10 @@
 
 .featured-stage-photo img {
   display: block;
+}
+
+.hero-mobile-product {
+  display: none;
 }
 
 @media (max-width: 760px) {
@@ -84,16 +87,39 @@
   }
 
   .commerce-hero {
-    padding: 24px 16px 22px;
-    gap: 18px;
+    padding: 18px 16px 22px;
+    gap: 16px;
   }
 
-  /* The header already carries the brand. Keep the hero logo elegant rather than oversized. */
-  .commerce-hero__brand > img {
-    width: 74px !important;
-    height: 74px !important;
-    margin-bottom: 10px !important;
-    border-radius: 10px;
+  .hero-mobile-product {
+    display: grid;
+    place-items: center;
+    gap: 8px;
+    width: 100%;
+    margin: 0 0 18px;
+    padding: 12px 12px 10px;
+    border: 1px solid rgba(212,175,55,.18);
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 50% 54%, rgba(34,199,183,.15), transparent 52%),
+      linear-gradient(180deg, rgba(12,22,28,.78), rgba(6,13,18,.36));
+  }
+
+  .hero-mobile-product img {
+    width: min(292px, 88vw);
+    height: 240px;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 18px 26px rgba(0,0,0,.46));
+  }
+
+  .hero-mobile-product span {
+    color: #d4af37;
+    font-size: .69rem;
+    font-weight: 800;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    text-align: center;
   }
 
   .commerce-hero__brand .eyebrow {
@@ -103,27 +129,27 @@
   }
 
   .commerce-hero__brand h1 {
-    font-size: clamp(2.9rem, 15vw, 4.35rem);
+    font-size: clamp(2.75rem, 14vw, 4.1rem);
     letter-spacing: .035em;
     line-height: .9;
   }
 
   .brand-gold {
-    margin: 12px 0 20px;
-    font-size: clamp(1.05rem, 5.4vw, 1.38rem);
+    margin: 12px 0 18px;
+    font-size: clamp(1.02rem, 5.2vw, 1.34rem);
     letter-spacing: .13em;
   }
 
   .commerce-hero__brand h2 {
-    font-size: clamp(1.25rem, 6vw, 1.65rem);
+    font-size: clamp(1.22rem, 5.7vw, 1.58rem);
     max-width: 18ch;
     margin-bottom: 12px;
   }
 
   .hero-services {
-    font-size: .84rem;
+    font-size: .82rem;
     line-height: 1.65;
-    letter-spacing: .055em;
+    letter-spacing: .05em;
   }
 
   .commerce-hero__brand > p[style] {
@@ -146,41 +172,13 @@
   .commerce-hero .cta-row button {
     padding: 0 12px;
     min-height: 46px;
-    font-size: .78rem;
+    font-size: .76rem;
   }
 
-  /* Keep the product visible near the hero instead of feeling like a missing image. */
+  /* On mobile the same phone is already shown above the hero copy.
+     Hide the large duplicate stage to keep the product visible without extra scrolling. */
   .product-stage {
-    min-height: 330px;
-    margin: 2px -6px 0;
-    border: 1px solid rgba(212,175,55,.12);
-    border-radius: 18px;
-    background:
-      radial-gradient(circle at 50% 44%, rgba(34,199,183,.12), transparent 54%),
-      linear-gradient(180deg, rgba(12,22,28,.72), rgba(6,13,18,.28));
-    overflow: hidden;
-  }
-
-  .featured-stage-photo {
-    width: min(310px, 88%);
-    align-items: center;
-  }
-
-  .featured-stage-photo img {
-    max-height: 300px;
-    filter: drop-shadow(0 20px 28px rgba(0,0,0,.48));
-  }
-
-  .stage-glow {
-    width: 360px;
-    height: 270px;
-    bottom: 28px;
-  }
-
-  .stage-plinth {
-    width: 72%;
-    height: 38px;
-    bottom: 18px;
+    display: none;
   }
 
   .commerce-hero__offer {
@@ -244,20 +242,12 @@
     gap: 16px;
   }
 
+  .hero-mobile-product img {
+    height: 220px;
+  }
+
   .commerce-hero .cta-row {
     grid-template-columns: 1fr;
-  }
-
-  .product-stage {
-    min-height: 300px;
-  }
-
-  .featured-stage-photo {
-    width: min(285px, 90%);
-  }
-
-  .featured-stage-photo img {
-    max-height: 272px;
   }
 
   .feature-row {
