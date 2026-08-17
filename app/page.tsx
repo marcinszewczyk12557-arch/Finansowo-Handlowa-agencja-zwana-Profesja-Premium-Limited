@@ -97,16 +97,19 @@ export default function Home() {
 
         <section className="commerce-hero">
           <div className="commerce-hero__brand">
-            <img src="/profesja-logo.svg" alt="Logo PROFESJA PREMIUM LIMITED" style={{ width: 112, height: 112, objectFit: 'contain', marginBottom: 12 }} />
+            <div className="hero-mobile-product" aria-label="Smartfon nubia Z80 Ultra — produkt prezentowany na stronie głównej">
+              <img src={originalSmartphones[0].image} alt={`${originalSmartphones[0].brand} ${originalSmartphones[0].model}`} />
+              <span>nubia Z80 Ultra • smartfon premium</span>
+            </div>
             <p className="eyebrow">Agencja Finansowo-Handlowa B2B</p>
             <h1>PROFESJA</h1><div className="brand-gold">PREMIUM LIMITED™</div>
             <h2>KOMPLEKSOWE ROZWIĄZANIA DLA BIZNESU</h2>
             <p className="hero-services">FINANSOWANIE • IMPORT • SOURCING • LOGISTYKA</p>
-            <p style={{ maxWidth: 560, lineHeight: 1.7, color: '#c9c9c9' }}>Kompleksowa obsługa przedsiębiorstw: dobór produktów, organizacja importu i dostaw, indywidualne zapytania ofertowe oraz koordynacja procesu handlowego od zapytania do realizacji.</p>
-            <div className="cta-row" style={{ marginTop: 24 }}><Link href="/offers/new"><button>ZAPYTAJ O OFERTĘ</button></Link><Link href="/catalog"><button className="cta-secondary">ZOBACZ KATALOG</button></Link></div>
+            <p style={{ maxWidth: 560, lineHeight: 1.7, color: '#c9c9c9' }}>Profesjonalna obsługa przedsiębiorstw: dobór oryginalnych produktów markowych, organizacja importu i dostaw, indywidualne zapytania ofertowe oraz koordynacja procesu handlowego od zapytania do realizacji.</p>
+            <div className="cta-row" style={{ marginTop: 24 }}><Link href="/catalog"><button>ZOBACZ KATALOG</button></Link><Link href="/offers/new"><button className="cta-secondary">ZAPYTANIE OFERTOWE B2B</button></Link></div>
           </div>
 
-          <div className="product-stage" aria-label="Oryginalne smartfony nubia i REDMAGIC"><div className="stage-glow" /><div className="featured-stage-photo"><img src={originalSmartphones[0].image} alt={`${originalSmartphones[0].brand} ${originalSmartphones[0].model}`} /></div><div className="stage-plinth" /></div>
+          <div className="product-stage" aria-label="Oryginalny smartfon nubia Z80 Ultra"><div className="stage-glow" /><div className="featured-stage-photo"><img src={originalSmartphones[0].image} alt={`${originalSmartphones[0].brand} ${originalSmartphones[0].model}`} /></div><div className="stage-plinth" /></div>
 
           <aside className="commerce-hero__offer">
             <div className="brand-offer-label">ORYGINALNE SMARTFONY PREMIUM</div>
