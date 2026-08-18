@@ -3,10 +3,20 @@ import { featuredFranchiseProducts, franchiseCatalog, franchiseCategories } from
 
 type Props = { mode?: 'home' | 'catalog' };
 
+const openingDaysHeadline = 'NAJBEZPIECZNIEJSZE NA ŚWIECIE LUKSUSOWE NOWOŚCI TECHNOLOGICZNE W KRAJU W NAJLEPSZYCH Z RYNKOWYCH CEN I 0-WYM %-OWANIEM Z PEŁNĄ PRZYZNAWALNOŚCIĄ A TAKŻE NAJLEPSZĄ FINANSOWO-HANDLOWĄ USŁUGĄ';
+
 export default function FranchiseCatalog({ mode = 'catalog' }: Props){
   const products = mode === 'home' ? featuredFranchiseProducts : franchiseCatalog;
   return (
     <section className="section taxonomy-browser" aria-label="Katalog franczyzowy PROFESJA">
+      <div className="source-dossier" style={{ marginBottom: 24 }}>
+        <p className="eyebrow">DNI OTWARCIA • UWARUNKOWANIA PROMOCJI SPRZEDAŻOWEJ</p>
+        <h2>{openingDaysHeadline}</h2>
+        <p>
+          Hasło określa założenia i docelowe korzyści promocji „Dni Otwarcia” projektu agencji usługowej PROFESJA PREMIUM LIMITED. Każda konkretna oferta podlega indywidualnemu potwierdzeniu ceny, dostępności, finansowania, zdolności/kwalifikacji klienta oraz dokumentacji produktu. Finansowanie 0% i jego przyznanie obowiązują wyłącznie wtedy, gdy zostaną potwierdzone w warunkach konkretnej oferty przez właściwego finansującego; nie stanowią bezwarunkowej gwarancji finansowania.
+        </p>
+      </div>
+
       <div className="taxonomy-leaf-heading">
         <div>
           <p className="eyebrow">PROFESJA FRANCHISE COMMERCE</p>
@@ -31,10 +41,15 @@ export default function FranchiseCatalog({ mode = 'catalog' }: Props){
             <p className="eyebrow">OFERTA PROFESJA • WYCENA INDYWIDUALNA</p>
             <h3>{product.title}</h3>
             <p className="offer-lead">{product.use}</p>
+            <div className="offer-spec-grid">
+              <div><span>Status zgodności</span><strong>Weryfikowany przed publikacją wiążącej oferty</strong></div>
+              <div><span>CE / RoHS</span><strong>Wymagane wyłącznie tam, gdzie mają zastosowanie przepisy właściwe dla danego typu produktu; potwierdzane deklaracją zgodności i dokumentacją techniczną.</strong></div>
+              <div><span>ISO / normy</span><strong>Normy i certyfikaty właściwe dla produktu lub systemu producenta są wskazywane dopiero po sprawdzeniu autentycznego dokumentu, zakresu i jednostki wystawiającej.</strong></div>
+            </div>
             <div className="source-dossier">
               <h4>Bezpieczny model realizacji</h4>
               <p>
-                Finalny producent i kanał dostawy nie są publikowane w karcie klienta. Przed zamówieniem weryfikowane są co najmniej: tożsamość kontrahenta, staż dostawcy, zabezpieczenia transakcji, specyfikacja, certyfikaty właściwe dla produktu, gwarancja, dostępność, cena, MOQ i warunki dostawy.
+                Finalny producent i kanał dostawy nie są publikowane w karcie klienta. Przed zamówieniem weryfikowane są co najmniej: tożsamość kontrahenta, staż dostawcy, zabezpieczenia transakcji, specyfikacja, deklaracja zgodności UE i oznakowanie CE — jeżeli wymagane, zgodność RoHS dla właściwego sprzętu elektrycznego/elektronicznego, właściwe normy ISO/EN/IEC, gwarancja, dostępność, cena, MOQ i warunki dostawy. Produkt nie jest przedstawiany jako certyfikowany, dopóki dokumentacja konkretnego modelu nie zostanie zweryfikowana.
               </p>
             </div>
             <div className="offer-actions">
