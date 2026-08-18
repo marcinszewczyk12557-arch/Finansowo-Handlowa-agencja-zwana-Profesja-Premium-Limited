@@ -30,6 +30,12 @@ export default async function AdminPanel() {
         </article>
 
         <article className="card">
+          <h2>Product Compliance</h2>
+          <p>Kontroluj status dokumentów, dowodów CE/ISO i reguły weryfikacji producenta bez automatycznego nadawania statusu zgodności.</p>
+          <Link href="/admin/compliance"><button>Otwórz Product Compliance</button></Link>
+        </article>
+
+        <article className="card">
           <h2>VELOX • Dyspozytornia</h2>
           <p>Obsługuj transport door-to-door: wybór przewoźnika, odbiór, tracking, status w trasie, doręczenie i dokument transportowy.</p>
           <Link href="/admin/dispatch"><button>Otwórz dyspozytornię</button></Link>
