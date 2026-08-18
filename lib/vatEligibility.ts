@@ -2,8 +2,8 @@
  * VAT eligibility gate.
  *
  * VAT 0% (EXEMPT_0) must never be hardcoded globally.
- * It is only emitted when explicit eligibility facts support it.
- * Any ambiguous case falls back to STANDARD or MANUAL_REVIEW.
+ * It is emitted only when the transaction facts and required evidence support it.
+ * Domestic rates and ambiguous cases require an explicit OWNER-reviewed rate.
  */
 
 export type VatEligibility = 'STANDARD' | 'EXEMPT_0' | 'MANUAL_REVIEW';
@@ -13,10 +13,18 @@ export interface VatEligibilityInput {
   buyerCountry?: string;
   /** ISO-3166-1 alpha-2 country code of the seller, uppercase */
   sellerCountry?: string;
-  /** Buyer holds a confirmed intra-community VAT number (e.g. EU VAT ID verified) */
+  /** Buyer holds a confirmed intra-community VAT number */
   buyerVatVerified?: boolean;
-  /** Explicit OWNER-level override: 'EXEMPT_0' | 'STANDARD' | 'MANUAL_REVIEW' | null */
+  /** Seller is registered for VAT-UE when WDT is used */
+  sellerVatEuRegistered?: boolean;
+  /** Evidence confirms dispatch/delivery to another EU member state */
+  intraEuDeliveryEvidenceVerified?: boolean;
+  /** Evidence confirms export outside the EU */
+  exportEvidenceVerified?: boolean;
+  /** Explicit OWNER-level override */
   ownerOverride?: VatEligibility | null;
+  /** Explicit OWNER-reviewed VAT rate, e.g. 23%, 8%, 5%, 0% */
+  ownerVatRate?: string;
   /** Free-text note provided by OWNER when applying the override */
   ownerNote?: string;
 }
@@ -32,23 +40,48 @@ const EU_COUNTRY_CODES = new Set([
   'IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE',
 ]);
 
+function normalizeVatRate(rate?: string): string | null {
+  if (!rate) return null;
+  const value = rate.trim().replace(',', '.');
+  if (!/^\d{1,2}(?:\.\d{1,2})?%$/.test(value)) return null;
+  const numeric = Number(value.slice(0, -1));
+  if (!Number.isFinite(numeric) || numeric < 0 || numeric > 99) return null;
+  return value;
+}
+
 /**
  * Determine VAT eligibility based on transaction facts.
  *
- * Rules (simplified; always subject to current applicable law):
- * - If OWNER provides an explicit override, it is honoured and logged.
- * - Intra-EU B2B supply with verified buyer VAT ID → EXEMPT_0 (Art. 138 VAT Directive).
- * - Export outside EU → EXEMPT_0 (typically 0% under domestic export rules).
- * - Missing/unverified buyer VAT ID for intra-EU → MANUAL_REVIEW.
- * - Domestic (same country) or unrecognised scenario → STANDARD (23% default; caller supplies correct rate).
- * - Any truly ambiguous case → MANUAL_REVIEW.
+ * This is a safety gate, not tax advice. Where the correct domestic rate or
+ * documentation is not fully established, the function returns MANUAL_REVIEW.
  */
 export function determineVatEligibility(input: VatEligibilityInput): VatEligibilityResult {
   if (input.ownerOverride) {
-    const rate = input.ownerOverride === 'EXEMPT_0' ? '0%' : input.ownerOverride === 'STANDARD' ? '23%' : 'MANUAL_REVIEW';
+    const explicitRate = normalizeVatRate(input.ownerVatRate);
+
+    if (input.ownerOverride === 'STANDARD' && !explicitRate) {
+      return {
+        eligibility: 'MANUAL_REVIEW',
+        vatRate: 'PENDING',
+        note: 'Ręczne ustawienie STANDARD wymaga jawnego wskazania zweryfikowanej stawki VAT przez OWNER.',
+      };
+    }
+
+    if (input.ownerOverride === 'EXEMPT_0' && explicitRate && explicitRate !== '0%') {
+      return {
+        eligibility: 'MANUAL_REVIEW',
+        vatRate: 'PENDING',
+        note: 'Niespójne ręczne ustawienie VAT: EXEMPT_0 może używać wyłącznie stawki 0%.',
+      };
+    }
+
     return {
       eligibility: input.ownerOverride,
-      vatRate: rate === 'MANUAL_REVIEW' ? 'PENDING' : rate,
+      vatRate: input.ownerOverride === 'MANUAL_REVIEW'
+        ? 'PENDING'
+        : input.ownerOverride === 'EXEMPT_0'
+          ? '0%'
+          : explicitRate!,
       note: `Ręczne ustawienie OWNER: ${input.ownerOverride}. ${input.ownerNote ?? ''}`.trim(),
     };
   }
@@ -64,40 +97,51 @@ export function determineVatEligibility(input: VatEligibilityInput): VatEligibil
     };
   }
 
-  // Domestic
+  // Domestic supplies can use different VAT rates depending on the goods/services.
   if (seller === buyer) {
     return {
-      eligibility: 'STANDARD',
-      vatRate: '23%',
-      note: 'Dostawa krajowa — stawka standardowa. Sprawdź aktualną stawkę dla kategorii towaru.',
+      eligibility: 'MANUAL_REVIEW',
+      vatRate: 'PENDING',
+      note: 'Dostawa krajowa — właściwa stawka zależy od klasyfikacji towaru lub usługi. OWNER musi wskazać zweryfikowaną stawkę.',
     };
   }
 
   const sellerInEU = EU_COUNTRY_CODES.has(seller);
   const buyerInEU  = EU_COUNTRY_CODES.has(buyer);
 
-  // Intra-EU B2B
+  // Intra-EU B2B: require VAT-UE and evidence before allowing 0%.
   if (sellerInEU && buyerInEU) {
-    if (input.buyerVatVerified === true) {
+    if (
+      input.buyerVatVerified === true &&
+      input.sellerVatEuRegistered === true &&
+      input.intraEuDeliveryEvidenceVerified === true
+    ) {
       return {
         eligibility: 'EXEMPT_0',
         vatRate: '0%',
-        note: 'Wewnątrzwspólnotowa dostawa towarów (WDT) — nabywca posiada zweryfikowany numer VAT-UE. Stawka 0% wymaga spełnienia warunków art. 138 Dyrektywy VAT oraz dokumentacji wysyłki.',
+        note: 'WDT — zweryfikowano VAT-UE nabywcy, rejestrację sprzedawcy VAT-UE oraz dowody wywozu/dostarczenia. Stawka 0% pozostaje zależna od zachowania wymaganej dokumentacji.',
       };
     }
     return {
       eligibility: 'MANUAL_REVIEW',
       vatRate: 'PENDING',
-      note: 'Dostawa wewnątrzwspólnotowa — numer VAT nabywcy niezweryfikowany. Wymagany ręczny przegląd.',
+      note: 'WDT — brakuje co najmniej jednego wymaganego potwierdzenia: VAT-UE nabywcy, rejestracji sprzedawcy VAT-UE lub dowodów wywozu/dostarczenia.',
     };
   }
 
-  // Export outside EU
+  // Export outside EU: require export evidence before allowing 0%.
   if (sellerInEU && !buyerInEU) {
+    if (input.exportEvidenceVerified === true) {
+      return {
+        eligibility: 'EXEMPT_0',
+        vatRate: '0%',
+        note: 'Eksport poza UE — potwierdzono dokument potwierdzający wywóz poza UE. Stawka 0% pozostaje zależna od zachowania wymaganej dokumentacji.',
+      };
+    }
     return {
-      eligibility: 'EXEMPT_0',
-      vatRate: '0%',
-      note: 'Eksport poza UE — stawka 0% zgodnie z przepisami eksportowymi. Wymagana dokumentacja eksportowa (ECS/SAD).',
+      eligibility: 'MANUAL_REVIEW',
+      vatRate: 'PENDING',
+      note: 'Eksport poza UE — brak zweryfikowanego dokumentu potwierdzającego wywóz. Nie można automatycznie zastosować stawki 0%.',
     };
   }
 
