@@ -1,6 +1,7 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import HierarchicalCatalog from '../../components/HierarchicalCatalog';
+import FranchiseCatalog from '../../components/FranchiseCatalog';
 import InstallmentCalculator from '../../components/InstallmentCalculator';
 import LandedCostCalculator from '../../components/LandedCostCalculator';
 import './catalog-enhancements.css';
@@ -12,8 +13,9 @@ export default function CatalogPage(){
       <section className='hero compact-hero'>
         <p className='eyebrow'>PROFESJA PREMIUM LIMITED™</p>
         <h2>Wyselekcjonowany katalog produktów PREMIUM</h2>
-        <p>Asortyment agencji jest celowo mniejszy niż oferta globalnych marketplace B2B. Publikujemy tylko unikalne pozycje, dla których wewnętrznie potwierdziliśmy dostawcę spełniającego minimalne kryteria stażu i ochrony transakcji. Każde konkretne zamówienie jest ponownie weryfikowane przed zawarciem transakcji.</p>
+        <p>Asortyment agencji łączy publiczny katalog zapytań z wewnętrzną kwalifikacją dostawców. Dane źródłowe kontrahentów, warunki zakupu i negocjacje pozostają poufne, natomiast klient otrzymuje ofertę PROFESJA z parametrami, ceną i warunkami potwierdzonymi dla konkretnej transakcji.</p>
       </section>
+      <FranchiseCatalog mode='catalog'/>
       <HierarchicalCatalog/>
       <section className='section catalog-calculators'>
         <div className='taxonomy-leaf-heading'>

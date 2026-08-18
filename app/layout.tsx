@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   },
   description: 'Import, sourcing, OEM/ODM, private label, organizacja finansowania i indywidualne oferty B2B dla przedsiębiorstw.',
   applicationName: 'PROFESJA PREMIUM LIMITED™',
+  manifest: '/manifest.webmanifest',
   keywords: ['B2B', 'import', 'sourcing', 'OEM', 'ODM', 'private label', 'finansowanie B2B', 'wycena B2B', 'PROFESJA PREMIUM LIMITED'],
   authors: [{ name: 'PROFESJA PREMIUM LIMITED™' }],
   creator: 'PROFESJA PREMIUM LIMITED™',
@@ -34,10 +35,22 @@ export const metadata: Metadata = {
   },
 };
 
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'PROFESJA PREMIUM LIMITED™',
+  url: siteUrl,
+  email: 'profesja.premium@gmail.com',
+  description: 'Finansowo-Handlowa Agencja B2B oferująca sourcing, import, logistykę i indywidualne oferty produktowe.',
+};
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pl">
-      <body>{children}</body>
+      <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
+        {children}
+      </body>
     </html>
   );
 }

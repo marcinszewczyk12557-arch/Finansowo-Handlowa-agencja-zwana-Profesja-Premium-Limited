@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import FranchiseCatalog from '../components/FranchiseCatalog';
 import { homeAssets0 } from '../data/homeAssets0';
 import { homeAssets1 } from '../data/homeAssets1';
 import { homeAssets2 } from '../data/homeAssets2';
@@ -149,6 +150,8 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        <FranchiseCatalog mode="home" />
 
         <section className="category-section"><div className="section-title-line"><span>PEŁNY KATALOG PRODUKTÓW I ROZWIĄZAŃ B2B</span></div><div className="category-ribbon">{categories.map(([name, sub, icon]) => (<Link href="/catalog" className="category-tile" key={name}><div className="category-visual">{icon}</div><strong>{name}</strong><span>{sub}</span></Link>))}</div></section>
 
