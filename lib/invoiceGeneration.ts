@@ -12,12 +12,13 @@ async function generateInvoiceNumber(): Promise<string> {
   const ts = new Date();
   const y  = ts.getFullYear();
   const m  = String(ts.getMonth() + 1).padStart(2, '0');
-  const prefix = `PPL/${y}/${m}/`;
-  const count = await prisma.invoice.count({
-    where: { number: { startsWith: prefix } },
-  });
-  const seq = String(count + 1).padStart(4, '0');
-  return `${prefix}${seq}`;
+  const rows = await prisma.$queryRaw<Array<{ value: bigint }>>`
+    SELECT nextval('"InvoiceNumberSeq"') AS value
+  `;
+  const seqValue = rows[0]?.value;
+  if (seqValue === undefined) throw new Error('INVOICE_SEQUENCE_UNAVAILABLE');
+  const seq = seqValue.toString().padStart(6, '0');
+  return `PPL/${y}/${m}/${seq}`;
 }
 
 export interface CreateInvoiceInput {
@@ -42,16 +43,30 @@ export interface CreateInvoiceInput {
 }
 
 function parseDecimal(s: string): number {
-  return parseFloat(s.replace(/[^\d.-]/g, '')) || 0;
+  const normalized = s.trim().replace(',', '.');
+  if (!/^\d+(?:\.\d{1,2})?$/.test(normalized)) {
+    throw new Error('INVALID_NET_AMOUNT');
+  }
+  const value = Number(normalized);
+  if (!Number.isFinite(value) || value <= 0) {
+    throw new Error('INVALID_NET_AMOUNT');
+  }
+  return value;
 }
 
 export async function createInvoice(input: CreateInvoiceInput) {
   const vatResult = determineVatEligibility(input.vatInput);
+  const requestedStatus = input.status ?? 'DRAFT';
+
+  if (requestedStatus === 'ISSUED' && vatResult.eligibility === 'MANUAL_REVIEW') {
+    throw new Error('VAT_REVIEW_REQUIRED');
+  }
 
   const net = parseDecimal(input.netAmount);
   let vatAmount = 0;
-  if (vatResult.vatRate !== 'PENDING' && vatResult.vatRate !== 'MANUAL_REVIEW') {
-    const rateNum = parseFloat(vatResult.vatRate.replace('%', '')) / 100;
+  if (vatResult.vatRate !== 'PENDING') {
+    const rateNum = Number(vatResult.vatRate.replace('%', '')) / 100;
+    if (!Number.isFinite(rateNum) || rateNum < 0) throw new Error('INVALID_VAT_RATE');
     vatAmount = Math.round(net * rateNum * 100) / 100;
   }
   const gross = Math.round((net + vatAmount) * 100) / 100;
@@ -63,7 +78,7 @@ export async function createInvoice(input: CreateInvoiceInput) {
       number,
       offerId:           input.offerId,
       orderId:           input.orderId ?? null,
-      status:            input.status ?? 'DRAFT',
+      status:            requestedStatus,
       issuerName:        input.issuerName.trim(),
       issuerAddress:     input.issuerAddress.trim(),
       issuerTaxId:       input.issuerTaxId.trim(),
@@ -71,10 +86,10 @@ export async function createInvoice(input: CreateInvoiceInput) {
       buyerAddress:      input.buyerAddress.trim(),
       buyerTaxId:        input.buyerTaxId?.trim() ?? null,
       currency:          input.currency ?? 'PLN',
-      netAmount:         String(net),
+      netAmount:         net.toFixed(2),
       vatRate:           vatResult.vatRate,
-      vatAmount:         String(vatAmount),
-      grossAmount:       String(gross),
+      vatAmount:         vatAmount.toFixed(2),
+      grossAmount:       gross.toFixed(2),
       vatEligibility:    vatResult.eligibility,
       vatEligibilityNote:vatResult.note,
       poReference:       input.poReference?.trim() ?? null,
