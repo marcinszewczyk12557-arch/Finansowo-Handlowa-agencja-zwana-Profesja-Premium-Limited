@@ -1,5 +1,7 @@
 -- Migration: invoice, factoring package, stage-link
 
+CREATE SEQUENCE "InvoiceNumberSeq" START 1;
+
 CREATE TABLE "Invoice" (
     "id"                 SERIAL PRIMARY KEY,
     "number"             TEXT NOT NULL,
