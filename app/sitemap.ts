@@ -4,14 +4,14 @@ import products from '../data/products';
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://profesja-premium-limited.vercel.app';
   const now = new Date();
-  const publicPages = ['', '/catalog', '/enterprise-equipment', '/biov-era', '/offers/new', '/about', '/contact', '/terms', '/privacy'];
+  const publicPages = ['', '/catalog', '/enterprise-equipment', '/biov-era', '/heavy-equipment', '/offers/new', '/about', '/contact', '/terms', '/privacy'];
 
   return [
     ...publicPages.map((path) => ({
       url: `${base}${path}`,
       lastModified: now,
-      changeFrequency: path === '' || path === '/catalog' || path === '/enterprise-equipment' || path === '/biov-era' ? ('weekly' as const) : ('monthly' as const),
-      priority: path === '' ? 1 : path === '/catalog' || path === '/enterprise-equipment' || path === '/biov-era' ? 0.9 : 0.6,
+      changeFrequency: path === '' || path === '/catalog' || path === '/enterprise-equipment' || path === '/biov-era' || path === '/heavy-equipment' ? ('weekly' as const) : ('monthly' as const),
+      priority: path === '' ? 1 : path === '/catalog' || path === '/enterprise-equipment' || path === '/biov-era' || path === '/heavy-equipment' ? 0.9 : 0.6,
     })),
     ...products.map((product) => ({
       url: `${base}/products/${product.id}`,
