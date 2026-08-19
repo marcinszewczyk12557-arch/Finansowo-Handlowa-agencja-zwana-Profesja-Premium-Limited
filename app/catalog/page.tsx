@@ -52,6 +52,10 @@ export default function CatalogPage(){
           <h1 style={{marginBottom:16, color:'#122027'}}>Profesjonalny katalog B2B — 50 kategorii wyposażenia przedsiębiorstw</h1>
           <p style={{maxWidth:900, lineHeight:1.7, color:'#45555d'}}>Publiczna warstwa katalogu nie ujawnia danych źródeł zaopatrzenia, cen zakupu ani informacji negocjacyjnych. Klient otrzymuje końcową ofertę PROFESJA dopiero po potwierdzeniu produktu, parametrów, ceny, dostępności, zgodności i warunków dostawy.</p>
           <p style={{maxWidth:900, lineHeight:1.7, color:'#45555d'}}>Brak dowodu certyfikacji lub zgodności = brak statusu „zweryfikowane”. Oznaczeń CE/ISO/EN/IEC nie przypisujemy produktowi bez dokumentu odnoszącego się do konkretnego modelu, wariantu i rynku docelowego.</p>
+          <div style={{display:'flex',gap:12,flexWrap:'wrap',marginTop:24}}>
+            <Link href='/catalog/fotowoltaika' style={{background:'#122027',color:'#fff',padding:'12px 16px',borderRadius:12,textDecoration:'none',fontWeight:700}}>Fotowoltaika Premium — 3 × 3 →</Link>
+            <Link href='/catalog/smartfony-premium' style={{background:'#e9d06f',color:'#172126',padding:'12px 16px',borderRadius:12,textDecoration:'none',fontWeight:700}}>Smartfony Premium / REDMAGIC →</Link>
+          </div>
         </div>
       </section>
 
