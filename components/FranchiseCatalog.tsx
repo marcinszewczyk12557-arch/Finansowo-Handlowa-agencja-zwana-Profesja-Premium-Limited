@@ -36,6 +36,13 @@ export default function FranchiseCatalog({ mode = 'catalog' }: Props){
         <p style={{ marginTop: 12, opacity: .86 }}><strong>PL:</strong> Jedna kontrolowana ścieżka obsługi: wyszukiwanie produktu, zapytanie ofertowe, sourcing, weryfikacja zgodności, logistyka, opcjonalne finansowanie lub najem długoterminowy, dokumentacja i obsługa posprzedażowa. Cena, marka, parametry i multimedia otrzymują status zweryfikowanych dopiero po potwierdzeniu dokumentacji.</p>
       </div>
 
+      <div className="source-dossier" style={{ marginBottom: 24 }}>
+        <p className="eyebrow">UNIVERSAL CATALOG ACCESS • 50 SPECIALIST STORES</p>
+        <h3>Każdy sklep specjalistyczny ma dostęp do pełnego, otwartego katalogu produktowego</h3>
+        <p><strong>PL:</strong> Każda z 50 specjalizacji sklepowych zachowuje własny profil, filtry, treści i priorytetowy asortyment, ale klient może z poziomu każdego sklepu wyszukać i zamówić dowolny zgodny z prawem produkt z całego katalogu PROFESJA. Towar nie musi fizycznie znajdować się w jednym magazynie: realizacja może korzystać z wielu niezależnych magazynów, centrów logistycznych, producentów, dystrybutorów i innych zweryfikowanych źródeł zlokalizowanych w różnych miejscach. System dobiera źródło realizacji według dostępności, zgodności, ceny, terminu dostawy i warunków transakcji. Produkty regulowane są udostępniane wyłącznie po spełnieniu właściwych wymogów prawnych i zgodności.</p>
+        <p style={{ marginTop: 12, opacity: .86 }}><strong>EN:</strong> Every specialist storefront keeps its own profile and priority assortment while retaining access to the shared open-ended PROFESJA product catalogue. Fulfilment may use multiple verified warehouses, logistics hubs, manufacturers and distributors in different locations, selected according to availability, compliance, price, delivery time and transaction conditions.</p>
+      </div>
+
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(230px,1fr))', gap: 14, marginBottom: 30 }}>
         {openingStores.map(([no, en, pl, mark]) => (
           <article key={no} style={{ border: '1px solid #d9e0e3', borderRadius: 16, padding: 18, background: '#fff' }}>
