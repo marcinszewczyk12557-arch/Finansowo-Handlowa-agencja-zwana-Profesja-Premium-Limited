@@ -34,8 +34,8 @@ export default function Home(){
             <p style={{fontWeight:900,letterSpacing:'.12em',color:'#8a7440'}}>LIVE PREVIEW MATRIX</p>
             <div style={{display:'grid',gridTemplateColumns:'repeat(3,minmax(0,1fr))',gap:10,margin:'16px 0 20px'}}>
               <div style={{background:'#eef1f3',borderRadius:14,padding:14}}><strong style={{fontSize:30}}>{franchiseOfferMatrixSummary.stores}</strong><span style={{display:'block',fontSize:12}}>stores / sklepów</span></div>
-              <div style={{background:'#eef1f3',borderRadius:14,padding:14}}><strong style={{fontSize:30}}>{franchiseOfferMatrixSummary.offersPerStore}</strong><span style={{display:'block',fontSize:12}}>tiers / wariantów</span></div>
-              <div style={{background:'#eef1f3',borderRadius:14,padding:14}}><strong style={{fontSize:30}}>{franchiseOfferMatrixSummary.totalOffers}</strong><span style={{display:'block',fontSize:12}}>offers / ofert</span></div>
+              <div style={{background:'#eef1f3',borderRadius:14,padding:14}}><strong style={{fontSize:30}}>{franchiseOfferMatrixSummary.seedProfilesPerStore}</strong><span style={{display:'block',fontSize:12}}>tiers / wariantów</span></div>
+              <div style={{background:'#eef1f3',borderRadius:14,padding:14}}><strong style={{fontSize:30}}>{franchiseOfferMatrixSummary.seedProfiles}</strong><span style={{display:'block',fontSize:12}}>offers / ofert</span></div>
             </div>
             <p style={{fontSize:13,lineHeight:1.6}}>Source links are sourcing leads until the exact seller, product, warranty, compliance and commercial terms are verified.</p>
           </div>
