@@ -10,8 +10,17 @@ type SubmissionResult = {
   createdAt: string;
 };
 
+const STORE01_MIN_ORDER = 110000;
+
+function numericBudget(value: string) {
+  const digits = value.replace(/[^0-9]/g, '');
+  return digits ? Number(digits) : 0;
+}
+
 export default function OfferForm() {
   const [product, setProduct] = useState('');
+  const [budget, setBudget] = useState('');
+  const [store, setStore] = useState('');
   const [financing, setFinancing] = useState(false);
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<SubmissionResult | null>(null);
@@ -19,18 +28,28 @@ export default function OfferForm() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const sourceStore = params.get('store') || '';
+    setStore(sourceStore);
     setProduct(params.get('product') || '');
+    const requestedBudget = params.get('budget') || '';
+    setBudget(sourceStore === '01' && numericBudget(requestedBudget) < STORE01_MIN_ORDER ? String(STORE01_MIN_ORDER) : requestedBudget);
   }, []);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSending(true);
     setError('');
     setResult(null);
 
+    if (store === '01' && numericBudget(budget) < STORE01_MIN_ORDER) {
+      setError('Dla sklepu 01 minimalna wartość pojedynczego zamówienia wynosi 110 000 zł.');
+      return;
+    }
+
+    setSending(true);
     const form = new FormData(event.currentTarget);
     const payload = {
       ...Object.fromEntries(form.entries()),
+      sourceStore: store,
       financingRequested: form.get('financingRequested') === 'on',
     };
 
@@ -47,6 +66,8 @@ export default function OfferForm() {
       window.localStorage.setItem('profesja_last_offer', JSON.stringify(data.offer));
       event.currentTarget.reset();
       setProduct('');
+      setBudget('');
+      setStore('');
       setFinancing(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Nie udało się wysłać zapytania.');
@@ -60,7 +81,9 @@ export default function OfferForm() {
       <p className="eyebrow">Kontakt handlowy</p>
       <h2>Zapytanie ofertowe B2B</h2>
       <p>Przekaż podstawowe parametry. Zapytanie zostanie zapisane w systemie PROFESJA, otrzyma indywidualny numer sprawy i zostanie włączone do Automatyzacji Finansowo‑Sprzedażowej.</p>
+      {store === '01' ? <p className="admin-note"><strong>Sklep 01:</strong> minimalna wartość pojedynczego zamówienia wynosi 110 000 zł.</p> : null}
 
+      <input type="hidden" name="sourceStore" value={store} />
       <div className="form-grid">
         <label>Nazwa firmy<input name="company" placeholder="Nazwa firmy" /></label>
         <label>Osoba kontaktowa<input name="contact" placeholder="Imię i nazwisko" required /></label>
@@ -69,7 +92,7 @@ export default function OfferForm() {
         <label>Produkt / usługa<input name="product" value={product} onChange={(event) => setProduct(event.target.value)} placeholder="Nazwa produktu lub potrzeby zakupowej" required /></label>
         <label>Ilość<input name="quantity" placeholder="np. 10 szt." /></label>
         <label>Rynek docelowy<input name="market" placeholder="Polska / UE / globalnie" /></label>
-        <label>Budżet orientacyjny<input name="budget" placeholder="np. 50 000 PLN" /></label>
+        <label>Budżet orientacyjny<input name="budget" value={budget} onChange={(event) => setBudget(event.target.value)} placeholder={store === '01' ? 'minimum 110 000 PLN' : 'np. 150 000 PLN'} required={store === '01'} /></label>
       </div>
 
       <label style={{ display: 'block', marginTop: 12 }}>
@@ -77,7 +100,7 @@ export default function OfferForm() {
         Chcę, aby zapytanie obejmowało również organizację finansowania B2B
       </label>
       {financing ? (
-        <label>Orientacyjna kwota finansowania<input name="financingAmount" placeholder="np. 50 000 PLN" /></label>
+        <label>Orientacyjna kwota finansowania<input name="financingAmount" placeholder="np. 110 000 PLN" /></label>
       ) : null}
       <p><small>Finansowanie jest organizowane indywidualnie. Decyzję podejmuje uprawniona instytucja finansująca; serwis nie gwarantuje przyznania finansowania ani finansowania bez wkładu własnego.</small></p>
 
@@ -115,7 +138,7 @@ export default function OfferForm() {
           Status: {result.status}. Pakiet formalności został przypisany do sprawy i będzie uzupełniany danymi transakcyjnymi; wymagane zgody i podpisy pozostają osobnym etapem.
           <div className="cta-row" style={{ marginTop: 16 }}>
             <Link href="/dashboard"><button type="button">PRZEJDŹ DO PANELU KLIENTA</button></Link>
-            <Link href="/catalog"><button type="button" className="cta-secondary">WRÓĆ DO KATALOGU</button></Link>
+            <Link href={store === '01' ? '/stores/01' : '/catalog'}><button type="button" className="cta-secondary">WRÓĆ DO KATALOGU</button></Link>
           </div>
         </div>
       ) : null}
