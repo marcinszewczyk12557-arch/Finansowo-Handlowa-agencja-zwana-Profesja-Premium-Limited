@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import StoreProductBrowser from '../../../components/StoreProductBrowser';
 import { businessStoreNetwork, getBusinessStoreBySlug } from '../../../data/businessStoreNetwork';
 import { franchiseCatalog } from '../../../data/franchiseCatalog';
 import { store01MobileCatalog } from '../../../data/store01MobileCatalog';
@@ -96,25 +97,7 @@ export default async function BusinessStorePage({ params }: PageProps) {
           <p style={{ color: '#52636b', lineHeight: 1.65, maxWidth: 900 }}>
             Każdy produkt ma stałe oznaczenie w formacie SKLEP-PRODUKT, np. 01-001. Pierwsze dwie cyfry wskazują numer sklepu, a trzy kolejne numer pozycji w jego katalogu. Numer jest przekazywany również do formularza zapytania ofertowego.
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 14 }}>
-            {displayedProducts.map((product) => (
-              <article key={product.code} className="professional-offer-card" style={{ background: '#fff', border: '1px solid #dde3e6', borderRadius: 18, padding: 22 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-                  <p className="eyebrow" style={{ margin: 0 }}>INDIVIDUAL B2B QUOTATION</p>
-                  <strong style={{ color: '#122027', letterSpacing: '.12em', whiteSpace: 'nowrap' }}>PRODUCT {product.code}</strong>
-                </div>
-                {product.department ? <div style={{ fontSize: '.82rem', color: '#607178', marginBottom: 8 }}>{product.department}</div> : null}
-                <h3><span style={{ color: '#607178' }}>{product.code}. </span>{product.title}</h3>
-                <p style={{ lineHeight: 1.65 }}>{product.use}</p>
-                <div style={{ borderTop: '1px solid #e3e8ea', paddingTop: 12, marginTop: 14, color: '#52636b', fontSize: '.9rem', lineHeight: 1.55 }}>
-                  Marka, model, wariant, cena, dostępność, zgodność, gwarancja i warunki dostawy są potwierdzane przed przedstawieniem oferty wiążącej.
-                </div>
-                <Link href={`/offers/new?product=${encodeURIComponent(product.title)}&category=${encodeURIComponent(store.category)}&productNumber=${encodeURIComponent(product.code)}`} style={{ fontWeight: 700, display: 'inline-block', marginTop: 14 }}>
-                  Poproś o ofertę dla produktu {product.code} →
-                </Link>
-              </article>
-            ))}
-          </div>
+          <StoreProductBrowser products={displayedProducts} category={store.category} />
         </div>
       </section>
 
