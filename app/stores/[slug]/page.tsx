@@ -71,19 +71,28 @@ export default async function BusinessStorePage({ params }: PageProps) {
 
       <section className="section" style={{ paddingTop: 18 }}>
         <div style={{ maxWidth: 1180, margin: '0 auto' }}>
-          <p className="eyebrow">STARTER OFFERS / OFERTY STARTOWE</p>
+          <p className="eyebrow">NUMBERED PRODUCTS / NUMEROWANE PRODUKTY</p>
           <h2>Przykładowe pozycje wejściowe</h2>
+          <p style={{ color: '#52636b', lineHeight: 1.65, maxWidth: 900 }}>
+            Każdy produkt otrzymuje stałe oznaczenie w formacie SKLEP-PRODUKT, np. 01-001. Pierwsze dwie cyfry wskazują numer sklepu, a trzy kolejne numer pozycji w jego katalogu.
+          </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 14 }}>
-            {starterProducts.map((product) => (
-              <article key={product.id} className="professional-offer-card" style={{ background: '#fff', border: '1px solid #dde3e6', borderRadius: 18, padding: 22 }}>
-                <p className="eyebrow">INDIVIDUAL B2B QUOTATION</p>
-                <h3>{product.title}</h3>
-                <p style={{ lineHeight: 1.65 }}>{product.use}</p>
-                <Link href={`/offers/new?product=${encodeURIComponent(product.title)}&category=${encodeURIComponent(store.category)}`} style={{ fontWeight: 700 }}>
-                  Poproś o ofertę →
-                </Link>
-              </article>
-            ))}
+            {starterProducts.map((product, index) => {
+              const productNumber = `${String(store.number).padStart(2, '0')}-${String(index + 1).padStart(3, '0')}`;
+              return (
+                <article key={product.id} className="professional-offer-card" style={{ background: '#fff', border: '1px solid #dde3e6', borderRadius: 18, padding: 22 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+                    <p className="eyebrow" style={{ margin: 0 }}>INDIVIDUAL B2B QUOTATION</p>
+                    <strong style={{ color: '#122027', letterSpacing: '.12em', whiteSpace: 'nowrap' }}>PRODUCT {productNumber}</strong>
+                  </div>
+                  <h3><span style={{ color: '#607178' }}>{productNumber}. </span>{product.title}</h3>
+                  <p style={{ lineHeight: 1.65 }}>{product.use}</p>
+                  <Link href={`/offers/new?product=${encodeURIComponent(product.title)}&category=${encodeURIComponent(store.category)}&productNumber=${encodeURIComponent(productNumber)}`} style={{ fontWeight: 700 }}>
+                    Poproś o ofertę dla produktu {productNumber} →
+                  </Link>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
