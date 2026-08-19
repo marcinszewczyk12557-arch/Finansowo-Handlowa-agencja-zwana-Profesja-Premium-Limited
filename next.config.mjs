@@ -13,7 +13,17 @@ const nextConfig = {
       { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
     ];
 
-    return [{ source: '/(.*)', headers: securityHeaders }];
+    const privateRouteHeaders = [
+      { key: 'Cache-Control', value: 'private, no-store, max-age=0, must-revalidate' },
+      { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, nosnippet' },
+    ];
+
+    return [
+      { source: '/admin/:path*', headers: privateRouteHeaders },
+      { source: '/owner/:path*', headers: privateRouteHeaders },
+      { source: '/api/:path*', headers: privateRouteHeaders },
+      { source: '/(.*)', headers: securityHeaders },
+    ];
   },
 };
 

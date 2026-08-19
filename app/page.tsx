@@ -1,169 +1,58 @@
 import Link from 'next/link';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { homeAssets0 } from '../data/homeAssets0';
-import { homeAssets1 } from '../data/homeAssets1';
-import { homeAssets2 } from '../data/homeAssets2';
+import { franchiseOfferMatrixSummary, franchiseStoreCategories } from '../data/franchiseOfferMatrix';
 
-const categories = [
-  ['Smartfony Premium', 'nubia, REDMAGIC i urządzenia mobilne', '01'],
-  ['Laptopy Premium', 'wydajne stacje mobilne i notebooki biznesowe', '02'],
-  ['Energia i Fotowoltaika', 'instalacje PV, magazyny energii i systemy hybrydowe', '03'],
-  ['HVAC', 'klimatyzacja, wentylacja i rozwiązania VRF/VRV', '04'],
-  ['Meble Premium', 'wyposażenie gabinetów, recepcji i sal konferencyjnych', '05'],
-  ['Drzwi i Bramy Premium', 'systemy wejściowe, automatyka i kontrola dostępu', '06'],
-  ['Maszyny i Sprzęt Ciężki', 'maszyny budowlane, komunalne i przemysłowe', '07'],
-  ['Wyposażenie Przedsiębiorstw', 'narzędzia, stanowiska pracy i wyposażenie techniczne', '08'],
-  ['Wellness Premium', 'wyposażenie stref relaksu, SPA i hospitality', '09'],
-  ['Smart Home Premium', 'automatyka budynkowa, sterowanie i inteligentne systemy', '10'],
-  ['Luxury Interior', 'wyposażenie i zabudowy wnętrz reprezentacyjnych', '11'],
-  ['Outdoor Luxury', 'tarasy, pergole i wyposażenie stref zewnętrznych', '12'],
-  ['Premium Lighting', 'oświetlenie dekoracyjne, techniczne i sterowanie', '13'],
-  ['Executive Office', 'wyposażenie gabinetów zarządu i przestrzeni executive', '14'],
-  ['Hospitality Premium', 'wyposażenie hoteli, apartamentów i stref usługowych', '15'],
-  ['Audio Video Premium', 'systemy AV, prezentacyjne i multimedialne', '16'],
-  ['E-Mobility', 'ładowanie, infrastruktura i rozwiązania elektromobilności', '17'],
-  ['Leisure Premium', 'produkty rekreacyjne i wyposażenie czasu wolnego', '18'],
-];
+export default function Home(){
+  return <>
+    <Header />
+    <main style={{background:'#0f171c',color:'#fff',minHeight:'100vh'}}>
+      <section aria-labelledby="ai-overview-title" style={{background:'#eef1f3',color:'#172126',padding:'24px'}}>
+        <div style={{maxWidth:1240,margin:'0 auto',background:'#d9dde0',border:'1px solid #c2c9cd',borderRadius:24,padding:'clamp(22px,4vw,42px)',boxShadow:'0 18px 50px rgba(0,0,0,.12)'}}>
+          <p style={{fontWeight:900,letterSpacing:'.12em',color:'#78652f',marginTop:0}}>PRZEGLĄD AI • PROFESJA PREMIUM LIMITED™</p>
+          <h1 id="ai-overview-title" style={{fontSize:'clamp(30px,5vw,58px)',lineHeight:1.02,margin:'10px 0 18px'}}>Jedna platforma B2B. 50 specjalistycznych kategorii. 250 wariantów ofert.</h1>
+          <p style={{fontSize:'clamp(17px,2vw,21px)',lineHeight:1.7,maxWidth:1000}}>PROFESJA PREMIUM LIMITED™ organizuje proces zakupowy B2B od określenia potrzeb i sourcingu, przez zapytanie ofertowe i dokumentację, po logistykę, weryfikację gwarancji i obsługę posprzedażową. Katalog obejmuje pięć poziomów każdej kategorii: Value, Standard, Professional, Premium oraz Luxury / Industrial.</p>
+          <p style={{lineHeight:1.65,maxWidth:1000,color:'#526067'}}><strong>AI overview:</strong> this panel summarizes only the PROFESJA PREMIUM LIMITED project and links exclusively to its internal catalogue and request workflow. Commercial parameters remain subject to verification for the specific transaction.</p>
+          <div style={{display:'flex',gap:12,flexWrap:'wrap',marginTop:22}}>
+            <Link href="/offer-matrix" style={{background:'#172126',color:'#fff',padding:'14px 20px',borderRadius:12,textDecoration:'none',fontWeight:900}}>ZOBACZ 250 OFERT</Link>
+            <Link href="/catalog" style={{background:'#fff',color:'#172126',padding:'14px 20px',borderRadius:12,textDecoration:'none',fontWeight:900,border:'1px solid #b9c1c5'}}>OTWÓRZ KATALOG</Link>
+            <Link href="/offers/new" style={{color:'#172126',padding:'14px 20px',borderRadius:12,textDecoration:'none',fontWeight:900,border:'1px solid #8a7440'}}>ZAPYTAJ O OFERTĘ</Link>
+          </div>
+        </div>
+      </section>
 
-const originalSmartphones = [
-  {
-    image: homeAssets1.nubia01,
-    brand: 'nubia',
-    model: 'Z80 Ultra 16GB+512GB',
-    retailEur: 799,
-    profesjaPln: 2765,
-    availability: 'oficjalny sklep UE: dostępny, deklarowana wysyłka 3–5 dni; wariant 16GB+512GB i stan potwierdzane przed zamówieniem',
-  },
-  {
-    image: homeAssets1.nubia02,
-    brand: 'nubia',
-    model: 'Z70S Ultra',
-    retailEur: 669,
-    profesjaPln: 2315,
-    availability: 'oficjalna dystrybucja UE — wariant i stan magazynowy potwierdzane przed zamówieniem',
-  },
-  {
-    image: homeAssets1.nubia03,
-    brand: 'nubia',
-    model: 'Z70 Ultra',
-    retailEur: 529,
-    profesjaPln: 1831,
-    availability: 'oficjalny model marki nubia — dostępność zależna od wariantu',
-  },
-  {
-    image: homeAssets1.nubia04,
-    brand: 'REDMAGIC',
-    model: '11 Pro 12GB+256GB',
-    retailEur: 699,
-    profesjaPln: 2419,
-    availability: 'oficjalny sklep UE: obecnie wyprzedany; cena odnosi się do wariantu 12GB+256GB, a dostępność alternatywnych wariantów jest potwierdzana przed zamówieniem',
-  },
-  {
-    image: homeAssets2.nubia05,
-    brand: 'REDMAGIC',
-    model: '11 Air',
-    retailEur: 599,
-    profesjaPln: 2073,
-    availability: 'oryginalny smartfon gamingowy REDMAGIC — wariant pamięci potwierdzany przed zamówieniem',
-  },
-  {
-    image: homeAssets2.nubia06,
-    brand: 'REDMAGIC',
-    model: '10S Pro',
-    retailEur: 609,
-    profesjaPln: 2107,
-    availability: 'oryginalny model REDMAGIC — dostępność może być ograniczona',
-  },
-  {
-    image: homeAssets2.nubia07,
-    brand: 'REDMAGIC',
-    model: '10 Air',
-    retailEur: 449,
-    profesjaPln: 1554,
-    availability: 'oryginalny model REDMAGIC — dostępność może być ograniczona',
-  },
-];
-
-export default function Home() {
-  return (
-    <>
-      <Header />
-      <main className="premium-home">
-        <section aria-label="Dni otwarcia i obsługa B2B" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20, padding: '14px 24px', borderBottom: '1px solid #2f373b', background: 'linear-gradient(90deg, rgba(192,155,70,.14), rgba(8,15,19,.96))' }}>
-          <div><strong style={{ color: '#f0d778', letterSpacing: '.16em' }}>DNI OTWARCIA</strong><span style={{ marginLeft: 14, color: '#d8d8d8' }}>Obsługa zapytań B2B i indywidualnych wycen online</span></div>
-          <Link href="/contact" style={{ color: '#f0d778', fontWeight: 700, textDecoration: 'none' }}>KONTAKT →</Link>
-        </section>
-
-        <section className="commerce-hero">
-          <div className="commerce-hero__brand">
-            <div className="hero-mobile-product" aria-label="Smartfon nubia Z80 Ultra — produkt prezentowany na stronie głównej">
-              <img src={originalSmartphones[0].image} alt={`${originalSmartphones[0].brand} ${originalSmartphones[0].model}`} />
-              <span>nubia Z80 Ultra • smartfon premium</span>
+      <section style={{padding:'64px 24px 54px',background:'radial-gradient(circle at 72% 28%,rgba(240,215,120,.14),transparent 34%),linear-gradient(135deg,#0d151a,#1d2b32)'}}>
+        <div style={{maxWidth:1240,margin:'0 auto',display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:34,alignItems:'center'}}>
+          <div>
+            <p style={{color:'#f0d778',fontWeight:900,letterSpacing:'.15em'}}>OPENING DAYS • ALL IN ONE</p>
+            <h2 style={{fontSize:'clamp(38px,6vw,72px)',lineHeight:.98,margin:'12px 0'}}>PROFESJA<br/>PREMIUM LIMITED™</h2>
+            <h3 style={{fontSize:'clamp(22px,3vw,34px)',fontWeight:600}}>50 specialist stores • 250 commercial offers</h3>
+            <p style={{maxWidth:720,lineHeight:1.75,color:'#d1dade'}}>Five market-positioned offer tiers for every category. Product sourcing, RFQ, documentation, logistics, warranty verification and post-warranty service are coordinated in one B2B process.</p>
+          </div>
+          <div style={{background:'#d9dde0',color:'#172126',borderRadius:24,padding:26,boxShadow:'0 30px 80px rgba(0,0,0,.28)'}}>
+            <img src="/profesja-logo.svg" alt="PROFESJA PREMIUM LIMITED" style={{width:86,height:86,objectFit:'contain'}} />
+            <p style={{fontWeight:900,letterSpacing:'.12em',color:'#8a7440'}}>LIVE PREVIEW MATRIX</p>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(3,minmax(0,1fr))',gap:10,margin:'16px 0 20px'}}>
+              <div style={{background:'#eef1f3',borderRadius:14,padding:14}}><strong style={{fontSize:30}}>{franchiseOfferMatrixSummary.stores}</strong><span style={{display:'block',fontSize:12}}>stores / sklepów</span></div>
+              <div style={{background:'#eef1f3',borderRadius:14,padding:14}}><strong style={{fontSize:30}}>{franchiseOfferMatrixSummary.seedProfilesPerStore}</strong><span style={{display:'block',fontSize:12}}>tiers / wariantów</span></div>
+              <div style={{background:'#eef1f3',borderRadius:14,padding:14}}><strong style={{fontSize:30}}>{franchiseOfferMatrixSummary.seedProfiles}</strong><span style={{display:'block',fontSize:12}}>offers / ofert</span></div>
             </div>
-            <p className="eyebrow">Agencja Finansowo-Handlowa B2B</p>
-            <h1>PROFESJA</h1><div className="brand-gold">PREMIUM LIMITED™</div>
-            <h2>KOMPLEKSOWE ROZWIĄZANIA DLA BIZNESU</h2>
-            <p className="hero-services">FINANSOWANIE • IMPORT • SOURCING • LOGISTYKA</p>
-            <p style={{ maxWidth: 560, lineHeight: 1.7, color: '#c9c9c9' }}>Profesjonalna obsługa przedsiębiorstw: dobór oryginalnych produktów markowych, organizacja importu i dostaw, indywidualne zapytania ofertowe oraz koordynacja procesu handlowego od zapytania do realizacji.</p>
-            <div className="cta-row" style={{ marginTop: 24 }}><Link href="/catalog"><button>ZOBACZ KATALOG</button></Link><Link href="/offers/new"><button className="cta-secondary">ZAPYTANIE OFERTOWE B2B</button></Link></div>
+            <p style={{fontSize:13,lineHeight:1.6}}>Source links are sourcing leads until the exact seller, product, warranty, compliance and commercial terms are verified.</p>
           </div>
+        </div>
+      </section>
 
-          <div className="product-stage" aria-label="Oryginalny smartfon nubia Z80 Ultra"><div className="stage-glow" /><div className="featured-stage-photo"><img src={originalSmartphones[0].image} alt={`${originalSmartphones[0].brand} ${originalSmartphones[0].model}`} /></div><div className="stage-plinth" /></div>
-
-          <aside className="commerce-hero__offer">
-            <div className="brand-offer-label">ORYGINALNE SMARTFONY PREMIUM</div>
-            <img src={homeAssets0.nubiaBrand} alt="nubia / REDMAGIC" style={{ width: '100%', maxWidth: 250, margin: '14px 0', borderRadius: 10 }} />
-            <div className="feature-row"><span><b>01</b>Oryginalne modele</span><span><b>02</b>Zweryfikowana marka i model</span><span><b>03</b>Import i obsługa B2B</span><span><b>04</b>Indywidualna realizacja</span></div>
-            <div style={{ marginTop: 22, padding: 18, border: '1px solid #38434a', borderRadius: 12, background: 'rgba(8,15,19,.72)' }}><strong style={{ color: '#f0d778' }}>CENY ODNIESIONE DO RYNKU UE</strong><p style={{ marginBottom: 0, color: '#b7b7b7', lineHeight: 1.55 }}>Poziom cenowy PROFESJA ustalany jest dla konkretnego modelu, wariantu i wielkości zamówienia. Dostępność, konfiguracja i warunki zakupu są potwierdzane przed przedstawieniem wiążącej oferty.</p></div>
-          </aside>
-        </section>
-
-        <section className="quick-actions">
-          <Link href="/offers/new"><span>01</span><div><strong>ZAMÓW OFERTĘ</strong><small>Szybka wycena B2B</small></div><b>→</b></Link>
-          <Link href="/offers/new?product=Finansowanie%20B2B"><span>02</span><div><strong>FINANSOWANIE</strong><small>Rozwiązania dobierane do konkretnej transakcji</small></div><b>→</b></Link>
-          <Link href="/about"><span>03</span><div><strong>IMPORT</strong><small>Koordynacja sourcingu, dostawy i dokumentacji</small></div><b>→</b></Link>
-          <Link href="/contact"><span>04</span><div><strong>KONTAKT Z DORADCĄ</strong><small>Indywidualne wsparcie handlowe</small></div><b>→</b></Link>
-        </section>
-
-        <section className="section featured-offers-section">
-          <p className="eyebrow">Oryginalne produkty nubia / REDMAGIC</p>
-          <h2>Wybrane smartfony premium w ofercie B2B</h2>
-          <p>Prezentowane ceny mają charakter orientacyjny i są kalkulowane względem aktualnych warunków rynkowych UE. Końcowa cena zależy od modelu, wariantu pamięci, wielkości zamówienia, dostępności, kursu walut oraz kosztów realizacji.</p>
-          <div className="featured-offer-grid">
-            {originalSmartphones.map((offer, index) => (
-              <article className="featured-offer-card" key={`${offer.brand}-${offer.model}`}>
-                <img src={offer.image} alt={`${offer.brand} ${offer.model}`} />
-                <div className="featured-offer-copy">
-                  <span>SMARTFON {String(index + 1).padStart(2, '0')} • OFERTA B2B</span>
-                  <h3>{offer.brand} {offer.model}</h3>
-                  <p><strong>Marka:</strong> {offer.brand}</p>
-                  <p><strong>Model:</strong> {offer.model}</p>
-                  <p><strong>Poziom detaliczny UE:</strong> od ok. €{offer.retailEur}</p>
-                  <p><strong>Dostępność:</strong> {offer.availability}.</p>
-                  <p><small>Kolor, pamięć, wersja regionalna i dokładna konfiguracja są potwierdzane w indywidualnej ofercie.</small></p>
-                  <strong className="featured-price">Orientacyjna cena PROFESJA: ok. {offer.profesjaPln.toLocaleString('pl-PL')} zł / szt.</strong>
-                  <Link href={`/offers/new?product=${encodeURIComponent(`${offer.brand} ${offer.model}`)}`}>POPROŚ O WYCENĘ →</Link>
-                </div>
-              </article>
-            ))}
+      <section style={{background:'#eef1f3',color:'#172126',padding:'48px 24px 64px'}}>
+        <div style={{maxWidth:1240,margin:'0 auto'}}>
+          <p style={{fontWeight:900,letterSpacing:'.12em',color:'#8a7440'}}>50 SPECIALIST STORES • 50 SKLEPÓW SPECJALISTYCZNYCH</p>
+          <h2 style={{fontSize:'clamp(28px,4vw,46px)',marginTop:8}}>One catalogue tree, five offer tiers per category</h2>
+          <p style={{maxWidth:900,lineHeight:1.7,color:'#58656b'}}>Each category opens a controlled sourcing path from an economical market option through professional and premium configurations up to luxury or industrial-grade solutions.</p>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:12,marginTop:26}}>
+            {franchiseStoreCategories.map((category,index)=><Link key={category} href={`/offer-matrix#store-${String(index+1).padStart(2,'0')}`} style={{textDecoration:'none',color:'inherit'}}><article style={{background:'#d9dde0',border:'1px solid #c2c9cd',borderRadius:15,padding:17,minHeight:112}}><span style={{fontWeight:900,color:'#8a7440'}}>{String(index+1).padStart(2,'0')}</span><h3 style={{fontSize:17,margin:'8px 0 0'}}>{category}</h3><p style={{fontSize:12,color:'#657178'}}>5 offer tiers / 5 wariantów</p></article></Link>)}
           </div>
-        </section>
-
-        <section className="category-section"><div className="section-title-line"><span>PEŁNY KATALOG PRODUKTÓW I ROZWIĄZAŃ B2B</span></div><div className="category-ribbon">{categories.map(([name, sub, icon]) => (<Link href="/catalog" className="category-tile" key={name}><div className="category-visual">{icon}</div><strong>{name}</strong><span>{sub}</span></Link>))}</div></section>
-
-        <section className="trust-strip"><div><b>01</b><strong>BEZPIECZNY PROCES</strong><span>Warunki i dokumentacja weryfikowane przed transakcją</span></div><div><b>02</b><strong>INDYWIDUALNE WYCENY</strong><span>Warunki dopasowane do konkretnego zamówienia</span></div><div><b>03</b><strong>GWARANCJA I SERWIS</strong><span>Zakres potwierdzany dla wybranego produktu</span></div><div><b>04</b><strong>WSPARCIE B2B</strong><span>Koordynacja procesu na każdym etapie</span></div><div><b>05</b><strong>GLOBALNY SOURCING</strong><span>Organizacja importu i dostaw międzynarodowych</span></div></section>
-
-        <section id="finansowanie" className="section finance-section">
-          <p className="eyebrow">Finansowanie B2B</p>
-          <h2>Finansowanie dobierane do konkretnej transakcji</h2>
-          <p>Możliwe formy finansowania, dostępność, koszt i warunki zależą od wartości zamówienia, profilu przedsiębiorstwa oraz decyzji wybranego finansującego. PROFESJA może pomóc w przygotowaniu danych transakcji i organizacji procesu, ale nie gwarantuje decyzji kredytowej ani finansowania.</p>
-          <Link href="/offers/new?product=Finansowanie%20B2B"><button>ZAPYTAJ O FINANSOWANIE B2B</button></Link>
-        </section>
-
-        <section className="section premium-contact-block"><div><p className="eyebrow">Profesja Premium Limited</p><h2>Zapytaj o rozwiązanie dopasowane do Twojej firmy</h2><p>Produkty markowe, sourcing, import, logistyka i finansowanie w jednym, uporządkowanym procesie obsługi B2B.</p></div><div className="cta-row"><Link href="/catalog"><button>Przejdź do katalogu</button></Link><Link href="/offers/new"><button className="cta-secondary">Złóż zapytanie B2B</button></Link></div></section>
-      </main>
-      <Footer />
-    </>
-  );
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </>;
 }

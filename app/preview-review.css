@@ -1,0 +1,286 @@
+/* Preview-only final review polish for PROFESJA PREMIUM LIMITED™.
+   Keep changes reversible and do not use this file to expose confidential data. */
+
+:root {
+  --pp-bg: #071014;
+  --pp-surface: #0d171c;
+  --pp-surface-soft: #f7f7f4;
+  --pp-text: #172126;
+  --pp-muted: #5e6c72;
+  --pp-gold: #d7b55b;
+  --pp-gold-strong: #f0d778;
+  --pp-teal: #31c9ba;
+  --pp-border: rgba(127, 145, 153, .28);
+  --pp-radius: 16px;
+  --pp-shadow: 0 18px 50px rgba(5, 16, 20, .10);
+}
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid var(--pp-gold-strong);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+:where(button, input, select, textarea) {
+  font: inherit;
+}
+
+:where(input, select, textarea) {
+  min-height: 44px;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+button,
+[role='button'],
+input[type='submit'],
+input[type='button'] {
+  min-height: 44px;
+  cursor: pointer;
+}
+
+main h1,
+main h2,
+main h3 {
+  text-wrap: balance;
+  letter-spacing: -.018em;
+}
+
+main p,
+main li {
+  text-wrap: pretty;
+}
+
+main img,
+main svg,
+main video {
+  max-width: 100%;
+}
+
+.reference-header {
+  backdrop-filter: saturate(120%) blur(12px);
+}
+
+.reference-brand img {
+  flex: 0 0 auto;
+}
+
+.reference-nav a,
+.reference-actions a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.reference-nav a {
+  white-space: nowrap;
+}
+
+.reference-offer-button,
+.reference-main-cta,
+.reference-catalog-cta a {
+  box-shadow: 0 8px 22px rgba(215, 181, 91, .14);
+}
+
+.reference-category-card,
+.reference-phone-card,
+.reference-offer-button,
+.reference-main-cta,
+.reference-catalog-cta a {
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+
+.reference-category-card:hover,
+.reference-phone-card:hover {
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .16);
+}
+
+.reference-footer a {
+  text-underline-offset: 3px;
+}
+
+/* Common content surfaces used across public subpages. */
+.section > div,
+main > section > div {
+  max-width: min(1120px, calc(100vw - 32px));
+}
+
+/* Tables remain usable on small screens without shrinking text to unreadable sizes. */
+main table {
+  border-collapse: collapse;
+}
+
+main :where(td, th) {
+  vertical-align: top;
+}
+
+/* Improve mobile/tablet header without introducing JS or a hidden menu. */
+@media (max-width: 1180px) {
+  .reference-header__inner {
+    grid-template-columns: 1fr auto;
+    gap: 10px 18px;
+  }
+
+  .reference-brand {
+    grid-column: 1;
+  }
+
+  .reference-actions {
+    grid-column: 2;
+    justify-self: end;
+  }
+
+  .reference-nav {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    gap: 18px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
+    padding: 0 2px 4px;
+  }
+
+  .reference-nav a {
+    padding: 10px 0 9px;
+  }
+}
+
+@media (max-width: 800px) {
+  .reference-topbar__inner {
+    padding-inline: 14px;
+  }
+
+  .reference-topbar__left {
+    display: none;
+  }
+
+  .reference-topbar__right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: .72rem;
+  }
+
+  .reference-header__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 10px 14px 8px;
+  }
+
+  .reference-brand strong {
+    font-size: 1.08rem;
+  }
+
+  .reference-brand small {
+    letter-spacing: .11em;
+    font-size: .54rem;
+  }
+
+  .reference-brand img {
+    width: 38px;
+    height: 34px;
+  }
+
+  .reference-actions {
+    gap: 8px;
+  }
+
+  .reference-offer-button {
+    min-height: 42px;
+    padding: 9px 11px;
+  }
+
+  .reference-nav {
+    margin-inline: -14px;
+    padding-inline: 14px;
+  }
+
+  .reference-nav a {
+    font-size: .64rem;
+  }
+
+  main > section > div,
+  .section > div {
+    max-width: min(100% - 24px, 1120px);
+  }
+}
+
+@media (max-width: 520px) {
+  .reference-topbar__right a:first-child {
+    max-width: 68vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .reference-brand span {
+    max-width: 145px;
+  }
+
+  .reference-actions .reference-login-button {
+    display: none;
+  }
+
+  .reference-offer-button {
+    font-size: .58rem;
+  }
+
+  .reference-left h1 {
+    font-size: clamp(2.1rem, 12vw, 2.65rem);
+  }
+
+  .reference-service-row,
+  .reference-trust-row,
+  .reference-category-grid,
+  .reference-phone-grid,
+  .reference-features {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-benefits {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .reference-topbar,
+  .reference-header,
+  .reference-footer,
+  .reference-actions {
+    display: none !important;
+  }
+
+  body,
+  main {
+    background: #fff !important;
+    color: #000 !important;
+  }
+}

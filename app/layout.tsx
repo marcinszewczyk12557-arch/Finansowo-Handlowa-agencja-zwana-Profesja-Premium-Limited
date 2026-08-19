@@ -3,6 +3,7 @@ import './globals.css';
 import './featured-offers.css';
 import './professional.css';
 import './mobile-luxury.css';
+import './preview-review.css';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://profesja-premium-limited.vercel.app';
 
