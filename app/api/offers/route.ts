@@ -5,6 +5,7 @@ import { ensureSalesAutomationCase } from '../../../lib/salesAutomation';
 import { syncTransactionFormalities } from '../../../lib/transactionFormalities';
 
 const MAX_BODY_BYTES = 16 * 1024;
+const STORE01_MIN_ORDER_PLN = 110_000;
 
 function text(value: unknown, max = 500) {
   return typeof value === 'string' ? value.trim().replace(/\u0000/g, '').slice(0, max) : '';
@@ -12,6 +13,11 @@ function text(value: unknown, max = 500) {
 
 function isEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(value);
+}
+
+function numericAmount(value: unknown) {
+  const normalized = text(value, 120).replace(/[^0-9]/g, '');
+  return normalized ? Number(normalized) : 0;
 }
 
 function referenceNumber() {
@@ -53,10 +59,19 @@ export async function POST(request: Request) {
   const contact = text(body.contact, 160);
   const email = text(body.email, 254).toLowerCase();
   const product = text(body.product, 300);
+  const sourceStore = text(body.sourceStore, 20);
+  const budget = text(body.budget, 120);
 
   if (!contact || !isEmail(email) || !product) {
     return json(
       { ok: false, error: 'Uzupełnij osobę kontaktową, poprawny adres e-mail oraz produkt lub usługę.' },
+      400,
+    );
+  }
+
+  if (sourceStore === '01' && numericAmount(budget) < STORE01_MIN_ORDER_PLN) {
+    return json(
+      { ok: false, error: 'Dla sklepu 01 minimalna wartość pojedynczego zamówienia wynosi 110 000 zł.' },
       400,
     );
   }
@@ -72,8 +87,8 @@ export async function POST(request: Request) {
         product,
         quantity: text(body.quantity, 120) || null,
         market: text(body.market, 120) || null,
-        budget: text(body.budget, 120) || null,
-        details: text(body.details, 5000) || null,
+        budget: budget || null,
+        details: [sourceStore ? `Źródło zapytania: sklep ${sourceStore}.` : '', text(body.details, 5000)].filter(Boolean).join('\n') || null,
       },
       select: {
         id: true,
