@@ -4,14 +4,28 @@ import products from '../data/products';
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://profesja-premium-limited.vercel.app';
   const now = new Date();
-  const publicPages = ['', '/catalog', '/enterprise-equipment', '/biov-era', '/heavy-equipment', '/offers/new', '/about', '/contact', '/terms', '/privacy'];
+  const publicPages = [
+    '',
+    '/catalog',
+    '/catalog/fotowoltaika',
+    '/catalog/smartfony-premium',
+    '/enterprise-equipment',
+    '/biov-era',
+    '/heavy-equipment',
+    '/offers/new',
+    '/about',
+    '/contact',
+    '/terms',
+    '/privacy',
+  ];
+  const priorityPages = new Set(['', '/catalog', '/catalog/fotowoltaika', '/enterprise-equipment', '/biov-era', '/heavy-equipment']);
 
   return [
     ...publicPages.map((path) => ({
       url: `${base}${path}`,
       lastModified: now,
-      changeFrequency: path === '' || path === '/catalog' || path === '/enterprise-equipment' || path === '/biov-era' || path === '/heavy-equipment' ? ('weekly' as const) : ('monthly' as const),
-      priority: path === '' ? 1 : path === '/catalog' || path === '/enterprise-equipment' || path === '/biov-era' || path === '/heavy-equipment' ? 0.9 : 0.6,
+      changeFrequency: priorityPages.has(path) ? ('weekly' as const) : ('monthly' as const),
+      priority: path === '' ? 1 : priorityPages.has(path) ? 0.9 : 0.6,
     })),
     ...products.map((product) => ({
       url: `${base}/products/${product.id}`,
