@@ -8,36 +8,29 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://profesja-premium-li
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: 'PROFESJA PREMIUM LIMITED™ — Agencja Finansowo-Handlowa B2B',
-    template: '%s | PROFESJA PREMIUM LIMITED™',
-  },
-  description: 'Import, sourcing, OEM/ODM, private label, organizacja finansowania i indywidualne oferty B2B dla przedsiębiorstw.',
+  title: 'PROFESJA PREMIUM LIMITED™ — tryb serwisowy',
+  description: 'Serwis i wszystkie funkcje publiczne są tymczasowo wyłączone.',
   applicationName: 'PROFESJA PREMIUM LIMITED™',
-  keywords: ['B2B', 'import', 'sourcing', 'OEM', 'ODM', 'private label', 'finansowanie B2B', 'wycena B2B', 'PROFESJA PREMIUM LIMITED'],
-  authors: [{ name: 'PROFESJA PREMIUM LIMITED™' }],
-  creator: 'PROFESJA PREMIUM LIMITED™',
-  publisher: 'PROFESJA PREMIUM LIMITED™',
-  alternates: { canonical: '/' },
-  openGraph: {
-    type: 'website',
-    locale: 'pl_PL',
-    url: siteUrl,
-    siteName: 'PROFESJA PREMIUM LIMITED™',
-    title: 'PROFESJA PREMIUM LIMITED™ — Agencja Finansowo-Handlowa B2B',
-    description: 'Import, sourcing, OEM/ODM, private label i indywidualna obsługa handlowa przedsiębiorstw.',
-  },
   robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
+    index: false,
+    follow: false,
+    googleBot: { index: false, follow: false },
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout(_props: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pl">
-      <body>{children}</body>
+      <body style={{ margin: 0, background: '#0b1220', color: '#f8fafc' }}>
+        <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 24, boxSizing: 'border-box' }}>
+          <section style={{ width: 'min(760px, 100%)', textAlign: 'center', border: '1px solid #334155', borderRadius: 24, padding: 40, background: '#111827' }}>
+            <h1 style={{ marginTop: 0 }}>PROFESJA PREMIUM LIMITED™</h1>
+            <p style={{ fontSize: 18, lineHeight: 1.6, color: '#cbd5e1' }}>
+              Strona oraz wszystkie funkcje dostępne dla użytkowników są tymczasowo wyłączone. Trwa pełny tryb serwisowy.
+            </p>
+          </section>
+        </main>
+      </body>
     </html>
   );
 }
