@@ -6,15 +6,10 @@ import StoreProductBrowser from '../../../components/StoreProductBrowser';
 import { businessStoreNetwork, getBusinessStoreBySlug } from '../../../data/businessStoreNetwork';
 import { franchiseCatalog } from '../../../data/franchiseCatalog';
 import { store01MobileCatalog } from '../../../data/store01MobileCatalog';
+import { store02MobileComputingCatalog } from '../../../data/store02MobileComputingCatalog';
 
 type PageProps = { params: Promise<{ slug: string }> };
-
-type DisplayProduct = {
-  code: string;
-  department?: string;
-  title: string;
-  use: string;
-};
+type DisplayProduct = { code: string; department?: string; title: string; use: string };
 
 export function generateStaticParams() {
   return businessStoreNetwork.map((store) => ({ slug: store.slug }));
@@ -28,11 +23,14 @@ export default async function BusinessStorePage({ params }: PageProps) {
   const starterProducts = franchiseCatalog.filter((product) => product.category === store.category);
   const displayedProducts: DisplayProduct[] = store.number === 1
     ? store01MobileCatalog
-    : starterProducts.map((product, index) => ({
-        code: `${String(store.number).padStart(2, '0')}-${String(index + 1).padStart(3, '0')}`,
-        title: product.title,
-        use: product.use,
-      }));
+    : store.number === 2
+      ? store02MobileComputingCatalog
+      : starterProducts.map((product, index) => ({
+          code: `${String(store.number).padStart(2, '0')}-${String(index + 1).padStart(3, '0')}`,
+          title: product.title,
+          use: product.use,
+        }));
+  const hasFullCatalog = store.number === 1 || store.number === 2;
 
   return <>
     <Header />
@@ -69,21 +67,13 @@ export default async function BusinessStorePage({ params }: PageProps) {
 
       <section className="section" style={{ paddingTop: 18 }}>
         <div style={{ maxWidth: 1180, margin: '0 auto' }}>
-          <div className="taxonomy-leaf-heading">
-            <div>
-              <p className="eyebrow">DEPARTMENTS / DZIAŁY</p>
-              <h2>{store.departments.length} głównych działów asortymentowych</h2>
-            </div>
-            <span>STORE {String(store.number).padStart(2, '0')}</span>
-          </div>
+          <div className="taxonomy-leaf-heading"><div><p className="eyebrow">DEPARTMENTS / DZIAŁY</p><h2>{store.departments.length} głównych działów asortymentowych</h2></div><span>STORE {String(store.number).padStart(2, '0')}</span></div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 14 }}>
             {store.departments.map((department, index) => (
               <article key={department} style={{ background: '#fff', border: '1px solid #dde3e6', borderRadius: 16, padding: 20 }}>
                 <span style={{ fontWeight: 800, letterSpacing: '.12em', color: '#607178' }}>{String(index + 1).padStart(2, '0')}</span>
                 <h3 style={{ marginBottom: 10 }}>{department}</h3>
-                <Link href={`/offers/new?category=${encodeURIComponent(store.category)}&product=${encodeURIComponent(department)}&campaign=${encodeURIComponent(`Store ${store.number}/50 A-Z`)}`} style={{ fontWeight: 700 }}>
-                  Zapytaj o produkt →
-                </Link>
+                <Link href={`/offers/new?category=${encodeURIComponent(store.category)}&product=${encodeURIComponent(department)}&campaign=${encodeURIComponent(`Store ${store.number}/50 A-Z`)}`} style={{ fontWeight: 700 }}>Zapytaj o produkt →</Link>
               </article>
             ))}
           </div>
@@ -93,10 +83,8 @@ export default async function BusinessStorePage({ params }: PageProps) {
       <section className="section" style={{ paddingTop: 18 }}>
         <div style={{ maxWidth: 1180, margin: '0 auto' }}>
           <p className="eyebrow">NUMBERED PRODUCTS / NUMEROWANE PRODUKTY</p>
-          <h2>{store.number === 1 ? 'Pełny katalog startowy sklepu 01' : 'Przykładowe pozycje wejściowe'}</h2>
-          <p style={{ color: '#52636b', lineHeight: 1.65, maxWidth: 900 }}>
-            Każdy produkt ma stałe oznaczenie w formacie SKLEP-PRODUKT, np. 01-001. Pierwsze dwie cyfry wskazują numer sklepu, a trzy kolejne numer pozycji w jego katalogu. Numer jest przekazywany również do formularza zapytania ofertowego.
-          </p>
+          <h2>{hasFullCatalog ? `Pełny katalog startowy sklepu ${String(store.number).padStart(2, '0')}` : 'Przykładowe pozycje wejściowe'}</h2>
+          <p style={{ color: '#52636b', lineHeight: 1.65, maxWidth: 900 }}>Każdy produkt ma stałe oznaczenie w formacie SKLEP-PRODUKT. Pierwsze dwie cyfry wskazują numer sklepu, a trzy kolejne numer pozycji w jego katalogu. Numer jest przekazywany również do formularza zapytania ofertowego.</p>
           <StoreProductBrowser products={displayedProducts} category={store.category} />
         </div>
       </section>
@@ -106,16 +94,9 @@ export default async function BusinessStorePage({ params }: PageProps) {
           <p className="eyebrow" style={{ color: '#f0d778' }}>FULL TRANSACTION PATH / PEŁNA ŚCIEŻKA OBSŁUGI</p>
           <h2>Od potrzeby klienta do dostawy i obsługi posprzedażowej</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(210px,1fr))', gap: 12, marginTop: 22 }}>
-            {store.services.map((service, index) => (
-              <div key={service} style={{ border: '1px solid #41545d', borderRadius: 14, padding: 18 }}>
-                <strong style={{ color: '#f0d778' }}>{String(index + 1).padStart(2, '0')}</strong>
-                <div style={{ marginTop: 8 }}>{service}</div>
-              </div>
-            ))}
+            {store.services.map((service, index) => <div key={service} style={{ border: '1px solid #41545d', borderRadius: 14, padding: 18 }}><strong style={{ color: '#f0d778' }}>{String(index + 1).padStart(2, '0')}</strong><div style={{ marginTop: 8 }}>{service}</div></div>)}
           </div>
-          <p style={{ marginTop: 24, color: '#c7d2d7', lineHeight: 1.65 }}>
-            Konkretna marka, model, cena, stan magazynowy, certyfikaty, gwarancja, MOQ i termin dostawy są potwierdzane dla danej transakcji. Publiczna karta nie oznacza automatycznie autoryzowanego partnerstwa z producentem.
-          </p>
+          <p style={{ marginTop: 24, color: '#c7d2d7', lineHeight: 1.65 }}>Konkretna marka, model, cena, stan magazynowy, certyfikaty, gwarancja, MOQ i termin dostawy są potwierdzane dla danej transakcji. Publiczna karta nie oznacza automatycznie autoryzowanego partnerstwa z producentem.</p>
         </div>
       </section>
     </main>
