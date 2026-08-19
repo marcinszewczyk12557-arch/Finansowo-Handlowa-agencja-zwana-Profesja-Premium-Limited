@@ -1,0 +1,106 @@
+export type BrandPresentation = {
+  name: string;
+  slug: string;
+  groups: string[];
+  description: string;
+  presentation: string;
+};
+
+export type ConsumableGroup = {
+  category: string;
+  items: string[];
+};
+
+export const brandPresentations: BrandPresentation[] = [
+  { name:'Apple', slug:'apple', groups:['Smartfony','Komputery','Akcesoria'], description:'Elektronika premium dla biznesu i użytkowników profesjonalnych.', presentation:'Smartfony, komputery, tablety, akcesoria, zasilanie i wyposażenie stanowisk pracy.' },
+  { name:'Samsung', slug:'samsung', groups:['Smartfony','Elektronika','AGD','Wyświetlacze'], description:'Globalny producent elektroniki użytkowej i profesjonalnych systemów wyświetlania.', presentation:'Smartfony, monitory, digital signage, pamięci, urządzenia mobilne i rozwiązania dla firm.' },
+  { name:'Huawei', slug:'huawei', groups:['Smartfony','Telekomunikacja','Energetyka'], description:'Urządzenia mobilne, infrastruktura telekomunikacyjna i rozwiązania energetyczne.', presentation:'Smartfony, urządzenia sieciowe, systemy komunikacyjne i rozwiązania dla infrastruktury.' },
+  { name:'Xiaomi', slug:'xiaomi', groups:['Smartfony','Elektronika','Smart Home'], description:'Szerokie portfolio urządzeń mobilnych, elektroniki i smart home.', presentation:'Smartfony, akcesoria, urządzenia IoT, wyposażenie mobilne i inteligentne urządzenia użytkowe.' },
+  { name:'OPPO', slug:'oppo', groups:['Smartfony'], description:'Urządzenia mobilne i elektronika konsumencka.', presentation:'Smartfony, akcesoria mobilne, urządzenia ubieralne i wyposażenie komunikacyjne.' },
+  { name:'vivo', slug:'vivo', groups:['Smartfony'], description:'Smartfony i urządzenia mobilne.', presentation:'Telefony 5G, akcesoria i rozwiązania mobilne dla użytkowników biznesowych.' },
+  { name:'realme', slug:'realme', groups:['Smartfony'], description:'Smartfony i elektronika mobilna.', presentation:'Urządzenia mobilne, ładowanie, akcesoria i rozwiązania codziennego użytkowania.' },
+  { name:'OnePlus', slug:'oneplus', groups:['Smartfony'], description:'Smartfony klasy premium i akcesoria.', presentation:'Urządzenia mobilne o wysokiej wydajności, ładowarki, słuchawki i wyposażenie towarzyszące.' },
+  { name:'HONOR', slug:'honor', groups:['Smartfony','Komputery'], description:'Smartfony, tablety i urządzenia mobilne.', presentation:'Telefony, laptopy, tablety i akcesoria dla pracy mobilnej.' },
+  { name:'Nubia / REDMAGIC', slug:'nubia-redmagic', groups:['Smartfony','Gaming'], description:'Smartfony premium i urządzenia gamingowe.', presentation:'Wydajne smartfony, akcesoria gamingowe, chłodzenie, zasilanie i wyposażenie mobilne.' },
+  { name:'Motorola', slug:'motorola', groups:['Smartfony'], description:'Smartfony i rozwiązania mobilne.', presentation:'Telefony, akcesoria i urządzenia komunikacyjne dla klientów indywidualnych i biznesowych.' },
+  { name:'Google', slug:'google', groups:['Smartfony','Elektronika'], description:'Urządzenia mobilne i ekosystem cyfrowy.', presentation:'Smartfony, urządzenia smart home i akcesoria współpracujące z usługami cyfrowymi.' },
+  { name:'Sony', slug:'sony', groups:['Elektronika','AV'], description:'Elektronika, obraz, dźwięk i rozwiązania profesjonalne.', presentation:'Monitory, audio, aparatura wideo, elektronika i wyposażenie multimedialne.' },
+  { name:'Lenovo', slug:'lenovo', groups:['Komputery','Stacje robocze'], description:'Komputery biznesowe, stacje robocze i infrastruktura IT.', presentation:'Laptopy, komputery, stacje robocze, monitory, akcesoria i rozwiązania dla przedsiębiorstw.' },
+  { name:'ASUS', slug:'asus', groups:['Komputery','Podzespoły'], description:'Komputery, podzespoły i sprzęt dla profesjonalistów.', presentation:'Laptopy, płyty główne, monitory, stacje robocze i urządzenia peryferyjne.' },
+  { name:'Acer', slug:'acer', groups:['Komputery','Monitory'], description:'Laptopy, komputery i rozwiązania wyświetlania.', presentation:'Sprzęt biurowy, mobilny i urządzenia do pracy profesjonalnej.' },
+  { name:'Dell', slug:'dell', groups:['Komputery','Serwery','Stacje robocze'], description:'Rozwiązania IT dla przedsiębiorstw.', presentation:'Laptopy, stacje robocze, serwery, monitory, pamięci i infrastruktura centrów danych.' },
+  { name:'HP', slug:'hp', groups:['Komputery','Druk'], description:'Komputery, druk i wyposażenie biurowe.', presentation:'Laptopy, stacje robocze, drukarki, materiały eksploatacyjne i urządzenia peryferyjne.' },
+  { name:'Microsoft', slug:'microsoft', groups:['Komputery','Oprogramowanie'], description:'Urządzenia, oprogramowanie i usługi dla biznesu.', presentation:'Komputery, urządzenia mobilne, oprogramowanie biurowe i usługi chmurowe.' },
+  { name:'Intel', slug:'intel', groups:['Podzespoły','Serwery'], description:'Procesory i platformy obliczeniowe.', presentation:'CPU, platformy serwerowe, moduły komunikacyjne i podzespoły infrastruktury IT.' },
+  { name:'AMD', slug:'amd', groups:['Podzespoły','Serwery'], description:'Procesory i układy obliczeniowe.', presentation:'CPU, GPU i rozwiązania obliczeniowe dla komputerów i centrów danych.' },
+  { name:'NVIDIA', slug:'nvidia', groups:['GPU','AI','Stacje robocze'], description:'Układy graficzne i akceleracja obliczeń.', presentation:'GPU, akceleratory AI, rozwiązania dla stacji roboczych i infrastruktury obliczeniowej.' },
+  { name:'Bosch', slug:'bosch', groups:['Narzędzia','Automatyka','AGD'], description:'Narzędzia profesjonalne, automatyka i urządzenia techniczne.', presentation:'Elektronarzędzia, osprzęt, automatyka, czujniki, systemy techniczne i wyposażenie warsztatowe.' },
+  { name:'Siemens', slug:'siemens', groups:['Automatyka','Przemysł'], description:'Automatyka, sterowanie i infrastruktura przemysłowa.', presentation:'Sterowniki, napędy, HMI, aparatura elektryczna, automatyka i systemy produkcyjne.' },
+  { name:'LG', slug:'lg', groups:['Elektronika','Wyświetlacze','AGD'], description:'Wyświetlacze, elektronika i wyposażenie komercyjne.', presentation:'Monitory, digital signage, urządzenia AV, klimatyzacja i rozwiązania komercyjne.' },
+  { name:'Panasonic', slug:'panasonic', groups:['Elektronika','Przemysł'], description:'Elektronika i rozwiązania przemysłowe.', presentation:'Urządzenia AV, podzespoły, automatyka i wyposażenie dla biznesu.' },
+  { name:'Philips', slug:'philips', groups:['Elektronika','Oświetlenie'], description:'Oświetlenie, elektronika i rozwiązania użytkowe.', presentation:'Systemy LED, wyposażenie użytkowe i urządzenia dla przestrzeni komercyjnych.' },
+  { name:'DJI', slug:'dji', groups:['Drony','Elektronika'], description:'Drony i systemy obrazowania.', presentation:'Drony, kamery, akumulatory, śmigła, ładowarki, kontrolery i wyposażenie inspekcyjne.' },
+  { name:'Anker', slug:'anker', groups:['Akcesoria','Zasilanie'], description:'Zasilanie i akcesoria mobilne.', presentation:'Ładowarki, powerbanki, przewody, stacje zasilania i akcesoria stanowisk pracy.' },
+  { name:'Baseus', slug:'baseus', groups:['Akcesoria'], description:'Akcesoria elektroniczne i mobilne.', presentation:'Huby, stacje dokujące, przewody, ładowarki i wyposażenie biurowo-mobilne.' },
+  { name:'UGREEN', slug:'ugreen', groups:['Akcesoria','Sieci'], description:'Okablowanie, huby i infrastruktura stanowisk.', presentation:'Przewody, adaptery, stacje dokujące, akcesoria sieciowe i wyposażenie IT.' },
+  { name:'Hilti', slug:'hilti', groups:['Narzędzia','Budownictwo'], description:'Profesjonalne narzędzia i systemy dla budownictwa.', presentation:'Elektronarzędzia, osprzęt, systemy kotwienia, wiercenia, cięcia i materiały eksploatacyjne.' },
+  { name:'Milwaukee', slug:'milwaukee', groups:['Narzędzia','Budownictwo'], description:'Profesjonalne elektronarzędzia i wyposażenie warsztatowe.', presentation:'Narzędzia akumulatorowe, baterie, ładowarki, osprzęt, skrzynie i wyposażenie serwisowe.' },
+  { name:'Makita', slug:'makita', groups:['Narzędzia','Budownictwo'], description:'Elektronarzędzia profesjonalne i akcesoria.', presentation:'Narzędzia, akumulatory, ładowarki, tarcze, wiertła, osprzęt i wyposażenie warsztatowe.' },
+  { name:'Festool', slug:'festool', groups:['Narzędzia'], description:'Precyzyjne elektronarzędzia i systemy pracy.', presentation:'Narzędzia, prowadnice, odsysanie, ścierniwa, osprzęt i systemy mobilnych stanowisk.' },
+  { name:'DeWalt', slug:'dewalt', groups:['Narzędzia','Budownictwo'], description:'Profesjonalne elektronarzędzia i wyposażenie budowlane.', presentation:'Narzędzia, akumulatory, ładowarki, osprzęt, tarcze, wiertła i wyposażenie warsztatowe.' },
+];
+
+export const consumablesByCategory: ConsumableGroup[] = [
+  { category:'Smartfony i urządzenia mobilne', items:['etui','szkła ochronne','przewody USB-C','ładowarki','powerbanki','uchwyty','folie ochronne'] },
+  { category:'Laptopy i komputery mobilne', items:['zasilacze','stacje dokujące','torby','myszy','klawiatury','pamięci RAM','dyski SSD','przewody i adaptery'] },
+  { category:'Komputery stacjonarne i mini PC', items:['pamięci RAM','dyski SSD/HDD','wentylatory','pasty termiczne','zasilacze','przewody','filtry przeciwkurzowe'] },
+  { category:'Monitory i wyświetlacze', items:['przewody HDMI/DP','uchwyty VESA','zasilacze','adaptery','środki do czyszczenia ekranów'] },
+  { category:'Serwery i infrastruktura IT', items:['dyski serwerowe','pamięci ECC','wentylatory','zasilacze redundantne','kable DAC/SFP','szyny rack','filtry'] },
+  { category:'Sieci i telekomunikacja', items:['patchcordy','wkładki SFP/SFP+','przewody LAN','złącza RJ45','patch panele','zasilacze PoE','anteny'] },
+  { category:'Cyberbezpieczeństwo sprzętowe', items:['tokeny uwierzytelniające','karty dostępu','moduły TPM/HSM','licencje/subskrypcje wsparcia','zasilacze awaryjne'] },
+  { category:'Drukarki i urządzenia biurowe', items:['tonery','tusze','bębny','pas transferowy','papier','rolki pobierające','zszywki i materiały wykończeniowe'] },
+  { category:'Meble biurowe premium', items:['maty ochronne','organizery kabli','wkłady zamków','kółka','podłokietniki','elementy tapicerskie'] },
+  { category:'Wyposażenie recepcji i lobby', items:['materiały informacyjne','papier do drukarek kiosków','rolki termiczne','środki czystości','elementy oznakowania'] },
+  { category:'Oświetlenie profesjonalne', items:['moduły LED','zasilacze/driver LED','źródła światła','przewody','złącza','elementy optyczne','czujniki'] },
+  { category:'Smart Home i automatyka budynkowa', items:['czujniki','baterie','przekaźniki','zasilacze','przewody magistralne','moduły komunikacyjne'] },
+  { category:'Kontrola dostępu i bezpieczeństwo', items:['karty RFID','breloki','baterie do zamków','zasilacze','elektrozaczepy','czytniki zapasowe'] },
+  { category:'Monitoring wizyjny', items:['dyski surveillance','przewody','wtyki','zasilacze','puszki montażowe','osłony','środki do czyszczenia optyki'] },
+  { category:'Systemy alarmowe i przeciwpożarowe', items:['czujki','baterie','akumulatory central','sygnalizatory','wkłady testowe','przewody ognioodporne'] },
+  { category:'Fotowoltaika', items:['złącza MC4','przewody solarne','bezpieczniki DC','ograniczniki przepięć','uchwyty montażowe','śruby','środki do czyszczenia modułów'] },
+  { category:'Magazyny energii', items:['bezpieczniki','złącza HV','przewody bateryjne','moduły komunikacyjne','wentylatory','elementy serwisowe BMS'] },
+  { category:'Ładowanie pojazdów elektrycznych', items:['przewody ładowania','wtyki','uchwyty','zabezpieczenia RCD','moduły RFID','elementy montażowe'] },
+  { category:'HVAC i klimatyzacja', items:['filtry','czynnik chłodniczy w legalnym obrocie','oleje sprężarkowe','paski','łożyska','środki do dezynfekcji','skropliny i pompki'] },
+  { category:'Pompy ciepła', items:['filtry siatkowe','glikol','anody','grzałki','uszczelki','pompy obiegowe','czujniki temperatury'] },
+  { category:'Uzdatnianie i filtracja wody', items:['wkłady filtracyjne','membrany RO','żywice jonowymienne','sól tabletkowana','lampy UV','uszczelki','środki dezynfekcyjne'] },
+  { category:'Maszyny pakujące', items:['folie','taśmy','worki','etykiety','tusze termotransferowe','grzałki','noże','rolki prowadzące'] },
+  { category:'Maszyny CNC', items:['narzędzia skrawające','frezy','płytki','chłodziwa','oleje prowadnicowe','filtry','tuleje zaciskowe','sondy'] },
+  { category:'Obróbka metalu', items:['oleje hydrauliczne','smary','noże','matryce','stemple','filtry','uszczelnienia'] },
+  { category:'Spawalnictwo', items:['drut spawalniczy','elektrody','gaz osłonowy','dysze','końcówki prądowe','ceramika TIG','tarcze i ścierniwa'] },
+  { category:'Narzędzia profesjonalne', items:['wiertła','bity','tarcze','brzeszczoty','ścierniwa','akumulatory','ładowarki','smary i środki konserwacyjne'] },
+  { category:'Sprężarki i pneumatyka', items:['olej sprężarkowy','filtry powietrza','filtry oleju','separatory','wkłady osuszaczy','węże','szybkozłącza'] },
+  { category:'Pompy przemysłowe', items:['uszczelnienia mechaniczne','oringi','wirniki','membrany','oleje','filtry','przewody i armatura'] },
+  { category:'Generatory i zasilanie awaryjne', items:['filtry paliwa','filtry oleju','oleje silnikowe','paski','świece','akumulatory','płyny chłodnicze'] },
+  { category:'Wózki widłowe i logistyka magazynowa', items:['koła i rolki','opony','oleje hydrauliczne','filtry','akumulatory trakcyjne','widełki','smary'] },
+  { category:'Regały i magazynowanie', items:['kotwy','śruby','zabezpieczenia słupów','belki','etykiety lokalizacyjne','pojemniki i przekładki'] },
+  { category:'Transport wewnętrzny i przenośniki', items:['taśmy transportowe','rolki','łożyska','łańcuchy','smary','czujniki','napinacze'] },
+  { category:'Maszyny budowlane', items:['oleje silnikowe i hydrauliczne','filtry','zęby łyżek','sworznie','tuleje','smary','opony/gąsienice','płyny eksploatacyjne'] },
+  { category:'Sprzęt komunalny', items:['szczotki','gumy zbierające','filtry','worki','chemia czyszcząca','pady','akumulatory','oleje'] },
+  { category:'Rolnictwo i agro', items:['filtry','oleje','smary','noże','pasy','łańcuchy','opony','dysze opryskowe','sznurki i siatki'] },
+  { category:'Sprzęt laboratoryjny', items:['probówki','kuwety','pipety i końcówki','filtry','szkło laboratoryjne','środki myjące','materiały kalibracyjne'] },
+  { category:'Aparatura pomiarowa', items:['sondy','elektrody','bufory kalibracyjne','czujniki','baterie','bezpieczniki','przewody pomiarowe'] },
+  { category:'Wyposażenie medyczne nieinwazyjne', items:['elektrody','mankiety','czujniki SpO2','papier rejestracyjny','filtry','przewody pacjenta','środki dezynfekcyjne zgodne z instrukcją'] },
+  { category:'Wyposażenie stomatologiczne', items:['końcówki','filtry','wkłady autoklawów','materiały barierowe','węże','smary serwisowe','środki dezynfekcyjne'] },
+  { category:'Fitness i wellness', items:['smary do bieżni','pasy biegowe','linki','łożyska','maty','środki czystości','uchwyty i tapicerka serwisowa'] },
+  { category:'SPA i hospitality', items:['filtry','chemia basenowa w zgodnym obrocie','wkłady filtracyjne','olejki i środki pielęgnacyjne','tekstylia','uszczelki'] },
+  { category:'Wyposażenie hoteli', items:['baterie do zamków/sejfów','minibarowe części eksploatacyjne','tekstylia','materiały higieniczne','środki czystości'] },
+  { category:'Gastronomia profesjonalna', items:['detergenty','nabłyszczacze','filtry wody','uszczelki','kosze','środki odkamieniające','papier i folie gastronomiczne'] },
+  { category:'Chłodnictwo komercyjne', items:['filtry','wentylatory','uszczelki drzwi','oleje chłodnicze','elementy odszraniania','środki czyszczące'] },
+  { category:'Automaty vendingowe', items:['kubki','mieszadełka','syropy/proszki','filtry wody','rolki termiczne','moduły płatnicze','środki czystości'] },
+  { category:'Obsługa gotówki i płatności', items:['rolki termiczne','taśmy','worki depozytowe','kasety','materiały do czyszczenia czytników','baterie'] },
+  { category:'Audio Video i konferencje', items:['przewody HDMI/XLR','adaptery','baterie','uchwyty','wkładki mikrofonowe','osłony i środki czyszczące'] },
+  { category:'Digital signage i reklama', items:['moduły LED','zasilacze','odbiorniki sygnału','przewody','uchwyty','elementy montażowe','środki do ekranów'] },
+  { category:'Drzwi, bramy i automatyka wejść', items:['piloty','baterie','rolki','sprężyny','smary','fotokomórki','uszczelki','listwy bezpieczeństwa'] },
+  { category:'Outdoor i architektura zewnętrzna', items:['impregnaty','śruby nierdzewne','prowadnice','uszczelki','tkaniny osłonowe','elementy mocujące','środki konserwujące'] },
+];
+
+export const merchandisingNote = 'Marki, logotypy, prezentacje i zdjęcia produktów są używane wyłącznie jako identyfikacja asortymentu. Konkretna dostępność, prawo do materiału, model, cena, zgodność, gwarancja i źródło dostawy są potwierdzane przed publikacją oferty wiążącej.';
