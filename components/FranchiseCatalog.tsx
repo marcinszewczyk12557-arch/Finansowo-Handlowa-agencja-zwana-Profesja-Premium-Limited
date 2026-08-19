@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { featuredFranchiseProducts, franchiseCatalog, franchiseCategories } from '../data/franchiseCatalog';
+import BrandProductExplorer from './BrandProductExplorer';
 
 type Props = { mode?: 'home' | 'catalog' };
 
@@ -10,7 +11,7 @@ const openingStores = [
   ['04', 'HVAC & Climate', 'Klimatyzacja, wentylacja i rozwiązania HVAC'],
   ['05', 'Premium Office & Furniture', 'Meble premium, recepcje i przestrzenie executive'],
   ['06', 'Doors, Gates & Access', 'Drzwi, bramy, automatyka i kontrola dostępu'],
-  ['07', 'Heavy Machinery', 'Maszyny budowlane, komunalne i przemysłowe'],
+  ['07', 'Heavy Machinery', 'Maszyny budowlane, komunalne, rolnicze, wydobywcze i przemysłowe'],
   ['08', 'Enterprise Equipment', 'Wyposażenie przedsiębiorstw, narzędzia i stanowiska pracy'],
   ['09', 'Wellness & SPA', 'Wyposażenie wellness, SPA i hospitality'],
   ['10', 'Smart Building', 'Smart Home, automatyka i inteligentne systemy budynkowe'],
@@ -54,6 +55,8 @@ export default function FranchiseCatalog({ mode = 'catalog' }: Props){
           </article>
         ))}
       </div>
+
+      <BrandProductExplorer />
 
       <div className="source-dossier" style={{ marginBottom: 24 }}>
         <p className="eyebrow">SAFE COMMERCIAL RULES • ZASADY BEZPIECZNEJ OBSŁUGI</p>
