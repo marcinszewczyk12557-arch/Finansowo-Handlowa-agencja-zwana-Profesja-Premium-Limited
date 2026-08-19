@@ -21,16 +21,20 @@ export type ScalableCatalogItem = {
   storeNo: number;
   category: string;
   tier: CatalogTier;
+  quantityPerCard: 1;
   titleEn: string;
   titlePl: string;
   role: string;
   formFactor: string;
   sourceUrl: string;
   sourceStatus: 'sourcing-candidate';
+  syncStatus: 'awaiting-verified-source';
   delivery: string;
   warranty: string;
   service: string;
   consumables: string;
+  documents: string;
+  automation: string;
   compliance: string;
 };
 
@@ -43,8 +47,8 @@ export function getCatalogItem(globalIndex: number): ScalableCatalogItem {
   const role = roles[Math.floor(withinStore / tiers.length) % roles.length];
   const formFactor = formFactors[Math.floor(withinStore / (tiers.length * roles.length)) % formFactors.length];
   const sequence = String(withinStore + 1).padStart(4, '0');
-  const titlePl = `${category} — ${tier} — ${role} — wariant ${sequence}`;
-  const titleEn = `${category} — ${tier} — ${formFactor} — variant ${sequence}`;
+  const titlePl = `${category} — ${tier} — ${role} — pozycja ${sequence}`;
+  const titleEn = `${category} — ${tier} — ${formFactor} — item ${sequence}`;
   const query = `${category} ${tier} ${role} ${formFactor}`;
   return {
     id: `PPL-${String(storeNo).padStart(2,'0')}-${sequence}`,
@@ -52,16 +56,20 @@ export function getCatalogItem(globalIndex: number): ScalableCatalogItem {
     storeNo,
     category,
     tier,
+    quantityPerCard: 1,
     titleEn,
     titlePl,
     role,
     formFactor,
     sourceUrl: toAlibabaSearch(query),
     sourceStatus: 'sourcing-candidate',
+    syncStatus: 'awaiting-verified-source',
     delivery: 'Door-to-door / od odbioru od dostawcy do doręczenia odbiorcy; przewoźnik, tracking, ubezpieczenie, Incoterms i moment przejścia ryzyka są potwierdzane w ofercie wiążącej.',
     warranty: 'Minimum 12 miesięcy wyłącznie po pisemnym potwierdzeniu producenta lub sprzedawcy dla konkretnego modelu i rynku.',
     service: 'Odpłatny serwis pogwarancyjny, naprawy i części zamienne są potwierdzane przed przyjęciem zamówienia.',
     consumables: 'Materiały eksploatacyjne, części zużywalne i akcesoria są mapowane do wybranego modelu przed akceptacją zamówienia.',
+    documents: 'Dokumentacja produktu, instrukcje, deklaracje i pliki są przypisywane indywidualnie do dokładnego SKU/modelu po weryfikacji źródła.',
+    automation: 'Rekord jest przygotowany do automatycznej synchronizacji ceny, MOQ, dostępności, dokumentów i statusu dostawy po podłączeniu autoryzowanego źródła danych.',
     compliance: 'CE/ISO/MDR/EN/IEC i inne oznaczenia otrzymują status zweryfikowany wyłącznie po sprawdzeniu autentycznej dokumentacji dla dokładnego produktu i rynku docelowego.'
   };
 }
@@ -70,26 +78,13 @@ export function getCatalogPage(page: number, category?: string) {
   const safePage = Math.max(1, Math.min(CATALOG_TOTAL_PAGES, page));
   if (category && scalableCatalogCategories.includes(category as (typeof scalableCatalogCategories)[number])) {
     const storeNo = scalableCatalogCategories.indexOf(category as (typeof scalableCatalogCategories)[number]) + 1;
-    const startWithin = (safePage - 1) * CATALOG_PAGE_SIZE;
     const maxPages = Math.ceil(CATALOG_ITEMS_PER_STORE / CATALOG_PAGE_SIZE);
     const localPage = Math.max(1, Math.min(maxPages, safePage));
     const start = (storeNo - 1) * CATALOG_ITEMS_PER_STORE + (localPage - 1) * CATALOG_PAGE_SIZE;
     const count = Math.min(CATALOG_PAGE_SIZE, CATALOG_ITEMS_PER_STORE - (localPage - 1) * CATALOG_PAGE_SIZE);
-    return {
-      items: Array.from({length: count}, (_, i) => getCatalogItem(start + i)),
-      page: localPage,
-      totalPages: maxPages,
-      totalItems: CATALOG_ITEMS_PER_STORE,
-      category
-    };
+    return { items: Array.from({length: count}, (_, i) => getCatalogItem(start + i)), page: localPage, totalPages: maxPages, totalItems: CATALOG_ITEMS_PER_STORE, category };
   }
   const start = (safePage - 1) * CATALOG_PAGE_SIZE;
   const count = Math.min(CATALOG_PAGE_SIZE, CATALOG_TOTAL_ITEMS - start);
-  return {
-    items: Array.from({length: count}, (_, i) => getCatalogItem(start + i)),
-    page: safePage,
-    totalPages: CATALOG_TOTAL_PAGES,
-    totalItems: CATALOG_TOTAL_ITEMS,
-    category: undefined
-  };
+  return { items: Array.from({length: count}, (_, i) => getCatalogItem(start + i)), page: safePage, totalPages: CATALOG_TOTAL_PAGES, totalItems: CATALOG_TOTAL_ITEMS, category: undefined };
 }
