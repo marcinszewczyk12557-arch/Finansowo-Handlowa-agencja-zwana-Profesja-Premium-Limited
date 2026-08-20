@@ -30,7 +30,15 @@ export const STORES_02_06: StoreSpec[] = [
 {group:'WAN i routing',types:['routery biznesowe','routery operatorskie','bramy SD-WAN','urządzenia równoważenia łączy','urządzenia CPE']},
 {group:'Sieci bezprzewodowe',types:['punkty dostępowe Wi-Fi','kontrolery WLAN','mosty bezprzewodowe','anteny i akcesoria RF','systemy bezprzewodowe do obiektów przemysłowych']},
 {group:'Telekomunikacja i UC',types:['systemy VoIP','centrale IP','telefony konferencyjne','bramy głosowe','terminale komunikacji zunifikowanej']},
-{group:'Światłowody i transmisja',types:['przełączniki światłowodowe','multipleksery transmisyjne','konwertery mediów','moduły optyczne i transceivery','urządzenia transmisyjne dla sieci operatorskich']}]}
+{group:'Światłowody i transmisja',types:['przełączniki światłowodowe','multipleksery transmisyjne','konwertery mediów','moduły optyczne i transceivery','urządzenia transmisyjne dla sieci operatorskich']}]},
+{id:'SKLEP-007',slug:'07-cyberbezpieczenstwo-sprzetowe',name:'Cyberbezpieczeństwo sprzętowe',tree:[
+{group:'Firewalle i bramy bezpieczeństwa',types:['firewalle sprzętowe UTM/NGFW','bramy bezpieczeństwa dla oddziałów','appliance do segmentacji sieci','bezpieczne bramy dostępu internetowego','urządzenia ochrony brzegu sieci']},
+{group:'VPN i bezpieczny dostęp',types:['sprzętowe bramy VPN','koncentratory VPN klasy enterprise','appliance ZTNA','bramy zdalnego dostępu dla pracowników','urządzenia bezpiecznego dostępu do infrastruktury OT']},
+{group:'Uwierzytelnianie i kryptografia',types:['sprzętowe moduły bezpieczeństwa HSM','tokeny uwierzytelniające FIDO/FIDO2','sprzętowe klucze kryptograficzne','moduły TPM i secure element do integracji','appliance zarządzania kluczami kryptograficznymi']},
+{group:'Ochrona sieci i inspekcja ruchu',types:['appliance IDS/IPS','urządzenia network detection and response','sondy analizy ruchu sieciowego','appliance do filtrowania treści i DNS','urządzenia ochrony przed atakami DDoS']},
+{group:'Bezpieczeństwo danych i infrastruktury',types:['sprzętowe szyfratory danych i łączy','bezpieczne urządzenia backup/immutable storage','appliance DLP do integracji z infrastrukturą','bezpieczne konsole KVM i przełączniki dostępu','urządzenia audytu i monitoringu bezpieczeństwa']},
+{group:'Cyberbezpieczeństwo przemysłowe i OT',types:['firewalle przemysłowe','bezpieczne bramy protokołów przemysłowych','urządzenia segmentacji OT/IT','sondy monitoringu ICS/SCADA','appliance do bezpiecznego zdalnego serwisu maszyn']},
+{group:'Bezpieczna infrastruktura fizyczna IT',types:['szafy rack z kontrolą dostępu','sprzętowe moduły kontroli portów','bezpieczne stacje administracyjne','urządzenia izolacji sieciowej i data diode','systemy sprzętowego zarządzania dostępem uprzywilejowanym']}]}
 ];
 
 export const MIN_ORDER_PLN = 110000;
