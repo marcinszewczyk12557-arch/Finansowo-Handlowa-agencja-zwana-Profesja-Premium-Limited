@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/08-drukarki-urzadzenia-biurowe',
     '/sklepy/09-meble-biurowe-premium',
     '/sklepy/10-wyposazenie-recepcji-lobby',
+    '/sklepy/11-oswietlenie-profesjonalne',
     '/enterprise-equipment',
     '/biov-era',
     '/heavy-equipment',
@@ -38,6 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/08-drukarki-urzadzenia-biurowe',
     '/sklepy/09-meble-biurowe-premium',
     '/sklepy/10-wyposazenie-recepcji-lobby',
+    '/sklepy/11-oswietlenie-profesjonalne',
     '/enterprise-equipment', '/biov-era', '/heavy-equipment'
   ]);
 
