@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/06-sieci-telekomunikacja',
     '/sklepy/07-cyberbezpieczenstwo-sprzetowe',
     '/sklepy/08-drukarki-urzadzenia-biurowe',
+    '/sklepy/09-meble-biurowe-premium',
     '/enterprise-equipment',
     '/biov-era',
     '/heavy-equipment',
@@ -34,6 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/06-sieci-telekomunikacja',
     '/sklepy/07-cyberbezpieczenstwo-sprzetowe',
     '/sklepy/08-drukarki-urzadzenia-biurowe',
+    '/sklepy/09-meble-biurowe-premium',
     '/enterprise-equipment', '/biov-era', '/heavy-equipment'
   ]);
 
