@@ -9,6 +9,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/catalog',
     '/catalog/fotowoltaika',
     '/catalog/smartfony-premium',
+    '/sklepy/02-laptopy-komputery-mobilne',
+    '/sklepy/03-komputery-stacjonarne-mini-pc',
+    '/sklepy/04-monitory-wyswietlacze',
+    '/sklepy/05-serwery-infrastruktura-it',
+    '/sklepy/06-sieci-telekomunikacja',
     '/enterprise-equipment',
     '/biov-era',
     '/heavy-equipment',
@@ -18,7 +23,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/terms',
     '/privacy',
   ];
-  const priorityPages = new Set(['', '/catalog', '/catalog/fotowoltaika', '/enterprise-equipment', '/biov-era', '/heavy-equipment']);
+  const priorityPages = new Set([
+    '', '/catalog', '/catalog/fotowoltaika',
+    '/sklepy/02-laptopy-komputery-mobilne',
+    '/sklepy/03-komputery-stacjonarne-mini-pc',
+    '/sklepy/04-monitory-wyswietlacze',
+    '/sklepy/05-serwery-infrastruktura-it',
+    '/sklepy/06-sieci-telekomunikacja',
+    '/enterprise-equipment', '/biov-era', '/heavy-equipment'
+  ]);
 
   return [
     ...publicPages.map((path) => ({
