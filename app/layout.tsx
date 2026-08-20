@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import './featured-offers.css';
 import './professional.css';
@@ -31,6 +32,7 @@ export default function RootLayout(_props: Readonly<{ children: React.ReactNode 
             </p>
           </section>
         </main>
+        <Analytics />
       </body>
     </html>
   );
