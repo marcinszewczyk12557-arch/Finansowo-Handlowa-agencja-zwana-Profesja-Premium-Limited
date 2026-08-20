@@ -11,7 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/06-sieci-telekomunikacja', '/sklepy/07-cyberbezpieczenstwo-sprzetowe',
     '/sklepy/08-drukarki-urzadzenia-biurowe', '/sklepy/09-meble-biurowe-premium',
     '/sklepy/10-wyposazenie-recepcji-lobby', '/sklepy/11-oswietlenie-profesjonalne',
-    '/sklepy/12-smart-home-automatyka-budynkowa',
+    '/sklepy/12-smart-home-automatyka-budynkowa', '/sklepy/13-kontrola-dostepu-bezpieczenstwo',
     '/enterprise-equipment', '/biov-era', '/heavy-equipment', '/offers/new',
     '/about', '/contact', '/terms', '/privacy',
   ];
@@ -22,7 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/06-sieci-telekomunikacja', '/sklepy/07-cyberbezpieczenstwo-sprzetowe',
     '/sklepy/08-drukarki-urzadzenia-biurowe', '/sklepy/09-meble-biurowe-premium',
     '/sklepy/10-wyposazenie-recepcji-lobby', '/sklepy/11-oswietlenie-profesjonalne',
-    '/sklepy/12-smart-home-automatyka-budynkowa',
+    '/sklepy/12-smart-home-automatyka-budynkowa', '/sklepy/13-kontrola-dostepu-bezpieczenstwo',
     '/enterprise-equipment', '/biov-era', '/heavy-equipment'
   ]);
 
