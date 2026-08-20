@@ -7,7 +7,8 @@ export default function Footer() {
         <div className="reference-footer__brand">
           <strong>PROFESJA</strong>
           <span>PREMIUM LIMITED™</span>
-          <p>Finansowo-Handlowa Agencja B2B • finansowanie • import • sourcing • OEM/ODM • private label</p>
+          <p>Prywatna działalność inwestycyjno-usługowa / agencja B2B • sourcing • organizacja transakcji • import • logistyka • OEM/ODM • private label</p>
+          <p><strong>LEGAL_REVIEW:</strong> charakter prawny podmiotu i zakres usług finansowych wymagają potwierdzenia przed publikacją produkcyjną. PROFESJA PREMIUM LIMITED nie jest przedstawiana jako bank, fundusz inwestycyjny, firma inwestycyjna, ubezpieczyciel ani inna regulowana instytucja finansowa bez potwierdzonego zezwolenia lub wpisu do właściwego rejestru.</p>
         </div>
 
         <nav className="reference-footer__nav" aria-label="Nawigacja w stopce">
@@ -28,7 +29,7 @@ export default function Footer() {
       </div>
       <div className="reference-footer__bottom">
         <span>© 2026 PROFESJA PREMIUM LIMITED™. Wszelkie prawa zastrzeżone.</span>
-        <span>Oferty, dostępność, parametry i warunki handlowe są potwierdzane indywidualnie przed zawarciem transakcji.</span>
+        <span>Kapitał prywatnego inwestora, usługi agencji B2B oraz finansowanie zapewniane przez ewentualnego zewnętrznego finansującego są rozdzielnymi rolami. Oferty, dostępność, parametry i warunki handlowe są potwierdzane indywidualnie przed zawarciem transakcji.</span>
       </div>
     </footer>
   );
