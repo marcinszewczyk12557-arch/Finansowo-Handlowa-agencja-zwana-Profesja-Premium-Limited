@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/04-monitory-wyswietlacze',
     '/sklepy/05-serwery-infrastruktura-it',
     '/sklepy/06-sieci-telekomunikacja',
+    '/sklepy/07-cyberbezpieczenstwo-sprzetowe',
     '/enterprise-equipment',
     '/biov-era',
     '/heavy-equipment',
@@ -30,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/04-monitory-wyswietlacze',
     '/sklepy/05-serwery-infrastruktura-it',
     '/sklepy/06-sieci-telekomunikacja',
+    '/sklepy/07-cyberbezpieczenstwo-sprzetowe',
     '/enterprise-equipment', '/biov-era', '/heavy-equipment'
   ]);
 
