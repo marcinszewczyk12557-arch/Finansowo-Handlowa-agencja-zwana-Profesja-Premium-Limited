@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/08-drukarki-urzadzenia-biurowe', '/sklepy/09-meble-biurowe-premium',
     '/sklepy/10-wyposazenie-recepcji-lobby', '/sklepy/11-oswietlenie-profesjonalne',
     '/sklepy/12-smart-home-automatyka-budynkowa', '/sklepy/13-kontrola-dostepu-bezpieczenstwo',
-    '/sklepy/14-monitoring-wizyjny',
+    '/sklepy/14-monitoring-wizyjny', '/sklepy/15-systemy-alarmowe-przeciwpozarowe',
     '/enterprise-equipment', '/biov-era', '/heavy-equipment', '/offers/new',
     '/about', '/contact', '/terms', '/privacy',
   ];
@@ -24,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/08-drukarki-urzadzenia-biurowe', '/sklepy/09-meble-biurowe-premium',
     '/sklepy/10-wyposazenie-recepcji-lobby', '/sklepy/11-oswietlenie-profesjonalne',
     '/sklepy/12-smart-home-automatyka-budynkowa', '/sklepy/13-kontrola-dostepu-bezpieczenstwo',
-    '/sklepy/14-monitoring-wizyjny',
+    '/sklepy/14-monitoring-wizyjny', '/sklepy/15-systemy-alarmowe-przeciwpozarowe',
     '/enterprise-equipment', '/biov-era', '/heavy-equipment'
   ]);
 
