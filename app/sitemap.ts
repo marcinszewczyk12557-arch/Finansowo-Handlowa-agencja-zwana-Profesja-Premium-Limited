@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/16-fotowoltaika', '/sklepy/17-magazyny-energii',
     '/sklepy/18-ladowanie-pojazdow-elektrycznych', '/sklepy/19-hvac-klimatyzacja',
     '/sklepy/20-pompy-ciepla', '/sklepy/21-uzdatnianie-filtracja-wody',
+    '/sklepy/22-systemy-czyszczenia-przemyslowego',
     '/enterprise-equipment', '/biov-era', '/heavy-equipment', '/offers/new',
     '/about', '/contact', '/terms', '/privacy',
   ];
@@ -31,6 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/16-fotowoltaika', '/sklepy/17-magazyny-energii',
     '/sklepy/18-ladowanie-pojazdow-elektrycznych', '/sklepy/19-hvac-klimatyzacja',
     '/sklepy/20-pompy-ciepla', '/sklepy/21-uzdatnianie-filtracja-wody',
+    '/sklepy/22-systemy-czyszczenia-przemyslowego',
     '/enterprise-equipment', '/biov-era', '/heavy-equipment'
   ]);
 
