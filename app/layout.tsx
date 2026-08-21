@@ -4,6 +4,7 @@ import './featured-offers.css';
 import './professional.css';
 import './mobile-luxury.css';
 import './preview-review.css';
+import { buildOrganizationJsonLd, publicPositioning } from '@/lib/publicPositioning';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://profesja-premium-limited.vercel.app';
 const maintenanceMode = process.env.MAINTENANCE_MODE === 'true';
@@ -18,16 +19,24 @@ export const metadata: Metadata = maintenanceMode
     }
   : {
       metadataBase: new URL(siteUrl),
-      title: 'PROFESJA PREMIUM LIMITED™ — prywatna działalność inwestycyjno-usługowa i agencja B2B',
-      description: 'Prywatna działalność inwestycyjno-usługowa i agencja B2B: sourcing, RFQ, organizacja transakcji, logistyka i specjalistyczny katalog dla przedsiębiorstw. Finansowanie, jeżeli występuje, jest przypisywane rzeczywistemu finansującemu.',
-      applicationName: 'PROFESJA PREMIUM LIMITED™',
+      title: `${publicPositioning.name} — ${publicPositioning.pl.headline}`,
+      description: publicPositioning.pl.description,
+      applicationName: publicPositioning.name,
       robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
     };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const organizationJsonLd = buildOrganizationJsonLd(siteUrl);
+
   return (
     <html lang="pl">
       <body style={{ margin: 0 }}>
+        {!maintenanceMode && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          />
+        )}
         {maintenanceMode ? (
           <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 24, boxSizing: 'border-box', background: '#0b1220', color: '#f8fafc' }}>
             <section style={{ width: 'min(760px, 100%)', textAlign: 'center', border: '1px solid #334155', borderRadius: 24, padding: 40, background: '#111827' }}>
