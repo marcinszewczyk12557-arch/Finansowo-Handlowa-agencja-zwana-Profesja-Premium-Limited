@@ -30,9 +30,13 @@ export default function Dashboard() {
     <>
       <Header />
       <main className="section">
-        <p className="eyebrow">Strefa klienta</p>
-        <h1>Panel Klienta B2B</h1>
-        <p>Jedno miejsce do obsługi zapytań, ofert, zamówień i dokumentacji związanej ze współpracą z PROFESJA PREMIUM LIMITED™.</p>
+        <p className="eyebrow">Strefa klienta • B2B</p>
+        <h1>Panel Klienta PROFESJA PREMIUM LIMITED™</h1>
+        <p>
+          Jedno miejsce do obsługi zapytań RFQ, ofert, zamówień i dokumentacji w ramach prywatnej działalności
+          inwestycyjno-usługowej oraz usług agencji handlowej B2B. Sourcing, organizacja transakcji i logistyka są
+          rozdzielone od finansowania, które — jeżeli występuje — jest przypisywane rzeczywistemu finansującemu.
+        </p>
 
         <section className="admin-stats" aria-label="Podsumowanie konta">
           <article className="card"><strong>{lastOffer ? 1 : 0}</strong><span>ostatnich zapytań na tym urządzeniu</span></article>
@@ -55,22 +59,45 @@ export default function Dashboard() {
 
         <section className="grid">
           <article className="card">
-            <h2>Nowe zapytanie</h2>
-            <p>Opisz produkt, ilość, termin i dodatkowe wymagania. Zapytanie może dotyczyć produktu katalogowego lub indywidualnego sourcingu.</p>
+            <h2>Nowe zapytanie RFQ</h2>
+            <p>Opisz produkt, ilość, termin i wymagania. Zapytanie może dotyczyć produktu katalogowego lub indywidualnego sourcingu B2B.</p>
             <Link href="/offers/new"><button>Złóż zapytanie</button></Link>
           </article>
 
           <article className="card">
             <h2>Katalog premium</h2>
-            <p>Przeglądaj aktualne kategorie i pozycje przygotowane do indywidualnej wyceny B2B.</p>
+            <p>Przeglądaj kategorie i profile sourcingowe przygotowane do indywidualnej weryfikacji oraz wyceny B2B.</p>
             <Link href="/catalog"><button>Otwórz katalog</button></Link>
           </article>
 
           <article className="card">
-            <h2>Indywidualna wycena B2B</h2>
-            <p>Końcowe warunki handlowe, dostępność, dostawa i ewentualne finansowanie są ustalane dla konkretnego zapytania i zatwierdzonej oferty.</p>
+            <h2>Warunki handlowe i finansowanie</h2>
+            <p>
+              Końcowe warunki handlowe, dostępność i dostawa są ustalane dla konkretnego zapytania. Jeżeli proces
+              obejmuje finansowanie, jego dostawca, warunki i odpowiedzialność muszą być wskazane zgodnie z rzeczywistym
+              statusem stron i zweryfikowane przed zawarciem transakcji.
+            </p>
             <Link href="/offers/new"><button>Poproś o wycenę</button></Link>
           </article>
+        </section>
+
+        <section className="section admin-note">
+          <h2>Weryfikacja i dokumenty</h2>
+          <p>
+            Proces może obejmować KYC/KYB, weryfikację umocowania, dokumenty transakcyjne, compliance produktu oraz
+            podpis elektroniczny, zależnie od rodzaju sprawy. Dane i dokumenty powinny być przetwarzane zgodnie z
+            właściwymi podstawami prawnymi, zakresem celu i zasadą minimalizacji.
+          </p>
+        </section>
+
+        <section className="section admin-note">
+          <h2>Informacja o charakterze usług • LEGAL_REVIEW</h2>
+          <p>
+            PROFESJA PREMIUM LIMITED™ jest w tym środowisku opisywana jako prywatna działalność inwestycyjno-usługowa
+            i agencja B2B. Treść nie stanowi deklaracji posiadania statusu banku, funduszu inwestycyjnego, firmy
+            inwestycyjnej, ubezpieczyciela, pożyczkodawcy ani licencjonowanego pośrednika. Twierdzenia prawne i finansowe
+            wymagają końcowej weryfikacji zgodności z rzeczywistym statusem podmiotu przed publikacją produkcyjną.
+          </p>
         </section>
 
         <section className="section admin-note">
