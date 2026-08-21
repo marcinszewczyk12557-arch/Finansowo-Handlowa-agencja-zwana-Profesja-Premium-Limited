@@ -11,20 +11,21 @@ export default function ContactPage() {
           <p className="eyebrow">Kontakt</p>
           <h2>Rozpocznij współpracę</h2>
           <p>
-            profesja/premium/limited działa online w modelu globalnym. Kontakt handlowy prowadzimy indywidualnie,
-            z naciskiem na precyzyjne określenie produktu, ilości, rynku docelowego i wymaganej dokumentacji.
+            PROFESJA PREMIUM LIMITED działa online w modelu globalnym. Kontakt handlowy rozpoczyna się przez
+            formularz zgłoszeniowy, który porządkuje dane potrzebne do analizy produktu, ilości, rynku docelowego,
+            finansowania, logistyki i wymaganej dokumentacji.
           </p>
         </section>
 
         <section className="section contact-grid">
           <article className="card">
-            <h2>Kontakt bezpośredni</h2>
-            <p><strong>E-mail:</strong><br /><a href="mailto:profesja.premium@gmail.com">profesja.premium@gmail.com</a></p>
+            <h2>Bezpieczny kanał zgłoszeniowy</h2>
+            <p>Publiczny adres skrzynki operacyjnej nie jest wyświetlany. Zgłoszenia są kierowane przez formularz do wewnętrznego procesu obsługi PROFESJA PREMIUM LIMITED.</p>
             <p><strong>Obszar działalności:</strong><br />Internet — działalność o zasięgu globalnym</p>
           </article>
           <article className="card">
             <h2>Obsługa zapytań</h2>
-            <p>W zapytaniu podaj możliwie dokładne parametry, ilość, oczekiwany termin, rynek docelowy i wymagania dotyczące gwarancji lub dokumentacji.</p>
+            <p>Podaj możliwie dokładne parametry, ilość, oczekiwany termin, rynek docelowy oraz wymagania dotyczące gwarancji, zgodności, logistyki i dokumentacji. Dane finansowe lub rozliczeniowe powinny być przekazywane dopiero w zabezpieczonym etapie właściwym dla danej sprawy.</p>
           </article>
         </section>
 
