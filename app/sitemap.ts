@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/14-monitoring-wizyjny', '/sklepy/15-systemy-alarmowe-przeciwpozarowe',
     '/sklepy/16-fotowoltaika', '/sklepy/17-magazyny-energii',
     '/sklepy/18-ladowanie-pojazdow-elektrycznych', '/sklepy/19-hvac-klimatyzacja',
-    '/sklepy/20-pompy-ciepla',
+    '/sklepy/20-pompy-ciepla', '/sklepy/21-uzdatnianie-filtracja-wody',
     '/enterprise-equipment', '/biov-era', '/heavy-equipment', '/offers/new',
     '/about', '/contact', '/terms', '/privacy',
   ];
@@ -30,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/sklepy/14-monitoring-wizyjny', '/sklepy/15-systemy-alarmowe-przeciwpozarowe',
     '/sklepy/16-fotowoltaika', '/sklepy/17-magazyny-energii',
     '/sklepy/18-ladowanie-pojazdow-elektrycznych', '/sklepy/19-hvac-klimatyzacja',
-    '/sklepy/20-pompy-ciepla',
+    '/sklepy/20-pompy-ciepla', '/sklepy/21-uzdatnianie-filtracja-wody',
     '/enterprise-equipment', '/biov-era', '/heavy-equipment'
   ]);
 
