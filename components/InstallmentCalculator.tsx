@@ -48,10 +48,14 @@ export default function InstallmentCalculator() {
   return (
     <section className="calculator-card" aria-labelledby="installment-calculator-title">
       <p className="eyebrow">Kalkulator sprzedaży ratalnej</p>
-      <h2 id="installment-calculator-title">Symulacja miesięcznej raty</h2>
+      <h2 id="installment-calculator-title">Orientacyjna symulacja miesięcznej raty</h2>
       <p className="calculator-note">
-        Kalkulator ma charakter orientacyjny. Nie jest ofertą kredytu, decyzją finansową ani wyliczeniem RRSO.
-        Ostateczne warunki zależą od konkretnej oferty finansującej.
+        To wyłącznie narzędzie matematyczne do samodzielnej symulacji. Wartości początkowe, w tym 9,9% oprocentowania,
+        są przykładowymi założeniami demonstracyjnymi i nie stanowią aktualnej stawki, promocji ani oferty PROFESJA PREMIUM LIMITED
+        lub jakiegokolwiek finansującego. Kalkulator nie jest ofertą kredytu, decyzją finansową, oceną zdolności ani wyliczeniem RRSO.
+        Wstępna kwalifikacja handlowa PROFESJA nie oznacza przyznania finansowania. Dostępność i ostateczne warunki finansowania
+        określa wyłącznie właściwy finansujący po przeprowadzeniu własnej oceny. Przed zawarciem umowy należy opierać się na jego
+        aktualnej, indywidualnej ofercie i wymaganych informacjach prawnych.
       </p>
 
       <div className="calculator-grid">
@@ -66,28 +70,28 @@ export default function InstallmentCalculator() {
         </label>
 
         <label>
-          Liczba rat
+          Liczba rat — założenie symulacji
           <input type="number" min="1" max="120" step="1" value={months} onChange={(e) => setMonths(Number(e.target.value))} />
         </label>
 
         <label>
-          Oprocentowanie nominalne roczne (%)
+          Oprocentowanie nominalne roczne (%) — własne założenie
           <input type="number" min="0" max="100" step="0.1" value={annualRate} onChange={(e) => setAnnualRate(Number(e.target.value))} />
         </label>
 
         <label>
-          Prowizja finansującego (%)
+          Prowizja finansującego (%) — własne założenie
           <input type="number" min="0" max="100" step="0.1" value={commissionRate} onChange={(e) => setCommissionRate(Number(e.target.value))} />
         </label>
       </div>
 
       <div className="calculator-results" aria-live="polite">
-        <div><span>Kwota finansowana</span><strong>{money(result.financed)}</strong></div>
-        <div><span>Szacowana rata miesięczna</span><strong>{money(result.installment)}</strong></div>
-        <div><span>Liczba rat</span><strong>{result.safeMonths}</strong></div>
-        <div><span>Łączna suma rat</span><strong>{money(result.installmentsTotal)}</strong></div>
-        <div><span>Szacowany koszt finansowania</span><strong>{money(result.financingCost)}</strong></div>
-        <div><span>Łączna kwota do zapłaty</span><strong>{money(result.totalPayment)}</strong></div>
+        <div><span>Kwota finansowana w symulacji</span><strong>{money(result.financed)}</strong></div>
+        <div><span>Orientacyjna rata miesięczna</span><strong>{money(result.installment)}</strong></div>
+        <div><span>Liczba rat w symulacji</span><strong>{result.safeMonths}</strong></div>
+        <div><span>Orientacyjna suma rat</span><strong>{money(result.installmentsTotal)}</strong></div>
+        <div><span>Orientacyjny koszt finansowania</span><strong>{money(result.financingCost)}</strong></div>
+        <div><span>Orientacyjna łączna kwota do zapłaty</span><strong>{money(result.totalPayment)}</strong></div>
       </div>
     </section>
   );
