@@ -9,7 +9,7 @@ export default function Header() {
             <span>FINANSOWANIE B2B</span><i>•</i><span>IMPORT</span><i>•</i><span>LOGISTYKA DOOR-TO-DOOR</span><i>•</i><span>OEM / ODM</span><i>•</i><span>PRIVATE LABEL</span>
           </div>
           <div className="reference-topbar__right">
-            <a href="mailto:profesja.premium@gmail.com">✉ profesja.premium@gmail.com</a>
+            <Link href="/contact">Formularz kontaktowy</Link>
             <Link href="/contact">Kontakt</Link>
           </div>
         </div>
